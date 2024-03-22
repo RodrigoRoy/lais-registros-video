@@ -14,7 +14,8 @@ export default defineNuxtConfig({
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
-    //...
+    // my modules
+    'nuxt-mongoose',
   ],
   vite: {
     vue: {
@@ -23,4 +24,12 @@ export default defineNuxtConfig({
       },
     },
   },
+  mongoose: {
+    uri: process.env.MONGODB_URI,
+    options: {
+      dbName: process.env.MONGODB_DBNAME
+    },
+    modelsDir: 'models',
+    devtools: true,
+  }
 })
