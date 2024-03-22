@@ -3,10 +3,11 @@ export default defineEventHandler(async (event) => {
     const isValidId = /^[a-f0-9]{24}$/.test(event.context.params._id)
     if(!isValidId) throw createError({ statusCode: 400, statusMessage: 'ID inválido'})
 
+    // Buscar en base de datos
     try {
         return await UsuarioSchema.findOne({ _id: event.context.params?._id })
     }
     catch (error) {
-        return error
+        throw createError({ statusCode: 500, statusMessage: error })
     }
 })

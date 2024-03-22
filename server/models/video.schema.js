@@ -15,7 +15,6 @@ export const VideoSchema = defineMongooseModel({
             iluminacion: {type: 'string', trim: true},
             asistencia: {type: 'string', trim: true},
             sonido: {type: 'string', trim: true},
-            _id: false,
         },
         contenidoEstructura: {
             descripcionGeneral: {type: 'string', trim: true},
@@ -52,7 +51,6 @@ export const VideoSchema = defineMongooseModel({
             location: {
                 lat: {type: 'number'},
                 lng: {type: 'number'},
-                _id: false
             }
         },
     },
@@ -64,7 +62,6 @@ export const VideoSchema = defineMongooseModel({
     
     hooks(schema) {
         schema.virtual('duracionString').get(function(){
-            // verificar que la duración exista
             if(!this.duracion) return ''
             return `${this.duracion} s`
         })

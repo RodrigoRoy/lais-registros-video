@@ -1,3 +1,8 @@
 export default defineEventHandler( async (event) => {
-    return 'Hello video'
+    try {
+        return await VideoSchema.find({})
+    }
+    catch (error) {
+        return error
+    }
 })

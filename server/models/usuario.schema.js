@@ -14,7 +14,6 @@ export const UsuarioSchema = defineMongooseModel({
                 read: { type: 'boolean', default: true },
                 update: { type: 'boolean', default: false },
                 delete: { type: 'boolean', default: false },
-                _id: false,
             },
         },
         admin: { type: 'boolean', default: false },
