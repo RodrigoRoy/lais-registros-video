@@ -9,9 +9,12 @@ export const useUserStore = defineStore('user', () => {
 
     /**
      * Inicia sesión del usuario
+     * @param {string} user - Nombre de usuario o email
+     * @param {string} password - Contraseña como texto simple
      */
-    function login() {
-        isLoggedIn.value = true
+    function login(user, password) {
+        if(user && password)
+            isLoggedIn.value = true
     }
 
     /**

@@ -22,15 +22,17 @@ const user = useUserStore()
             <v-list v-if="!user.isLoggedIn">
                 <v-list-item>
                     <v-list-item-title>
-                        <v-btn @click="user.login()">
-                            Iniciar sesión
-                        </v-btn>
+                        <nuxt-link to="/login">
+                            <v-btn>
+                                Iniciar sesión
+                            </v-btn>
+                        </nuxt-link>
                     </v-list-item-title>
                 </v-list-item>
                 <v-list-item>
                     <v-list-item-title>
                         <v-btn>
-                            Crear usuario
+                            Crear cuenta
                         </v-btn>
                     </v-list-item-title>
                 </v-list-item>
