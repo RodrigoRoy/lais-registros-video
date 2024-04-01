@@ -52,6 +52,15 @@ const user = useUserStore()
                         </v-btn>
                     </v-list-item-title>
                 </v-list-item>
+                <v-list-item>
+                    <v-list-item-title>
+                        <nuxt-link to="/videos/nuevo">
+                            <v-btn>
+                                Nuevo registro
+                            </v-btn>
+                        </nuxt-link>
+                    </v-list-item-title>
+                </v-list-item>
                 <v-divider></v-divider>
                 <v-list-item>
                     <v-list-item-title>
