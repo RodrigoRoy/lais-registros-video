@@ -62,26 +62,17 @@ const formRules = {
 }
 
 /**
- * Determina si todos los campos del formulario son válidos según las reglas definidas
- * @returns {boolean} True si cada campo cumple las reglas de validación, false en caso contrario.
- */
-async function validate(){
-    await new Promise(resolve => setTimeout(resolve, 3000)) // Simulación de 3 segundos de espera
-    const { valid } = await form.value.validate()
-    return valid
-}
-
-/**
  * Acciones al dar clic al botón de Iniciar sesión.
  * Se realizan validaciones, si todo es correcto se inicia sesión y se envia a la página inicial
  */
 async function submit(){
-    isLoading.value = true
-    const isValid = await validate()
-    isLoading.value = false
-    if(isValid) {
-        user.login(usuario.value, password.value)
-        await navigateTo('/')
+    isLoading.value = true // indicar el comienzo de inicio de sesión
+    await new Promise(resolve => setTimeout(resolve, 3000)) // Simulación de 3 segundos de espera
+    const { valid } = await form.value.validate() // validaciones del formulario
+    if(valid) {
+        await user.login(usuario.value, password.value) // petición al API con datos del usuario
+        isLoading.value = false // fin del proceso de inicio de sesión
+        await navigateTo('/') // ir a página de inicio
     }
 }
 </script>

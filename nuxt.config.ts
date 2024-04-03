@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     // my modules
     'nuxt-mongoose', // manejador de base de datos MongoDB (mongoose)
     '@pinia/nuxt', // state manager (pinia)
+    '@vueuse/nuxt', // essential utilities (like useStorage)
   ],
   vite: {
     vue: {

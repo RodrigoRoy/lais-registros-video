@@ -1,7 +1,14 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+/**
+ * Recibe información del usuario y devuelve sus datos
+ * en formato de JSON Web Token (JWT)
+ * @param {string} name - Nombre de usuario o email
+ * @param {string} password - Contraseña (en texto plano)
+ */
 export default defineEventHandler(async (event) => {
+    // Información recibida del request.body
     const { name, password } = await readBody(event)
 
     // Verificar que se incluya nombre y contraseña
