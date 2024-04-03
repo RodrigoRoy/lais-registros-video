@@ -12,7 +12,7 @@ const user = useUserStore()
             <v-app-bar-nav-icon @click.stop="website.toggleDrawer()"></v-app-bar-nav-icon>
         </template>
         
-        <v-app-bar-title>Registros en video</v-app-bar-title>
+        <v-app-bar-title><nuxt-link to="/" class="text-decoration-none"> Registros en video </nuxt-link></v-app-bar-title>
         
         <v-menu>
             <template v-slot:activator="{ props }">
@@ -23,31 +23,31 @@ const user = useUserStore()
                 <v-list-item>
                     <v-list-item-title>
                         <nuxt-link to="/login">
-                            <v-btn>
+                            <v-btn color="primary" variant="plain">
                                 Iniciar sesión
                             </v-btn>
                         </nuxt-link>
                     </v-list-item-title>
                 </v-list-item>
-                <v-list-item>
+                <v-list-item active="false">
                     <v-list-item-title>
-                        <v-btn>
+                        <v-btn color="primary" variant="plain" disabled>
                             Crear cuenta
                         </v-btn>
                     </v-list-item-title>
                 </v-list-item>
             </v-list>
             <v-list v-else>
-                <v-list-item>
+                <v-list-item active="false">
                     <v-list-item-title>
-                        <v-btn>
+                        <v-btn color="primary" variant="plain" disabled>
                             Página personal
                         </v-btn>
                     </v-list-item-title>
                 </v-list-item>
-                <v-list-item>
+                <v-list-item active="false">
                     <v-list-item-title>
-                        <v-btn>
+                        <v-btn color="primary" variant="plain" disabled>
                             Administración
                         </v-btn>
                     </v-list-item-title>
@@ -55,7 +55,7 @@ const user = useUserStore()
                 <v-list-item>
                     <v-list-item-title>
                         <nuxt-link to="/videos/nuevo">
-                            <v-btn>
+                            <v-btn color="primary" variant="plain">
                                 Nuevo registro
                             </v-btn>
                         </nuxt-link>
@@ -64,7 +64,7 @@ const user = useUserStore()
                 <v-divider></v-divider>
                 <v-list-item>
                     <v-list-item-title>
-                        <v-btn @click="user.logout()">
+                        <v-btn color="primary" variant="plain" @click="user.logout()">
                             Cerrar sesión
                         </v-btn>
                     </v-list-item-title>

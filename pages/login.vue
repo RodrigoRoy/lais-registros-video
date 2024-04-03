@@ -68,11 +68,20 @@ const formRules = {
 async function submit(){
     isLoading.value = true // indicar el comienzo de inicio de sesión
     await new Promise(resolve => setTimeout(resolve, 3000)) // Simulación de 3 segundos de espera
-    const { valid } = await form.value.validate() // validaciones del formulario
-    if(valid) {
-        await user.login(usuario.value, password.value) // petición al API con datos del usuario
-        isLoading.value = false // fin del proceso de inicio de sesión
-        await navigateTo('/') // ir a página de inicio
+    
+    try {
+        const { valid } = await form.value.validate() // validaciones del formulario
+        if(valid) {
+            await user.login(usuario.value, password.value) // petición al API con datos del usuario
+            await navigateTo('/') // ir a página de inicio
+        }
+    } 
+    catch (error) {
+        throw createError({ statusCode: 400, statusMessage: error})
+    } 
+    finally {
+        isLoading.value = false // indicar el final del inicio de sesión
     }
+
 }
 </script>

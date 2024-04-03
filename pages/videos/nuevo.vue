@@ -170,6 +170,12 @@
 </template>
 
 <script setup>
+definePageMeta({
+    middleware: [
+        'auth',
+    ]
+})
+
 // Selector de pestaña. Debe coincidir con el prop "value" de <v-tab>
 const tab = ref('identificacion')
 
