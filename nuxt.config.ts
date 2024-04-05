@@ -15,7 +15,9 @@ export default defineNuxtConfig({
       })
     },
     // my modules
-    'nuxt-mongoose',
+    'nuxt-mongoose', // manejador de base de datos MongoDB (mongoose)
+    '@pinia/nuxt', // state manager (pinia)
+    '@vueuse/nuxt', // essential utilities (like useStorage)
   ],
   vite: {
     vue: {
@@ -25,11 +27,12 @@ export default defineNuxtConfig({
     },
   },
   mongoose: {
-    uri: process.env.MONGODB_URI,
+    // Configuración de base de datos
+    uri: process.env.MONGODB_URI, // URL de la conexión con MongoDB
     options: {
-      dbName: process.env.MONGODB_DBNAME
+      dbName: process.env.MONGODB_DBNAME // nombre de la base de datos
     },
-    modelsDir: 'models',
-    devtools: true,
+    modelsDir: 'models', // ubicación de los modelos
+    devtools: process.env.NODE_ENV === 'development',
   }
 })

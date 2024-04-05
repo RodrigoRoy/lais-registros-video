@@ -1,9 +1,12 @@
+<script setup>
+</script>
+
 <template>
   <NuxtLayout>
     <v-layout class="rounded rounded-md">
       <AppBar></AppBar>
       
-      <!-- <NavigationDrawer></NavigationDrawer> -->
+      <NavigationDrawer></NavigationDrawer>
       
       <v-main class="align-center justify-center" style="min-height: 300px;">
         <NuxtPage />
