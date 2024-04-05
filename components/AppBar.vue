@@ -11,19 +11,11 @@ const user = useUserStore()
         <template v-slot:prepend>
             <v-app-bar-nav-icon @click.stop="website.toggleDrawer()"></v-app-bar-nav-icon>
         </template>
-        
         <v-app-bar-title>Registros en video</v-app-bar-title>
-        
-
-        
-        
-        
-        
         <v-menu>
             <template v-slot:activator="{ props }">
                 <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
             </template>
-            
             <v-list v-if="!user.isLoggedIn">
                 <v-list-item>
                     <v-list-item-title>
@@ -78,10 +70,3 @@ const user = useUserStore()
         </v-menu>
     </v-app-bar>
 </template>
-
-<script setup>
-const  items = [
-    { title: 'Iniciar sesión' },
-    { title: 'Crear usuario' },
-]
-</script>
