@@ -1,10 +1,10 @@
 <template>
     <div class="py-2 py-10">
         <h2 class="px-4">
-            Fecha: 14 de marzo de 2024
+            Título del grupo documental
         </h2>
         <h1 class="px-4">
-            id de la unidad
+            00/00/0000
         </h1>
     </div>
     
@@ -26,19 +26,19 @@
                                         <v-icon start>
                                             mdi-lock
                                         </v-icon>
-                                        Área de contenido y estructura
+                                        Área de contexto
                                     </v-tab>
                                     <v-tab value="option-3">
                                         <v-icon start>
                                             mdi-access-point
                                         </v-icon>
-                                        Área de acceso y uso
+                                        Área de contenido y estructura
                                     </v-tab>
                                     <v-tab value="option-4">
                                         <v-icon start>
                                             mdi-access-point
                                         </v-icon>
-                                        Área de documentación asociada
+                                        Área de acceso y uso
                                     </v-tab>
                                     <v-tab value="option-5">
                                         <v-icon start>
@@ -67,7 +67,7 @@
                                     <v-card flat>
                                         <v-card-text>
                                             <p>
-                                                cosas del área de contenido y estructura
+                                                cosas del área de contexto
                                             </p>
                                         </v-card-text>
                                     </v-card>
@@ -76,7 +76,7 @@
                                     <v-card flat>
                                         <v-card-text>
                                             <p>
-                                                cosas del área de acceso y uso
+                                                cosas del contenido y estructura
                                             </p>
                                         </v-card-text>
                                     </v-card>
@@ -85,7 +85,7 @@
                                     <v-card flat>
                                         <v-card-text>
                                             <p>
-                                                cosas del área de documentación asociada
+                                                cosas del área de área de acceso y uso
                                             </p>
                                         </v-card-text>
                                     </v-card>
@@ -116,17 +116,12 @@
                 </v-sheet>
             </v-col>
             <v-col cols="4" align="center" >
-                <v-sheet class="pa-2 ma-2" >
-                        <v-card  class=" mx-auto bg-light-green-lighten-4" elevation="12" height="auto" width="auto" variant="outlined" >
+                <v-sheet class="pa-2 ma-2">
+                        <v-card  class=" mx-auto bg-light-green-lighten-4" elevation="12" height="auto" width="auto" variant="outlined">
                             <v-img :src="img" height="auto" width="auto"></v-img>
-                            <v-img :src="img" height="auto" width="auto"></v-img>
-                            <v-btn class="text-none" variant="outlined" size="small" rounded="xl">Documento de calificación</v-btn>
-                            <br>
                             <v-btn class="text-none mt-3" variant="outlined" size="small" rounded="xl">Descargar PDF</v-btn>
                             <br>
-                            {{ tab }}
                         </v-card>
-                    
                 </v-sheet>
             </v-col>
         </v-row>
