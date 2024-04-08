@@ -2,10 +2,12 @@
  * State manager para las funciones de usuario
  * Cumple la función de tener variables y funciones globales
  */
-
-export const useUserStore = defineStore('user', () => {
+export const useAuthStore = defineStore('auth', () => {
     // Determina si el usuario tiene sesión iniciada
     const isLoggedIn = ref(false)
+
+    // Información del usuario
+    // const user = reactive(null)
 
     /**
      * Inicia sesión del usuario.
@@ -30,6 +32,7 @@ export const useUserStore = defineStore('user', () => {
         
         // Guardar token en memoria
         localStorage.setItem('token', token)
+
         // Establecer el state value ("variable global") de que el usuario tiene sesión iniciada
         isLoggedIn.value = true
     }

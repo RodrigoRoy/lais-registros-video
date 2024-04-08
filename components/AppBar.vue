@@ -1,9 +1,9 @@
 <script setup>
 // State manager
 import { useWebsiteStore } from '@/stores/website'
-import { useUserStore } from '@/stores/user'
+import { useAuthStore } from '@/stores/auth'
 const website = useWebsiteStore()
-const user = useUserStore()
+const auth = useAuthStore()
 </script>
 
 <template>
@@ -16,7 +16,7 @@ const user = useUserStore()
             <template v-slot:activator="{ props }">
                 <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
             </template>
-            <v-list v-if="!user.isLoggedIn">
+            <v-list v-if="!auth.isLoggedIn">
                 <v-list-item>
                     <v-list-item-title>
                         <nuxt-link to="/login">
@@ -61,7 +61,7 @@ const user = useUserStore()
                 <v-divider></v-divider>
                 <v-list-item>
                     <v-list-item-title>
-                        <v-btn color="primary" variant="plain" @click="user.logout()">
+                        <v-btn color="primary" variant="plain" @click="auth.logout()">
                             Cerrar sesión
                         </v-btn>
                     </v-list-item-title>

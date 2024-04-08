@@ -12,7 +12,7 @@
                 <nuxt-link class="text-caption text-decoration-none text-blue">¿Olvidaste tu contraseña?</nuxt-link>
             </div>
             <v-text-field v-model="password" :append-inner-icon="isPassVisible ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisible ? 'text' : 'password'" density="compact" placeholder="Escribe la contraseña" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisible = !isPassVisible" :rules="formRules.password" ></v-text-field>
-            
+
             <v-btn class="mb-8" color="blue" size="large" variant="tonal" block type="submit" :loading="isLoading" >Iniciar sesión</v-btn>
 
             <v-card-text class="text-center">
@@ -25,8 +25,8 @@
 
 <script setup>
 // State manager
-import { useUserStore } from '@/stores/user'
-const user = useUserStore()
+import { useAuthStore } from '@/stores/auth'
+const auth = useAuthStore()
 
 const form = ref(null) // Referencia a formulario (util para funciones de validación)
 const usuario = ref('') // Username/email
@@ -72,7 +72,7 @@ async function submit(){
     try {
         const { valid } = await form.value.validate() // validaciones del formulario
         if(valid) {
-            await user.login(usuario.value, password.value) // petición al API con datos del usuario
+            await auth.login(usuario.value, password.value) // petición al API con datos del usuario
             await navigateTo('/') // ir a página de inicio
         }
     } 
