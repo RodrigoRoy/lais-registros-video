@@ -27,7 +27,7 @@
                             <!-- Acciones / botones para mostrar más información o redirigir a otra página -->
                             <v-card-actions>
                                 <v-btn color="secondary" variant="text" @click="revealId = i">Detalles</v-btn>
-                                <nuxt-link :to="`/video/${video._id}`"><v-btn color="secondary" variant="text" class="text-decoration-none">Ver registro</v-btn></nuxt-link>
+                                <nuxt-link :to="`/videos/${video._id}`"><v-btn color="secondary" variant="text" class="text-decoration-none">Ver registro</v-btn></nuxt-link>
                             </v-card-actions>
 
                             <!-- "Cortina" para mostrar información adicional sobre el <v-card> -->

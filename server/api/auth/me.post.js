@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 
 /**
  * Recibe token y devuelve la información del usuario
- * @param {strin} token - JWT con payload del usuario
+ * @param {string} token - JWT con payload del usuario
  */
 export default defineEventHandler(async (event) => {
     // Información recibida del request.body

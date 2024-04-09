@@ -9,12 +9,10 @@ export const UsuarioSchema = defineMongooseModel({
         email: { type: 'string', required:true, trim: true, unique: true, select: false },
         password: {type: 'string', required: true, maxlength: 64, select: false },
         operation: {
-            create: {
-                create: { type: 'boolean', default: false },
-                read: { type: 'boolean', default: true },
-                update: { type: 'boolean', default: false },
-                delete: { type: 'boolean', default: false },
-            },
+            create: { type: 'boolean', default: false },
+            read: { type: 'boolean', default: true },
+            update: { type: 'boolean', default: false },
+            delete: { type: 'boolean', default: false },
         },
         admin: { type: 'boolean', default: false },
         active: { type: 'boolean', default: true },

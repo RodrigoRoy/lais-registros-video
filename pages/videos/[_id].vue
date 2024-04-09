@@ -1,14 +1,14 @@
 <template>
     <div class="py-2 py-10">
         <h2 class="px-4">
-            Fecha: 14 de marzo de 2024
+            {{ video.identificacion.fecha }}
         </h2>
         <h1 class="px-4">
-            id de la unidad
+            {{ video.identificacion.codigoReferencia }}
         </h1>
     </div>
-    
-    <v-container class="" >
+
+    <v-container>
         <v-row no-gutters>
             <v-col align-self="start">
                 <v-sheet class="pa-2 ma-2">
@@ -16,94 +16,94 @@
                     <v-card  class=" mx-auto" elevation="12" height="auto" max-width="auto">
                         <div class="d-flex flex-row">
                             <v-tabs class="py-6 text-caption" v-model="tab" direction="vertical" bg-color="light-green-lighten-4">
-                                    <v-tab value="option-1">
+                                    <v-tab value="identificacion">
                                         <v-icon start>
-                                            mdi-account
+                                            mdi-file-edit
                                         </v-icon>
                                         Área de identificación
                                     </v-tab>
-                                    <v-tab value="option-2">
+                                    <v-tab value="contenidoEstructura">
                                         <v-icon start>
-                                            mdi-lock
+                                            mdi-image-text
                                         </v-icon>
                                         Área de contenido y estructura
                                     </v-tab>
-                                    <v-tab value="option-3">
+                                    <v-tab value="condicionesAccesoUso">
                                         <v-icon start>
-                                            mdi-access-point
+                                            mdi-video-input-component
                                         </v-icon>
                                         Área de acceso y uso
                                     </v-tab>
-                                    <v-tab value="option-4">
+                                    <v-tab value="documentacionAsociada">
                                         <v-icon start>
-                                            mdi-access-point
+                                            mdi-vector-link
                                         </v-icon>
                                         Área de documentación asociada
                                     </v-tab>
-                                    <v-tab value="option-5">
+                                    <v-tab value="notas">
                                         <v-icon start>
-                                            mdi-access-point
+                                            mdi-note
                                         </v-icon>
                                         Área de notas
                                     </v-tab>
-                                    <v-tab value="option-6">
+                                    <v-tab value="controlDescripcion">
                                         <v-icon start>
-                                            mdi-access-point
+                                            mdi-account
                                         </v-icon>
                                         Área de control de la descripción
                                     </v-tab>
                             </v-tabs>
                             <v-window v-model="tab" class="px-4">
-                                <v-window-item value="option-1">
+                                <v-window-item value="identificacion">
                                     <v-card flat>
                                         <v-card-text>
                                             <p>
-                                                cosas del área de identificación
+                                                {{ video.identificacion || 'Área de identificación' }}
                                             </p>
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
-                                <v-window-item value="option-2">
+                                <v-window-item value="contenidoEstructura">
                                     <v-card flat>
                                         <v-card-text>
                                             <p>
-                                                cosas del área de contenido y estructura
+                                                {{ video.contenidoEstructura || 'Área de contenido y estructura' }}
                                             </p>
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
-                                <v-window-item value="option-3">
+                                <v-window-item value="condicionesAccesoUso">
                                     <v-card flat>
                                         <v-card-text>
                                             <p>
-                                                cosas del área de acceso y uso
+                                                {{ video.condicionesAccesoUso || 'Área de condiciones de acceso y uso' }}
                                             </p>
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
-                                <v-window-item value="option-4">
+                                <v-window-item value="documentacionAsociada">
                                     <v-card flat>
                                         <v-card-text>
                                             <p>
-                                                cosas del área de documentación asociada
+                                                {{ video.documentacionAsociada || 'Área de documentación asociada' }}
                                             </p>
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
-                                <v-window-item value="option-5">
+                                <v-window-item value="notas">
                                     <v-card flat>
                                         <v-card-text>
                                             <p>
-                                                cosas del área de notas
+                                                {{ video.notas || 'Área de notas' }}
                                             </p>
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
-                                <v-window-item value="option-6">
+                                <v-window-item value="controlDescripcion">
                                     <v-card flat>
                                         <v-card-text>
                                             <p>
-                                                cosas del área de control de la descripción
+                                                {{ video.controlDescripcion || 'Área de control de la descripción' }}
                                             </p>
                                         </v-card-text>
                                     </v-card>
@@ -111,20 +111,17 @@
                             </v-window>
                         </div>
                     </v-card>
-
-
                 </v-sheet>
             </v-col>
+
             <v-col cols="4" align="center" >
                 <v-sheet class="pa-2 ma-2" >
-                        <v-card  class=" mx-auto bg-light-green-lighten-4" elevation="12" height="auto" width="auto" variant="outlined" >
-                            <v-img :src="img" height="auto" width="auto"></v-img>
-                            <v-img :src="img" height="auto" width="auto"></v-img>
+                        <v-card  class=" mx-auto bg-light-green-lighten-4" elevation="12" height="auto" width="auto" >
+                            <v-img src="https://picsum.photos/300/200" height="auto" width="auto"></v-img>
+                            <v-img :src="testImage" height="auto" width="auto"></v-img>
                             <v-btn class="text-none" variant="outlined" size="small" rounded="xl">Documento de calificación</v-btn>
                             <br>
                             <v-btn class="text-none mt-3" variant="outlined" size="small" rounded="xl">Descargar PDF</v-btn>
-                            <br>
-                            {{ tab }}
                         </v-card>
                     
                 </v-sheet>
@@ -133,9 +130,17 @@
     </v-container>
 </template>
 
+
 <script setup>
-  const tab = ref(null)
-  //const img = ref("https://img.freepik.com/vector-gratis/icono-claqueta-plano_1063-38.jpg")
-  const img = ref('/imagenVideo.png')
-  const color = ref('indigo')
+// Composable para obtener parametros desde URL
+const route = useRoute()
+
+// Nombre de la pestaña actual
+const tab = ref('identificacion')
+
+// Imagen de prueba
+const testImage = ref('/imagenVideo.png')
+
+// Información del registro de video
+const video = await $fetch(`/api/videos/${route.params._id}`)
 </script>

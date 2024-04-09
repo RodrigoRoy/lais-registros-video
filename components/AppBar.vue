@@ -42,7 +42,7 @@ const auth = useAuthStore()
                         </v-btn>
                     </v-list-item-title>
                 </v-list-item>
-                <v-list-item active="false">
+                <v-list-item active="false" v-show="auth.isAdmin">
                     <v-list-item-title>
                         <v-btn color="primary" variant="plain" disabled>
                             Administración
