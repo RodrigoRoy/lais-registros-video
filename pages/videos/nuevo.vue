@@ -154,6 +154,7 @@
                         <v-card flat>
                             <v-card-text>
                                 <v-file-input v-model="files.video" label="Archivo de video" prepend-icon="mdi-file-video-outline" :rules="formRules.clipVideo" accept="video/*" show-size chips ></v-file-input>
+                                files.video[0]: {{ files.video ? files.video[0] : '' }}
                                 <v-file-input v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
                                 <v-file-input v-model="files.document" label="Documento de calificación" prepend-icon="mdi-file-document-outline" :rules="formRules.documentoCalificacion" accept=".pdf" show-size chips ></v-file-input>
                                 <v-checkbox v-model="video.adicional.isPublic" label="El registro de video es público" ></v-checkbox>
@@ -164,6 +165,8 @@
             </div>
             <div class="d-flex justify-center">
                 <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading" >Crear nuevo registro de video</v-btn>
+
+                <v-btn class="mb-8" color="secondary" variant="tonal" @click="uploadFile('video')" >Upload video</v-btn>
             </div>
         </v-form>
     </v-card>
@@ -172,7 +175,7 @@
 <script setup>
 definePageMeta({
     middleware: [
-        'auth',
+        // 'auth',
     ]
 })
 
@@ -283,8 +286,8 @@ const formRules = {
     ],
     clipVideo: [
         value => {
-            if (value && value.length && value[0].size < 5000000) return true
-            return 'El tamaño del video debe ser menor a 5 MB'
+            if (value && value.length && value[0].size < 9000000) return true
+            return 'El tamaño del video debe ser menor a 9 MB'
         }
     ],
     documentoCalificacion: [
@@ -302,12 +305,41 @@ const form = ref(null)
 const isLoading = ref(false)
 
 /**
+ * Sube un archivo del cliente al servidor.
+ * El archivo a subir debe estar especificado en alguno de los <v-file-input>
+ * @param {string} filetype Representa el tipo de archivo a subir ("video", "image", "document")
+ */
+async function uploadFile(filetype) {
+    // Validación del parámetro "filetype"
+    const valid = /(^video$)|(^image$)|(^document$)/gm.test(filetype)
+    if(!valid) return
+    
+    // Crear un nuevo formulario
+    const formData = new FormData()
+
+    // Agregar campos necesarios, incluyendo el archivo. El nombre de cada campo se usará en el API
+    formData.append('file', files[filetype][0])
+    formData.append('codigoReferencia', video.identificacion.codigoReferencia)
+    formData.append('filetype', filetype)
+
+    // Petición al API para procesar la información del formulario
+    await $fetch('/api/files/upload', {
+        method: 'POST',
+        body: formData
+    })
+}
+
+/**
  * Acciones al dar clic al botón de Crear nuevo registro de video.
  * Se realizan validaciones, si todo es correcto se envia información a la base de datos
  */
  async function submit(){
+    // Indicar inicio de proceso de subida del registro de video
     isLoading.value = true
+
+    // Validación de TODOS los campos del formulario
     const { valid } = await form.value.validate()
+    // Si el formulario no es válido, se cancela el proceso
     if (!valid) {
         isLoading.value = false
         return
@@ -318,10 +350,18 @@ const isLoading = ref(false)
         method: 'POST',
         body: JSON.parse(JSON.stringify(video)),
     })
-    
-    await new Promise(resolve => setTimeout(resolve, 3000)) // Simulación de 3 segundos de espera
+
+    // Si existe archivo de video, proceder a subirlo
+    if(files.video && files.video[0])
+    await uploadFile('video')
+
+    // Simulación de 3 segundos de espera
+    await new Promise(resolve => setTimeout(resolve, 3000))
+
+    // Indicar el final del proceso de subida del registro de video
     isLoading.value = false
     
+    // Concluido el proceso, reenviar a otra página
     await navigateTo('/')
 }
 </script>
