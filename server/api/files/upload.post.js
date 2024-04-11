@@ -1,14 +1,32 @@
 import formidable from 'formidable' // Biblioteca para procesamiento y subida de archivos
+import * as fs from 'fs' // Biblioteca de Node para editar y mover archivos
 
 export default defineEventHandler(async (event) => {
+    // Ubicación para almacenar archivos
+    const uploadDir = 'public/data'
+    
     // Crear instancia para parsing de datos del formulario
     const form = formidable({
-        defaultInvalidName: 'invalid',
-        uploadDir: 'uploads',
+        uploadDir: uploadDir,
         keepExtensions: true,
-        createDirsFromUploads: true,
         allowEmptyFiles: false,
-        minFileSize: 0,
+        maxFiles: 1,
+        maxFileSize: 20 * 1024 * 1024, // 20 MB
+        maxTotalFileSize: 20 * 1024 * 1024, // 20 MB
+        maxFields: 3,
+        maxFieldsSize: 5 * 1024 * 1024, // 5 MB
+        defaultInvalidName: 'invalid',
+        /**
+         * Renombramiento del archivo para conservar su nombre original
+         * @param {string} name Nombre original del archivo
+         * @param {string} ext Extensión original del archivo, inlcuye punto(.)
+         * @param {Object} part Incluye varios metadatos como originalFilename y mimetype
+         * @param {Object} form Información del formulario, incluye metadatos como bytesReceived y bytesExpected
+         * @returns {string} Nuevo nombre del archivo
+         */
+        filename: (name, ext, part, form) => {
+            return part.originalFilename
+        },
     })
 
     // Los campos definidos en el cliente (FormData)
@@ -19,14 +37,39 @@ export default defineEventHandler(async (event) => {
     // Representa un listado, pero solamente se procesa un archivo
     let files
 
-    // FormData => variables con metadatos
+    // FormData a variables
     try {
         [fields, files] = await form.parse(event.node.req)
     }
     catch(err){
-        throw createError({ statusCode: 400, statusMessage: err })
+        return createError({ statusCode: 400, statusMessage: err })
+    }
+
+    // Campos recibidos desde FormData:
+    // fields.codigoReferencia[0]
+    // fields.filetype[0]
+    
+    // Archivo recibido desde FormData y sus propiedades:
+    // files.file[0]{ size, filepath, newFilename, mimetype, mtime, originalFilename }
+
+    // Nueva ubicación para mover archivo (public/data/video, public/data/image, public/data/document)
+    const newDirPath = fields.filetype ? `${uploadDir}/${fields.filetype[0]}` : uploadDir
+
+    // Ubicación original del archivo
+    const oldPath = `${uploadDir}/${files.file[0].originalFilename}`
+    // Nueva ubicación del archivo
+    const newPath = `${newDirPath}/${files.file[0].originalFilename}`
+
+    // Mover el archivo de su ubicacion por default
+    try {
+        // Verificar que la ubicación exista, de lo contrario, crearla
+        if(!fs.existsSync(newDirPath)) fs.mkdirSync(newDirPath, {recursive: true})
+
+        fs.renameSync(oldPath, newPath)
+    } catch (err) {
+        return createError({ statusCode: 400, statusMessage: err })
     }
 
     // Notificar que la subida de archivos fue correcta
-    return JSON.stringify(files[0])
+    return {filename: files.file[0].newFilename}
 })

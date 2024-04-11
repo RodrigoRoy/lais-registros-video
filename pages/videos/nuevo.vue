@@ -154,7 +154,6 @@
                         <v-card flat>
                             <v-card-text>
                                 <v-file-input v-model="files.video" label="Archivo de video" prepend-icon="mdi-file-video-outline" :rules="formRules.clipVideo" accept="video/*" show-size chips ></v-file-input>
-                                files.video[0]: {{ files.video ? files.video[0] : '' }}
                                 <v-file-input v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
                                 <v-file-input v-model="files.document" label="Documento de calificación" prepend-icon="mdi-file-document-outline" :rules="formRules.documentoCalificacion" accept=".pdf" show-size chips ></v-file-input>
                                 <v-checkbox v-model="video.adicional.isPublic" label="El registro de video es público" ></v-checkbox>
@@ -166,7 +165,7 @@
             <div class="d-flex justify-center">
                 <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading" >Crear nuevo registro de video</v-btn>
 
-                <v-btn class="mb-8" color="secondary" variant="tonal" @click="uploadFile('video')" >Upload video</v-btn>
+                <!-- <v-btn class="mb-8" color="secondary" variant="tonal" @click="uploadFile('video')" >Upload video</v-btn> -->
             </div>
         </v-form>
     </v-card>
@@ -175,7 +174,7 @@
 <script setup>
 definePageMeta({
     middleware: [
-        // 'auth',
+        'auth',
     ]
 })
 
@@ -307,7 +306,8 @@ const isLoading = ref(false)
 /**
  * Sube un archivo del cliente al servidor.
  * El archivo a subir debe estar especificado en alguno de los <v-file-input>
- * @param {string} filetype Representa el tipo de archivo a subir ("video", "image", "document")
+ * @param {string} filetype Representa el tipo de archivo a subir ("video", "image", "document")\
+ * @returns {string} El nuevo nombre del archivo subido
  */
 async function uploadFile(filetype) {
     // Validación del parámetro "filetype"
@@ -323,10 +323,13 @@ async function uploadFile(filetype) {
     formData.append('filetype', filetype)
 
     // Petición al API para procesar la información del formulario
-    await $fetch('/api/files/upload', {
+    const {filename} = await $fetch('/api/files/upload', {
         method: 'POST',
         body: formData
     })
+
+    // Devuelve el nuevo nombre del archivo subido
+    return filename
 }
 
 /**
@@ -352,8 +355,8 @@ async function uploadFile(filetype) {
     })
 
     // Si existe archivo de video, proceder a subirlo
-    if(files.video && files.video[0])
-    await uploadFile('video')
+    // if(files.video && files.video[0])
+    // video.adicional.clipVideo.value = uploadFile('video')
 
     // Simulación de 3 segundos de espera
     await new Promise(resolve => setTimeout(resolve, 3000))
