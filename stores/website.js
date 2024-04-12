@@ -7,9 +7,6 @@ export const useWebsiteStore = defineStore('website', () => {
     // Determina si el Navigation Drawer es visible
     const isDrawerVisible = ref(false)
 
-    // Determina si el usuario tiene sesión iniciada
-    const isLoggedIn = ref(false)
-
     /**
      * Activa o desactiva la visibilidad del Navigation Drawer
      */
@@ -17,19 +14,5 @@ export const useWebsiteStore = defineStore('website', () => {
         isDrawerVisible.value = !isDrawerVisible.value
     }
 
-    /**
-     * Inicia sesión del usuario
-     */
-    function login() {
-        isLoggedIn = true
-    }
-
-    /**
-     * Cierra sesión del usuario
-     */
-    function logout() {
-        isLoggedIn = false
-    }
-
-    return { isDrawerVisible, toggleDrawer, isLoggedIn, login, logout }
+    return { isDrawerVisible, toggleDrawer }
 })
