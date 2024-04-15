@@ -1,9 +1,12 @@
 // import this after install `@mdi/font` package
 import '@mdi/font/css/materialdesignicons.css'
 
+// Theme configuration
 import 'vuetify/styles'
-import { createApp } from 'vue'
 import { createVuetify, type ThemeDefinition } from 'vuetify'
+
+// Translations provided by Vuetify
+import { es, en } from 'vuetify/locale'
 
 // Creación de temas personalizables
 const myCustomLightTheme: ThemeDefinition = {
@@ -24,12 +27,20 @@ const myCustomLightTheme: ThemeDefinition = {
 
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
+    // Temas de color
     theme: {
         defaultTheme: 'light',
         themes: {
             myCustomLightTheme,
         }
-    }
+    },
+    // Idiomas. Español (es) por default, inglés (en) como secundario
+    locale: {
+      locale: 'es',
+      fallback: 'en',
+      messages: { es, en }
+    },
   })
+  
   app.vueApp.use(vuetify)
 })
