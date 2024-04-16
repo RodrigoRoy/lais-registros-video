@@ -19,6 +19,8 @@ const auth = useAuthStore()
             <v-list-item title="Navigation drawer"></v-list-item>
             <nuxt-link to="/videos" class="text-decoration-none" ><v-list-item title="Registros de video"></v-list-item></nuxt-link>
         </v-list>
+        
+        <v-btn @click="website.toggleTheme" prepend-icon="mdi-theme-light-dark">Tema de color</v-btn>
     </v-navigation-drawer>
     
 </template>

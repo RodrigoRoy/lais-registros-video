@@ -3,7 +3,7 @@
 
 <template>
   <NuxtLayout>
-    <v-layout class="rounded rounded-md">
+    <v-app class="rounded rounded-md">
       <AppBar></AppBar>
       
       <NavigationDrawer></NavigationDrawer>
@@ -13,6 +13,6 @@
         <Footer></Footer>
       </v-main>
 
-    </v-layout>
+    </v-app>
   </NuxtLayout>
 </template>
