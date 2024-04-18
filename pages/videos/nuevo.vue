@@ -164,8 +164,6 @@
             </div>
             <div class="d-flex justify-center">
                 <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading" >Crear nuevo registro de video</v-btn>
-
-                <!-- <v-btn class="mb-8" color="secondary" variant="tonal" @click="uploadFile('video')" >Upload video</v-btn> -->
             </div>
         </v-form>
     </v-card>
@@ -256,9 +254,9 @@ const video = reactive({
         documentalista: null,
     },
     adicional: {
-        imagen: null,
-        clipVideo: null,
-        documentoCalificacion: null,
+        imagen: '',
+        clipVideo: '',
+        documentoCalificacion: '',
         isPublic: true,
     },
 })
@@ -348,23 +346,37 @@ async function uploadFile(filetype) {
         return
     }
 
+    // Si existe archivo de video, proceder a subirlo
+    if(video.identificacion.codigoReferencia && files.video && files.video[0])
+        video.adicional.clipVideo = await uploadFile('video')
+    else
+        video.adicional.clipVideo = null
+
+    // Si existe archivo de imagen, proceder a subirlo
+    if(video.identificacion.codigoReferencia && files.image && files.image[0])
+        video.adicional.imagen = await uploadFile('image')
+    else
+        video.adicional.imagen = null
+
+    // Si existe documento de texto, proceder a subirlo
+    if(video.identificacion.codigoReferencia && files.document && files.document[0])
+        video.adicional.documentoCalificacion = await uploadFile('document')
+    else
+        video.adicional.documentoCalificacion = null
+
     // newVideo es el nuevo registro en base de datos. Incluye propiedad "_id"
     const newVideo = await $fetch('/api/videos/nuevo', {
         method: 'POST',
         body: JSON.parse(JSON.stringify(video)),
     })
 
-    // Si existe archivo de video, proceder a subirlo
-    // if(files.video && files.video[0])
-    // video.adicional.clipVideo.value = uploadFile('video')
-
     // Simulación de 3 segundos de espera
-    await new Promise(resolve => setTimeout(resolve, 3000))
+    // await new Promise(resolve => setTimeout(resolve, 3000))
 
     // Indicar el final del proceso de subida del registro de video
     isLoading.value = false
     
-    // Concluido el proceso, reenviar a otra página
-    await navigateTo('/')
+    // Concluido el proceso, reenviar a página del registro de video
+    await navigateTo(`/videos/${newVideo._id}`)
 }
 </script>
