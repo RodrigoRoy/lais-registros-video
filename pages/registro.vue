@@ -22,8 +22,12 @@
                 Confirmar contraseña
             </div>
             <v-text-field v-model="passwordConfirm" :append-inner-icon="isPassVisibleConfirm ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisibleConfirm ? 'text' : 'password'" density="compact" placeholder="Confirma la contraseña" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisibleConfirm = !isPassVisibleConfirm" :rules="formRules.passwordConfirm" ></v-text-field>
-            
+
             <v-btn class="mb-8 mt-4" color="blue" size="large" variant="tonal" block type="submit" :loading="isLoading" >Registrar</v-btn>
+
+            <v-snackbar timeout="3000" :color="snackbarColor" variant="tonal" v-model="showSnackbar">
+                <p class="text-center font-weight-bold">{{ snackbarText }}</p>
+            </v-snackbar>
 
         </v-form>
 
@@ -43,6 +47,9 @@ const password = ref('') // Password (texto simple)
 const passwordConfirm = ref('') // confirmar contraseña
 
 const isLoading = ref(false) // determina si hay validaciones en curso
+const showSnackbar = ref(false) // determina si muestra el snackbar/mensaje de aviso (alerta)
+const snackbarColor = ref("success")
+const snackbarText = ref("Registro exitoso") // texto en el snackbar
 const isPassVisible = ref(false) // determina si la contraseña es visible
 const isPassVisibleConfirm = ref(false) // determina si la contraseña es visible
 
@@ -64,17 +71,29 @@ const formRules = {
         value => {
             if(/^[a-zA-Z0-9\-\.]+@.+(\.[a-zA-Z0-9\-]+)+$/gm.test(value)) return true
             return 'Escribe un correo válido'
-        }
+        }, 
     ],
     password: [
         value => {
             if (value) return true
-            return 'La contraseña es necesaria'
+            return 'La contraseña es necesaria.'
         },
         value => {
-            if (value?.length > 8) return true
+            if (value?.length >= 8) return true
             return 'La contraseña debe contener al menos 8 caracteres.'
         },  // TODO Agregrar validaciones de caracteres,numeros, mayus
+        value => {
+            if(/^.*[0-9A-Z]+.*$/gm.test(value)) return true
+            return 'La contraseña debe tener al menos un número y una letra en mayúscula.'
+        },
+        value => {
+            if(/^.*[A-Z]+.*$/gm.test(value)) return true
+            return 'La contraseña debe tener al menos una letra en mayúscula.'
+        },
+        value => {
+            if(/^.*[0-9]+.*$/gm.test(value)) return true
+            return 'La contraseña debe tener al menos un número.'
+        },
     ],
     passwordConfirm: [
         value => {
@@ -95,13 +114,12 @@ const formRules = {
  */
 async function submit(){
     isLoading.value = true // indicar el comienzo de inicio de sesión
-    await new Promise(resolve => setTimeout(resolve, 3000)) // Simulación de 3 segundos de espera
     
     try {
         const { valid } = await form.value.validate() // validaciones del formulario
         if(valid) {
             // await auth.login(usuario.value, password.value) // petición al API con datos del usuario
-            $fetch('/api/usuarios/nuevo', {
+            await $fetch('/api/usuarios/nuevo', {
                 method: 'POST',
                 body: {
                     "name": name.value,
@@ -110,11 +128,18 @@ async function submit(){
                     "password": password.value
                 }
             })
-
+            snackbarColor.value = "success"
+            snackbarText.value = "Registro exitoso"
+            showSnackbar.value = true // indicar que el registro fue exitoso
+            await new Promise(resolve => setTimeout(resolve, 3000)) // Simulación de 3 segundos de espera
             await navigateTo('/login') // ir a página de login
+            
         }
     } 
     catch (error) {
+        snackbarColor.value = "error"
+        showSnackbar.value = true
+        snackbarText.value = "Hubo un error"
         throw createError({ statusCode: 400, statusMessage: error})
     } 
     finally {
