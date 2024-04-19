@@ -1,9 +1,6 @@
-<script setup>
-</script>
-
 <template>
   <NuxtLayout>
-    <v-layout class="rounded rounded-md">
+    <v-app class="rounded rounded-md">
       <AppBar></AppBar>
       
       <NavigationDrawer></NavigationDrawer>
@@ -13,6 +10,19 @@
         <Footer></Footer>
       </v-main>
 
-    </v-layout>
+    </v-app>
   </NuxtLayout>
 </template>
+
+
+<script setup>
+// // State manager
+import { useAuthStore } from '@/stores/auth'
+const auth = useAuthStore()
+
+// Antes de montar el componente principal, establecer los datos del usuario
+// es decir, si existe un token guardado, cargar en memoria la información
+onBeforeMount(async () => {
+  await auth.setUserData()
+})
+</script>

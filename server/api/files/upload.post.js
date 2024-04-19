@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
         [fields, files] = await form.parse(event.node.req)
     }
     catch(err){
-        return createError({ statusCode: 400, statusMessage: err })
+        throw createError({ statusCode: 400, statusMessage: err })
     }
 
     // Campos recibidos desde FormData:
@@ -55,10 +55,14 @@ export default defineEventHandler(async (event) => {
     // Nueva ubicación para mover archivo (public/data/video, public/data/image, public/data/document)
     const newDirPath = fields.filetype ? `${uploadDir}/${fields.filetype[0]}` : uploadDir
 
+    // Caracteres finales después del punto (.) final. Por ejemplo: pdf, mp4, jpg
+    const fileExtension = files.file[0].originalFilename.match(/\.(.+)$/i)[1]
+
     // Ubicación original del archivo
     const oldPath = `${uploadDir}/${files.file[0].originalFilename}`
     // Nueva ubicación del archivo
-    const newPath = `${newDirPath}/${files.file[0].originalFilename}`
+    // const newPath = `${newDirPath}/${files.file[0].originalFilename}`
+    const newPath = `${newDirPath}/${fields.codigoReferencia[0]}.${fileExtension}`
 
     // Mover el archivo de su ubicacion por default
     try {
@@ -67,9 +71,9 @@ export default defineEventHandler(async (event) => {
 
         fs.renameSync(oldPath, newPath)
     } catch (err) {
-        return createError({ statusCode: 400, statusMessage: err })
+        throw createError({ statusCode: 400, statusMessage: err })
     }
 
     // Notificar que la subida de archivos fue correcta
-    return {filename: files.file[0].newFilename}
+    return {filename: `${fields.codigoReferencia[0]}.${fileExtension}`}
 })

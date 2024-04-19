@@ -3,9 +3,18 @@
  * Cumple la función de tener variables y funciones globales
  */
 
+// Biblioteca para uso de temas (color)
+import { useTheme } from 'vuetify'
+
 export const useWebsiteStore = defineStore('website', () => {
     // Determina si el Navigation Drawer es visible
     const isDrawerVisible = ref(false)
+
+    // Usar funciones para temas (color)
+    const theme = useTheme()
+
+    // Nombre del tema de color
+    const colorTheme = ref('dark')
 
     /**
      * Activa o desactiva la visibilidad del Navigation Drawer
@@ -14,5 +23,13 @@ export const useWebsiteStore = defineStore('website', () => {
         isDrawerVisible.value = !isDrawerVisible.value
     }
 
-    return { isDrawerVisible, toggleDrawer }
+    /**
+     * Cambia el tema de color (tema 'dark' a tema 'light' y vicecersa)
+     */
+    function toggleTheme() {
+        theme.global.name.value = theme.global.name.value === 'dark' ? 'light' : 'dark'
+        colorTheme.value = theme.global.name.value
+    }
+
+    return { isDrawerVisible, colorTheme, toggleDrawer, toggleTheme }
 })
