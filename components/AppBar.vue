@@ -26,9 +26,9 @@ const auth = useAuthStore()
                         </nuxt-link>
                     </v-list-item-title>
                 </v-list-item>
-                <v-list-item active="false">
+                <v-list-item>
                     <v-list-item-title>
-                        <v-btn color="primary" variant="plain" disabled>
+                        <v-btn color="primary" variant="plain">
                             Crear cuenta
                         </v-btn>
                     </v-list-item-title>
