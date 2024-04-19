@@ -14,10 +14,10 @@ export default defineEventHandler(async (event) => {
     try {
         // Decodificar token
         const user = jwt.verify(token, process.env.JWT_SECRET)
-        if (!user) return createError({ statusCode: 400, statusMessage: 'Cannot verify token'})
+        if (!user) throw createError({ statusCode: 400, statusMessage: 'Cannot verify token'})
         
         return user
     } catch (error) {
-        return createError({ statusCode: 400, statusMessage: error})
+        throw createError({ statusCode: 400, statusMessage: error})
     }    
 })

@@ -77,8 +77,13 @@ export const useAuthStore = defineStore('auth', () => {
                 token: localStorage.getItem('token')
             },
         })
-        // Detener la ejecución del código en caso de error con token
-        if(!user) return createError({statusCode:400, statusMessage: 'Cannot retrieve user info'})
+
+        // En caso de error con API, negar valores e indicar el error
+        if (!user) {
+            clearUserData()
+            isLoggedIn.value = false
+            throw createError({statusCode: 400, statusMessage: 'Token error'})
+        }
 
         // Establecer los valores del usuario a partir de la decodificación del token
         name.value = user.name ? user.name : ''
@@ -89,6 +94,9 @@ export const useAuthStore = defineStore('auth', () => {
         canUpdate.value = user.operation && user.operation.update ? user.operation.update : false
         canDelete.value = user.operation && user.operation.delete ? user.operation.delete : false
         isAdmin.value = user.admin ? user.admin : false
+
+        // Indicar que la sesión está iniciada
+        isLoggedIn.value = true
     }
 
     /**
@@ -105,6 +113,6 @@ export const useAuthStore = defineStore('auth', () => {
         isAdmin.value = null
     }
 
-    return { login, logout, isLoggedIn, name, fullname, email, canCreate, canRead, canUpdate, canDelete, isAdmin }
+    return { login, logout, setUserData, isLoggedIn, name, fullname, email, canCreate, canRead, canUpdate, canDelete, isAdmin }
     
 })
