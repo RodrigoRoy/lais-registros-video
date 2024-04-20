@@ -6,7 +6,7 @@ export const UsuarioSchema = defineMongooseModel({
     schema: {
         name: { type: 'string', required: true, maxlength: 30, trim: true, unique: true },
         fullname: { type: 'string', required: true, maxlength: 64, trim: true },
-        email: { type: 'string', required:true, trim: true, unique: true, select: false },
+        email: { type: 'string', required:true, trim: true, unique: true },
         password: {type: 'string', required: true, maxlength: 64, select: false },
         operation: {
             create: { type: 'boolean', default: false },
