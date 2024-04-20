@@ -7,7 +7,7 @@
                     <!-- <template> permite asignar variables cuando el mouse hace acción :hover -->
                     <template v-slot:default="{ isHovering, props }">
                         <!-- Cada elemento es un <v-card> que contiene información básica -->
-                        <v-card v-bind="props" :color="isHovering ? 'primary' : undefined" class="mx-auto" max-width="400">
+                        <v-card v-bind="props" :color="isHovering ? 'teal-darken-4' : undefined" class="mx-auto" max-width="400">
                             
                             <!-- incluir <v-img> hace que la imagen aparezca como encabezado -->
                             <v-img class="align-end text-white" height="200" :src="`https://picsum.photos/500/300?image=${i*5+10}`" cover>
@@ -32,7 +32,7 @@
 
                             <!-- "Cortina" para mostrar información adicional sobre el <v-card> -->
                             <v-expand-transition>
-                                <v-card v-if="revealId === i" class="v-card--reveal" style="height: 100%;">
+                                <v-card v-if="revealId === i" class="position-absolute w-100" height="100%" style="bottom: 0;">
                                     <v-card-text class="pb-0">
                                         <p class="text-h5 text--primary">
                                             {{ video.identificacion.codigoReferencia }}
@@ -62,14 +62,3 @@ const { data } = await useFetch('/api/videos')
 // Auxiliar para determinar el v-card del cual se desea ver más información
 const revealId = ref(null)
 </script>
-
-
-<style>
-/* Permite mostrar correctamente info en <v-expand-transition> */
-.v-card--reveal {
-  bottom: 0;
-  opacity: 1 !important;
-  position: absolute;
-  width: 100%;
-}
-</style>
