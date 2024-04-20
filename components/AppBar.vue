@@ -4,6 +4,18 @@ import { useWebsiteStore } from '@/stores/website'
 import { useAuthStore } from '@/stores/auth'
 const website = useWebsiteStore()
 const auth = useAuthStore()
+const showSnackbar1 = ref(false)
+const showSnackbar2 = ref(false)
+const showSnackbar3 = ref(false)
+async function cerrandoSesion(){
+    showSnackbar1.value = true
+    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
+    showSnackbar2.value = true
+    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
+    showSnackbar3.value = true
+    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
+    auth.logout()
+}
 </script>
 
 <template>
@@ -28,25 +40,32 @@ const auth = useAuthStore()
                 </v-list-item>
                 <v-list-item>
                     <v-list-item-title>
-                        <v-btn color="primary" variant="plain">
-                            Crear cuenta
-                        </v-btn>
+                        <nuxt-link to="/registro">
+                            <v-btn color="primary" variant="plain">
+                                Crear cuenta
+                            </v-btn>
+                        </nuxt-link>
                     </v-list-item-title>
                 </v-list-item>
             </v-list>
             <v-list v-else>
-                <v-list-item active="false">
+                <v-list-item>
                     <v-list-item-title>
-                        <v-btn color="primary" variant="plain" disabled>
-                            Página personal
-                        </v-btn>
+                        <nuxt-link to="/">
+                            <v-btn color="primary" variant="plain">
+                                Página personal
+                            </v-btn>
+                        </nuxt-link>
                     </v-list-item-title>
                 </v-list-item>
-                <v-list-item active="false" v-show="auth.isAdmin">
+                <!-- <v-list-item v-show="auth.isAdmin"> TODO habilitar esto -->
+                <v-list-item >
                     <v-list-item-title>
-                        <v-btn color="primary" variant="plain" disabled>
-                            Administración
-                        </v-btn>
+                        <nuxt-link to="/usuarios/all">
+                            <v-btn color="primary" variant="plain">
+                                Administración
+                            </v-btn>
+                        </nuxt-link>
                     </v-list-item-title>
                 </v-list-item>
                 <v-list-item>
@@ -61,12 +80,21 @@ const auth = useAuthStore()
                 <v-divider></v-divider>
                 <v-list-item>
                     <v-list-item-title>
-                        <v-btn color="primary" variant="plain" @click="auth.logout()">
-                            Cerrar sesión
+                        <v-btn color="primary" variant="plain" @click="cerrandoSesion()">
+                                Cerrar sesión
                         </v-btn>
                     </v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>
     </v-app-bar>
+    <v-snackbar timeout=800 color=success variant="tonal" v-model="showSnackbar1">
+        <p class="text-center font-weight-bold">Cerrando sesión.</p>
+    </v-snackbar>
+    <v-snackbar timeout=800 color=success variant="tonal" v-model="showSnackbar2">
+        <p class="text-center font-weight-bold">Cerrando sesión..</p>
+    </v-snackbar>
+    <v-snackbar timeout=800 color=success variant="tonal" v-model="showSnackbar3">
+        <p class="text-center font-weight-bold">Cerrando sesión...</p>
+    </v-snackbar>
 </template>

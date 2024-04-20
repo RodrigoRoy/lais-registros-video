@@ -15,8 +15,12 @@
 
             <v-btn class="mb-8" color="blue" size="large" variant="tonal" block type="submit" :loading="isLoading" >Iniciar sesión</v-btn>
 
+            <v-snackbar timeout="3000" color=error variant="tonal" v-model="showSnackbar">
+                <p class="text-center font-weight-bold">Error al iniciar sesión</p>
+            </v-snackbar>
+
             <v-card-text class="text-center">
-                <nuxt-link class="text-blue text-decoration-none" >Crear cuenta <v-icon icon="mdi-chevron-right"></v-icon> </nuxt-link>
+                <nuxt-link class="text-blue text-decoration-none" to="/registro">Crear cuenta <v-icon icon="mdi-chevron-right"></v-icon> </nuxt-link>
             </v-card-text>
         </v-form>
 
@@ -34,6 +38,7 @@ const password = ref('') // Password (texto simple)
 
 const isLoading = ref(false) // determina si hay validaciones en curso
 const isPassVisible = ref(false) // determina si la contraseña es visible
+const showSnackbar = ref(false) // determina si muestra el snackbar/mensaje de aviso (alerta)
 
 // Conjunto de reglas de validación para todos los campos del formulario
 const formRules = {
@@ -67,16 +72,21 @@ const formRules = {
  */
 async function submit(){
     isLoading.value = true // indicar el comienzo de inicio de sesión
-    await new Promise(resolve => setTimeout(resolve, 3000)) // Simulación de 3 segundos de espera
+    await new Promise(resolve => setTimeout(resolve, 2500)) // Simulación de 3 segundos de espera
     
     try {
         const { valid } = await form.value.validate() // validaciones del formulario
         if(valid) {
             await auth.login(usuario.value, password.value) // petición al API con datos del usuario
             await navigateTo('/') // ir a página de inicio
+            showSnackbar.value = false
+        }
+        else{
+            showSnackbar.value = true // no pudo iniciar sesión
         }
     } 
     catch (error) {
+        showSnackbar.value = true // no pudo iniciar sesión
         throw createError({ statusCode: 400, statusMessage: error})
     } 
     finally {
