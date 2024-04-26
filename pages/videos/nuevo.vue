@@ -145,7 +145,7 @@
                     <v-window-item value="controlDescripcion">
                         <v-card flat>
                             <v-card-text>
-                                <v-text-field v-model="video.controlDescripcion.documentalista" label="Documentalista" variant="underlined" readonly ></v-text-field>
+                                <v-text-field v-model="auth.fullname" label="Documentalista" variant="underlined" readonly ></v-text-field>
                                 <v-text-field v-model="today" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
                             </v-card-text>
                         </v-card>
@@ -256,7 +256,7 @@ const video = reactive({
         notas: null,
     },
     controlDescripcion: {
-        documentalista: auth?.fullname || null,
+        documentalista: auth?.id || null,
     },
     adicional: {
         imagen: '',

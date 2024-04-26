@@ -10,7 +10,7 @@
                         <v-card v-bind="props" :color="isHovering ? 'teal-darken-4' : undefined" class="mx-auto" max-width="400">
                             
                             <!-- incluir <v-img> hace que la imagen aparezca como encabezado -->
-                            <v-img class="align-end text-white" height="200" :src="`https://picsum.photos/500/300?image=${i*5+10}`" cover>
+                            <v-img class="align-end text-white" height="200" :src="`/data/image/${video.adicional.imagen}`" cover>
                             </v-img>
 
                             <!-- No hay <v-card-title> porque quedaría sobre la imagen -->
@@ -21,7 +21,7 @@
 
                             <!-- Resto del texto básico -->
                             <v-card-text>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas sed enim ut sem viverra aliquet. Donec et odio pellentesque diam.</p>
+                                <p>{{ video.contenidoEstructura.descripcionGeneral }}</p>
                             </v-card-text>
 
                             <!-- Acciones / botones para mostrar más información o redirigir a otra página -->
@@ -38,7 +38,7 @@
                                             {{ video.identificacion.codigoReferencia }}
                                         </p>
                                         <p class="text--primary">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas sed enim ut sem viverra aliquet. Donec et odio pellentesque diam.
+                                            <p>{{ video.contenidoEstructura.descripcionGeneral }}</p>
                                         </p>
                                     </v-card-text>
                                     <v-card-actions class="pt-0">

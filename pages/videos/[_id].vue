@@ -117,8 +117,10 @@
             <v-col cols="4" align="center" >
                 <v-sheet class="pa-2 ma-2" >
                         <v-card  class=" mx-auto bg-light-green-lighten-4" elevation="12" height="auto" width="auto" >
-                            <v-img src="https://picsum.photos/300/200" height="auto" width="auto"></v-img>
-                            <v-img :src="testImage" height="auto" width="auto"></v-img>
+                            <v-img :src="`/data/image/${video.adicional.imagen}`" height="auto" width="auto"></v-img>
+                            <video controls width="100%" height="auto" >
+                                <source :src="`/data/video/${video.adicional.clipVideo}`" />
+                            </video>
                             <v-btn class="text-none" variant="outlined" size="small" rounded="xl">Documento de calificación</v-btn>
                             <br>
                             <v-btn class="text-none mt-3" variant="outlined" size="small" rounded="xl">Descargar PDF</v-btn>

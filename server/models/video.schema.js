@@ -44,7 +44,7 @@ export const VideoSchema = defineMongooseModel({
             notas: {type: 'string', trim: true},
         },
         controlDescripcion: {
-            documentalista: [{type: Types.ObjectId, ref: 'Usuario'}],
+            documentalista: {type: Types.ObjectId, ref: 'Usuario'},
         },
         adicional: {
             imagen: {type: 'string', trim: true}, // referencia a la portada
