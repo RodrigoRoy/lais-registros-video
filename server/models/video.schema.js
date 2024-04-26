@@ -1,7 +1,10 @@
 import { defineMongooseModel } from '#nuxt/mongoose'
+import { Types } from 'mongoose'
 
+// Definición del modelo para representar un registro de video (unidad documental)
 export const VideoSchema = defineMongooseModel({
     name: 'Video',
+
     schema: {
         identificacion: {
             codigoReferencia: {type: 'string', required: true, trim: true, unique: true },
@@ -41,29 +44,34 @@ export const VideoSchema = defineMongooseModel({
             notas: {type: 'string', trim: true},
         },
         controlDescripcion: {
-            documentalista: {type: 'string', trim: true},
+            documentalista: [{type: Types.ObjectId, ref: 'Usuario'}],
         },
         adicional: {
-            imagen: {type: 'string', trim: true},
-            clipVideo: {type: 'string', trim: true},
-            documentoCalificacion: {type: 'string', trim: true},
-            isPublic: {type: 'boolean', default: true},
-            location: {
+            imagen: {type: 'string', trim: true}, // referencia a la portada
+            clipVideo: {type: 'string', trim: true}, // referencia al clip de video
+            documentoCalificacion: {type: 'string', trim: true}, // referencia al pdf
+            isPublic: {type: 'boolean', default: true}, // define si el registro es público
+            location: { // geolocalización
                 lat: {type: 'number'},
                 lng: {type: 'number'},
             }
         },
     },
     
+    // Opciones adicionales del modelo
     options: {
-        timestamps: true, // enable 'createdAt', 'updatedAt'
-        collection: 'videos'
-    },
-    
-    hooks(schema) {
-        schema.virtual('duracionString').get(function(){
-            if(!this.duracion) return ''
-            return `${this.duracion} s`
-        })
-    }
+        // Habilita propiedades 'createdAt' (fecha de creación) y 'updatedAt' (fecha de última modificación)
+        timestamps: true,
+        // Nombre en la base de datos (por convención se pluraliza)
+        collection: 'videos',
+        // Propiedades generadas a partir de otras
+        virtuals: {
+            // Representación textual de la duración en segundos
+            duracionString: {
+                get() {
+                    return this.identificacion.duracion ? `${this.identificacion.duracion} s` : ''
+                }
+            }
+        },
+    },  
 })
