@@ -69,7 +69,7 @@ const formRules = {
     ],
     email: [
         value => {
-            if(/^[a-zA-Z0-9\-\.]+@.+(\.[a-zA-Z0-9\-]+)+$/gm.test(value)) return true
+            if(/^[a-zA-Z0-9\-\_\.]+@.+(\.[a-zA-Z0-9\-]+)+$/gm.test(value)) return true
             return 'Escribe un correo válido'
         }, 
     ],
@@ -132,7 +132,9 @@ async function submit(){
             snackbarText.value = "Registro exitoso"
             showSnackbar.value = true // indicar que el registro fue exitoso
             await new Promise(resolve => setTimeout(resolve, 3000)) // Simulación de 3 segundos de espera
-            await navigateTo('/login') // ir a página de login
+
+            await auth.login(name.value, password.value)
+            await navigateTo('/') // ir a página inicial con sesión iniciada
             
         }
     } 

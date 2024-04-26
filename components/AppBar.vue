@@ -4,16 +4,24 @@ import { useWebsiteStore } from '@/stores/website'
 import { useAuthStore } from '@/stores/auth'
 const website = useWebsiteStore()
 const auth = useAuthStore()
+
+// auxiliar para mostrar mensaje en pantalla
 const showSnackbar1 = ref(false)
 const showSnackbar2 = ref(false)
 const showSnackbar3 = ref(false)
-async function cerrandoSesion(){
+
+/**
+ * Cierra sesión del usuario activo
+ */
+async function cerrarSesion(){
+    // Estrategia para animar mensaje de cierre de sesión:
     showSnackbar1.value = true
     await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
     showSnackbar2.value = true
     await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
     showSnackbar3.value = true
     await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
+    
     auth.logout()
 }
 </script>
@@ -29,7 +37,7 @@ async function cerrandoSesion(){
         <!-- Vista alternativa con botones para iniciar y cerrar sesión -->
         <!-- <template v-slot:append>
             <v-btn v-if="!auth.isLoggedIn" append-icon="mdi-login" variant="tonal">Entrar</v-btn>
-            <v-btn v-if="auth.isLoggedIn" append-icon="mdi-logout" variant="tonal" @click="cerrandoSesion()">Salir</v-btn>
+            <v-btn v-if="auth.isLoggedIn" append-icon="mdi-logout" variant="tonal" @click="cerrarSesion()">Salir</v-btn>
         </template> -->
         
         <v-menu>
@@ -59,7 +67,7 @@ async function cerrandoSesion(){
             <v-list v-else>
                 <v-list-item>
                     <v-list-item-title>
-                        <v-btn color="primary" variant="plain" append-icon="mdi-logout" @click="cerrandoSesion()">
+                        <v-btn color="primary" variant="plain" append-icon="mdi-logout" @click="cerrarSesion()">
                                 Cerrar sesión
                         </v-btn>
                     </v-list-item-title>

@@ -63,7 +63,7 @@ export const useAuthStore = defineStore('auth', () => {
         isLoggedIn.value = false
         
         // Ir a página de inicio
-        await navigateTo('/login')
+        await navigateTo('/')
     }
 
     /**
