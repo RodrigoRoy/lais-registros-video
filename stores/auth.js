@@ -7,6 +7,7 @@ export const useAuthStore = defineStore('auth', () => {
     const isLoggedIn = ref(false)
 
     // Información del usuario
+    const id = ref(null)
     const name = ref(null)
     const fullname = ref(null)
     const email = ref(null)
@@ -86,6 +87,7 @@ export const useAuthStore = defineStore('auth', () => {
         }
 
         // Establecer los valores del usuario a partir de la decodificación del token
+        id.value = user._id ? user._id : ''
         name.value = user.name ? user.name : ''
         fullname.value = user.fullname ? user.fullname : ''
         email.value = user.email ? user.email : ''
@@ -103,6 +105,7 @@ export const useAuthStore = defineStore('auth', () => {
      * Establece los valores predeterminados de la información del usuario
      */
     function clearUserData() {
+        id.value = null
         name.value = null
         fullname.value = null
         email.value = null
@@ -113,6 +116,6 @@ export const useAuthStore = defineStore('auth', () => {
         isAdmin.value = null
     }
 
-    return { login, logout, setUserData, isLoggedIn, name, fullname, email, canCreate, canRead, canUpdate, canDelete, isAdmin }
+    return { login, logout, setUserData, isLoggedIn, id, name, fullname, email, canCreate, canRead, canUpdate, canDelete, isAdmin }
     
 })

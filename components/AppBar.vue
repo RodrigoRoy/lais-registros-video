@@ -23,7 +23,15 @@ async function cerrandoSesion(){
         <template v-slot:prepend>
             <v-app-bar-nav-icon @click.stop="website.toggleDrawer()"></v-app-bar-nav-icon>
         </template>
+        
         <v-app-bar-title>Registros en video</v-app-bar-title>
+
+        <!-- Vista alternativa con botones para iniciar y cerrar sesión -->
+        <!-- <template v-slot:append>
+            <v-btn v-if="!auth.isLoggedIn" append-icon="mdi-login" variant="tonal">Entrar</v-btn>
+            <v-btn v-if="auth.isLoggedIn" append-icon="mdi-logout" variant="tonal" @click="cerrandoSesion()">Salir</v-btn>
+        </template> -->
+        
         <v-menu>
             <template v-slot:activator="{ props }">
                 <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
@@ -32,7 +40,7 @@ async function cerrandoSesion(){
                 <v-list-item>
                     <v-list-item-title>
                         <nuxt-link to="/login">
-                            <v-btn color="primary" variant="plain">
+                            <v-btn color="primary" variant="plain" append-icon="mdi-login" >
                                 Iniciar sesión
                             </v-btn>
                         </nuxt-link>
@@ -41,7 +49,7 @@ async function cerrandoSesion(){
                 <v-list-item>
                     <v-list-item-title>
                         <nuxt-link to="/registro">
-                            <v-btn color="primary" variant="plain">
+                            <v-btn color="primary" variant="plain" append-icon="mdi-account-plus" >
                                 Crear cuenta
                             </v-btn>
                         </nuxt-link>
@@ -51,36 +59,7 @@ async function cerrandoSesion(){
             <v-list v-else>
                 <v-list-item>
                     <v-list-item-title>
-                        <nuxt-link to="/">
-                            <v-btn color="primary" variant="plain">
-                                Página personal
-                            </v-btn>
-                        </nuxt-link>
-                    </v-list-item-title>
-                </v-list-item>
-                <!-- <v-list-item v-show="auth.isAdmin"> TODO habilitar esto -->
-                <v-list-item >
-                    <v-list-item-title>
-                        <nuxt-link to="/usuarios/all">
-                            <v-btn color="primary" variant="plain">
-                                Administración
-                            </v-btn>
-                        </nuxt-link>
-                    </v-list-item-title>
-                </v-list-item>
-                <v-list-item>
-                    <v-list-item-title>
-                        <nuxt-link to="/videos/nuevo">
-                            <v-btn color="primary" variant="plain">
-                                Nuevo registro
-                            </v-btn>
-                        </nuxt-link>
-                    </v-list-item-title>
-                </v-list-item>
-                <v-divider></v-divider>
-                <v-list-item>
-                    <v-list-item-title>
-                        <v-btn color="primary" variant="plain" @click="cerrandoSesion()">
+                        <v-btn color="primary" variant="plain" append-icon="mdi-logout" @click="cerrandoSesion()">
                                 Cerrar sesión
                         </v-btn>
                     </v-list-item-title>
