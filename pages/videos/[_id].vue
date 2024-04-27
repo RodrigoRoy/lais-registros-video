@@ -7,111 +7,49 @@
             {{ video.identificacion.codigoReferencia }}
         </h1>
     </div>
-
+    
     <v-container>
         <v-row no-gutters>
             <v-col align-self="start">
                 <v-sheet class="pa-2 ma-2">
                     
                     <v-card  class=" mx-auto" elevation="12" height="auto" max-width="auto">
-                        <div class="d-flex flex-row">
-                            <v-tabs class="py-6 text-caption" v-model="tab" direction="vertical" bg-color="light-green-lighten-4">
-                                    <v-tab value="identificacion">
-                                        <v-icon start>
-                                            mdi-file-edit
-                                        </v-icon>
-                                        Área de identificación
-                                    </v-tab>
-                                    <v-tab value="contenidoEstructura">
-                                        <v-icon start>
-                                            mdi-image-text
-                                        </v-icon>
-                                        Área de contenido y estructura
-                                    </v-tab>
-                                    <v-tab value="condicionesAccesoUso">
-                                        <v-icon start>
-                                            mdi-video-input-component
-                                        </v-icon>
-                                        Área de acceso y uso
-                                    </v-tab>
-                                    <v-tab value="documentacionAsociada">
-                                        <v-icon start>
-                                            mdi-vector-link
-                                        </v-icon>
-                                        Área de documentación asociada
-                                    </v-tab>
-                                    <v-tab value="notas">
-                                        <v-icon start>
-                                            mdi-note
-                                        </v-icon>
-                                        Área de notas
-                                    </v-tab>
-                                    <v-tab value="controlDescripcion">
-                                        <v-icon start>
-                                            mdi-account
-                                        </v-icon>
-                                        Área de control de la descripción
-                                    </v-tab>
-                            </v-tabs>
-                            <v-window v-model="tab" class="px-4">
-                                <v-window-item value="identificacion">
-                                    <v-card flat>
-                                        <v-card-text>
-                                            <p>
-                                                {{ video.identificacion || 'Área de identificación' }}
-                                            </p>
-                                        </v-card-text>
-                                    </v-card>
-                                </v-window-item>
-                                <v-window-item value="contenidoEstructura">
-                                    <v-card flat>
-                                        <v-card-text>
-                                            <p>
-                                                {{ video.contenidoEstructura || 'Área de contenido y estructura' }}
-                                            </p>
-                                        </v-card-text>
-                                    </v-card>
-                                </v-window-item>
-                                <v-window-item value="condicionesAccesoUso">
-                                    <v-card flat>
-                                        <v-card-text>
-                                            <p>
-                                                {{ video.condicionesAccesoUso || 'Área de condiciones de acceso y uso' }}
-                                            </p>
-                                        </v-card-text>
-                                    </v-card>
-                                </v-window-item>
-                                <v-window-item value="documentacionAsociada">
-                                    <v-card flat>
-                                        <v-card-text>
-                                            <p>
-                                                {{ video.documentacionAsociada || 'Área de documentación asociada' }}
-                                            </p>
-                                        </v-card-text>
-                                    </v-card>
-                                </v-window-item>
-                                <v-window-item value="notas">
-                                    <v-card flat>
-                                        <v-card-text>
-                                            <p>
-                                                {{ video.notas || 'Área de notas' }}
-                                            </p>
-                                        </v-card-text>
-                                    </v-card>
-                                </v-window-item>
-                                <v-window-item value="controlDescripcion">
-                                    <v-card flat>
-                                        <v-card-text>
-                                            <p>
-                                                {{ video.controlDescripcion || 'Área de control de la descripción' }}
-                                            </p>
-                                        </v-card-text>
-                                    </v-card>
-                                </v-window-item>
-                            </v-window>
+                        <!-- server/models/video.schema.js -->
+                        <div v-if="video.identificacion">
+                            <div>
+                                <p class="text-h6">Área de identificación</p>
+                            </div>
+                            <div v-if="video.identificacion?.codigoReferencia">
+                                <p class="text-body-1">Código de referencia</p>
+                                <p class="text-body-2">{{ video.identificacion.codigoReferencia }}</p>
+                            </div>
+                            <div v-if="video.identificacion?.fecha">
+                                <p class="text-body-1">Fecha</p>
+                                <p class="text-body-2">{{ video.identificacion.fecha }}</p>
+                            </div>
+                            <div v-if="video.identificacion?.lugar">
+                                <p class="text-body-1">Lugar</p>
+                                <p class="text-body-2">{{ video.identificacion.lugar }}</p>
+                            </div>
                         </div>
+
+                        <div v-if="video.contenidoEstructura">
+                            <div>
+                                <p class="text-h6">Área de contenido y estructura</p>
+                            </div>
+                            <div v-if="video.contenidoEstructura?.descripcionGeneral">
+                                <p class="text-body-1">Descripción general</p>
+                                <p class="text-body-2">{{ video.contenidoEstructura.descripcionGeneral }}</p>
+                            </div>
+                            <div v-if="video.contenidoEstructura?.estructuraFormal">
+                                <p class="text-body-1">Estructura formal</p>
+                                <p class="text-body-2">{{ video.contenidoEstructura.estructuraFormal }}</p>
+                            </div>
+                        </div>
+
                     </v-card>
                 </v-sheet>
+                {{ video }}
             </v-col>
 
             <v-col cols="4" align="center" >

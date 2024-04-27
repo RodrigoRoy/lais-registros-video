@@ -1,5 +1,5 @@
 <template>
-    <v-container class="bg-surface-variant">
+    <v-container>
         <v-row>
             <!-- Mostrar cuadricula de elementos. Se usa nomenclatura (element, index) para generar numeración -->
             <v-col v-for="(video, i) in data" :key="video._id" class="d-flex child-flex" cols="12" sm="4">
