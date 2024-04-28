@@ -2,47 +2,73 @@
     <v-container>
         <v-row>
             <!-- Mostrar cuadricula de elementos. Se usa nomenclatura (element, index) para generar numeración -->
-            <v-col v-for="(video, i) in data" :key="video._id" class="d-flex child-flex" cols="12" sm="4">
+            <v-col v-for="(video, i) in data" :key="video._id" class="d-flex child-flex" cols="12" sm="6" md="4" lg="3" xl="3">
                 <v-hover>
-                    <!-- <template> permite asignar variables cuando el mouse hace acción :hover -->
+                    <!-- Interacción de fondo de color cuando el mouse hace acción :hover -->
                     <template v-slot:default="{ isHovering, props }">
-                        <!-- Cada elemento es un <v-card> que contiene información básica -->
-                        <v-card v-bind="props" :color="isHovering ? 'teal-darken-4' : undefined" class="mx-auto" max-width="400">
+                        <!-- Cada elemento es un v-card, al dar clic se navega a su página -->
+                        <v-card :title="video.identificacion.codigoReferencia" v-bind="props" :color="isHovering ? 'teal-darken-4' : undefined" class="mx-auto" max-width="400" link @click="navigateTo(`/videos/${video._id}`)">
                             
-                            <!-- incluir <v-img> hace que la imagen aparezca como encabezado -->
-                            <v-img class="align-end text-white" height="200" :src="`/data/image/${video.adicional.imagen}`" cover>
-                            </v-img>
+                            <!-- Menu para edición y borrado (requiere permisos) -->
+                            <template v-slot:append v-if="auth.isLoggedIn && (auth.canUpdate || auth.canDelete)">
+                                <v-menu transition="slide-y-transition">
+                                    <template v-slot:activator="{ props }">
+                                        <v-btn v-bind="props" icon="mdi-dots-horizontal" variant="plain"></v-btn>
+                                    </template>
+                                    <!-- Lista de acciones para administración -->
+                                    <v-list>
+                                        <nuxt-link v-if="true" class="text-decoration-none"><v-list-item>Editar</v-list-item></nuxt-link>
+                                        <nuxt-link v-if="true" class="text-decoration-none"><v-list-item>Borrar</v-list-item></nuxt-link>
+                                    </v-list>
+                                </v-menu>
+                            </template>
+                            
+                            <!-- incluir una imagen hace que aparezca como encabezado -->
+                            <nuxt-img class="align-center text-white" height="250" :src="`/data/image/${video.adicional.imagen}`" placeholder fit="cover" />
 
-                            <!-- No hay <v-card-title> porque quedaría sobre la imagen -->
+                            <!-- Subtítulo (fecha) -->
                             <v-card-subtitle class="pt-4">
-                                <p>{{ video.identificacion.codigoReferencia }}</p>
-                                <p>{{ video.identificacion.fecha }}</p>
+                                <p>
+                                    <v-icon icon="mdi-calendar-blank" size="x-small"></v-icon>
+                                    {{ video.identificacion.fecha }}
+                                </p>
                             </v-card-subtitle>
 
-                            <!-- Resto del texto básico -->
+                            <!-- Resto del texto (descripción a una línea) -->
                             <v-card-text>
-                                <p>{{ video.contenidoEstructura.descripcionGeneral }}</p>
+                                <p class="text-truncate">{{ video.contenidoEstructura.descripcionGeneral }}</p>
                             </v-card-text>
 
-                            <!-- Acciones / botones para mostrar más información o redirigir a otra página -->
+                            <!-- Acciones / botón para mostrar más información -->
                             <v-card-actions>
-                                <v-btn color="secondary" variant="text" @click="revealId = i">Detalles</v-btn>
-                                <nuxt-link :to="`/videos/${video._id}`"><v-btn color="secondary" variant="text" class="text-decoration-none">Ver registro</v-btn></nuxt-link>
+                                <v-spacer></v-spacer>
+                                <v-btn color="secondary" icon="mdi-chevron-up" @click.prevent.stop="revealId = i"></v-btn>
                             </v-card-actions>
 
-                            <!-- "Cortina" para mostrar información adicional sobre el <v-card> -->
-                            <v-expand-transition>
+                            <!-- "Cortina" para mostrar información adicional -->
+                            <v-expand-transition @click.prevent.stop>
                                 <v-card v-if="revealId === i" class="position-absolute w-100" height="100%" style="bottom: 0;">
                                     <v-card-text class="pb-0">
-                                        <p class="text-h5 text--primary">
+                                        <p class="text-caption text--primary">
                                             {{ video.identificacion.codigoReferencia }}
+                                        </p>
+                                        <p class="text-body-2">
+                                            <v-icon icon="mdi-map-marker" size="x-small"></v-icon>
+                                            <span v-if="video.identificacion.pais">{{ video.identificacion.pais }}</span>
+                                            <span v-if="video.identificacion.pais && video.identificacion.lugar">, </span>
+                                            <span v-if="video.identificacion.lugar">{{ video.identificacion.lugar }}</span>
+                                        </p>
+                                        <p class="text-body-2">
+                                            <v-icon icon="mdi-microphone-variant" size="x-small"></v-icon>
+                                            {{ video.identificacion.personasEntrevistadas }}
                                         </p>
                                         <p class="text--primary">
                                             <p>{{ video.contenidoEstructura.descripcionGeneral }}</p>
                                         </p>
                                     </v-card-text>
                                     <v-card-actions class="pt-0">
-                                        <v-btn color="teal-accent-4" variant="text" @click="revealId = null">Close</v-btn>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="teal-accent-4" icon="mdi-chevron-down" @click.prevent.stop="revealId = null"></v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-expand-transition>
@@ -56,6 +82,10 @@
 
 
 <script setup>
+// State manager
+import { useAuthStore } from '@/stores/auth'
+const auth = useAuthStore()
+
 // Obtener información de la base de datos
 const { data } = await useFetch('/api/videos')
 

@@ -10,7 +10,7 @@ const auth = useAuthStore()
     
     <v-navigation-drawer v-model="website.isDrawerVisible" temporary>
         <v-list v-show="auth.isLoggedIn">
-            <nuxt-link :to="`/usuarios/${auth.id}`" class="text-decoration-none"><v-list-item :title="auth.fullname" :subtitle="auth.email" prepend-icon="mdi-account"</v-list-item></nuxt-link>
+            <nuxt-link :to="`/usuarios/${auth.id}`" class="text-decoration-none"><v-list-item :title="auth.fullname" :subtitle="auth.email" prepend-icon="mdi-account"></v-list-item></nuxt-link>
         </v-list>
         
         <v-divider></v-divider>

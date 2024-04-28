@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     'nuxt-mongoose', // manejador de base de datos MongoDB (mongoose)
     '@pinia/nuxt', // state manager (pinia)
     '@vueuse/nuxt', // essential utilities (like useStorage)
+    '@nuxt/image', // image optimization
   ],
   vite: {
     vue: {
@@ -34,5 +35,10 @@ export default defineNuxtConfig({
     },
     modelsDir: 'models', // ubicación de los modelos
     devtools: process.env.NODE_ENV === 'development',
-  }
+  },
+  image: {
+    // options
+    format: ['webp', 'jpg'],
+    quality: 80,
+  },
 })

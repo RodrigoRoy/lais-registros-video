@@ -42,7 +42,7 @@ async function cerrarSesion(){
         
         <v-menu>
             <template v-slot:activator="{ props }">
-                <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+                <v-btn icon="mdi-dots-horizontal-circle-outline" v-bind="props"></v-btn>
             </template>
             <v-list v-if="!auth.isLoggedIn">
                 <v-list-item>
