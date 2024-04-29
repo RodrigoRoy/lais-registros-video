@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt', // state manager (pinia)
     '@vueuse/nuxt', // essential utilities (like useStorage)
     '@nuxt/image', // image optimization
+    'dayjs-nuxt', // Parse, validate, manipulate, and display dates and times
   ],
   vite: {
     vue: {
@@ -40,5 +41,9 @@ export default defineNuxtConfig({
     // options
     format: ['webp', 'jpg'],
     quality: 80,
+  },
+  dayjs: {
+    locales: ['es', 'en'],
+    defaultLocale: 'es',
   },
 })

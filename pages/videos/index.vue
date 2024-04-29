@@ -30,13 +30,13 @@
                             <v-card-subtitle class="pt-4">
                                 <p>
                                     <v-icon icon="mdi-calendar-blank" size="x-small"></v-icon>
-                                    {{ video.identificacion.fecha }}
+                                    {{ $dayjs(video.identificacion.fecha).format('DD/MM/YYYY') }}
                                 </p>
                             </v-card-subtitle>
 
                             <!-- Resto del texto (descripción a una línea) -->
                             <v-card-text>
-                                <p class="text-truncate">{{ video.contenidoEstructura.descripcionGeneral }}</p>
+                                <p class="text-truncate">{{ video.contenidoEstructura.descripcionGeneral || 'Sin descripcion'}}</p>
                             </v-card-text>
 
                             <!-- Acciones / botón para mostrar más información -->
@@ -52,18 +52,18 @@
                                         <p class="text-caption text--primary">
                                             {{ video.identificacion.codigoReferencia }}
                                         </p>
-                                        <p class="text-body-2">
+                                        <p v-if="video.identifacion?.pais || video.identificacion?.lugar" class="text-body-2">
                                             <v-icon icon="mdi-map-marker" size="x-small"></v-icon>
                                             <span v-if="video.identificacion.pais">{{ video.identificacion.pais }}</span>
                                             <span v-if="video.identificacion.pais && video.identificacion.lugar">, </span>
                                             <span v-if="video.identificacion.lugar">{{ video.identificacion.lugar }}</span>
                                         </p>
-                                        <p class="text-body-2">
+                                        <p v-if="video.identificacion?.personasEntrevistadas" class="text-body-2">
                                             <v-icon icon="mdi-microphone-variant" size="x-small"></v-icon>
                                             {{ video.identificacion.personasEntrevistadas }}
                                         </p>
                                         <p class="text--primary">
-                                            <p>{{ video.contenidoEstructura.descripcionGeneral }}</p>
+                                            <p>{{ video.contenidoEstructura.descripcionGeneral || '(Sin descripción)' }}</p>
                                         </p>
                                     </v-card-text>
                                     <v-card-actions class="pt-0">

@@ -1,38 +1,10 @@
-<script setup>
-// State manager
-import { useWebsiteStore } from '@/stores/website'
-import { useAuthStore } from '@/stores/auth'
-const website = useWebsiteStore()
-const auth = useAuthStore()
-
-// auxiliar para mostrar mensaje en pantalla
-const showSnackbar1 = ref(false)
-const showSnackbar2 = ref(false)
-const showSnackbar3 = ref(false)
-
-/**
- * Cierra sesión del usuario activo
- */
-async function cerrarSesion(){
-    // Estrategia para animar mensaje de cierre de sesión:
-    showSnackbar1.value = true
-    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
-    showSnackbar2.value = true
-    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
-    showSnackbar3.value = true
-    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
-    
-    auth.logout()
-}
-</script>
-
 <template>
     <v-app-bar elevation="4" rounded>
         <template v-slot:prepend>
             <v-app-bar-nav-icon @click.stop="website.toggleDrawer()"></v-app-bar-nav-icon>
         </template>
         
-        <v-app-bar-title>Registros en video</v-app-bar-title>
+        <v-app-bar-title><nuxt-link to="/" class="text-decoration-none text--primary">Registros en video</nuxt-link></v-app-bar-title>
 
         <!-- Vista alternativa con botones para iniciar y cerrar sesión -->
         <!-- <template v-slot:append>
@@ -85,3 +57,31 @@ async function cerrarSesion(){
         <p class="text-center font-weight-bold">Cerrando sesión...</p>
     </v-snackbar>
 </template>
+
+<script setup>
+// State manager
+import { useWebsiteStore } from '@/stores/website'
+import { useAuthStore } from '@/stores/auth'
+const website = useWebsiteStore()
+const auth = useAuthStore()
+
+// auxiliar para mostrar mensaje en pantalla
+const showSnackbar1 = ref(false)
+const showSnackbar2 = ref(false)
+const showSnackbar3 = ref(false)
+
+/**
+ * Cierra sesión del usuario activo
+ */
+async function cerrarSesion(){
+    // Estrategia para animar mensaje de cierre de sesión:
+    showSnackbar1.value = true
+    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
+    showSnackbar2.value = true
+    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
+    showSnackbar3.value = true
+    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
+    
+    auth.logout()
+}
+</script>

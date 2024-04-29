@@ -1,11 +1,3 @@
-<script setup>
-// State manager
-import { useWebsiteStore } from '@/stores/website'
-import { useAuthStore } from '@/stores/auth'
-const website = useWebsiteStore()
-const auth = useAuthStore()
-</script>
-
 <template>
     
     <v-navigation-drawer v-model="website.isDrawerVisible" temporary>
@@ -32,3 +24,11 @@ const auth = useAuthStore()
     </v-navigation-drawer>
     
 </template>
+
+<script setup>
+// State manager
+import { useWebsiteStore } from '@/stores/website'
+import { useAuthStore } from '@/stores/auth'
+const website = useWebsiteStore()
+const auth = useAuthStore()
+</script>
