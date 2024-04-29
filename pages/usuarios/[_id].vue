@@ -50,7 +50,7 @@ const userVideosList = await $fetch(`/api/videos/user/${route.params._id}`)
 const dataTableHeaders = [
     {title: 'Código de referencia', value: 'identificacion.codigoReferencia'},
     {title: 'Fecha del registro', key: 'fechaString', value: item => dayjs(item.identificacion.fecha).format('DD/MM/YYYY')},
-    {title: 'Duración', key: 'duracionString', value: item => `${item.identificacion.duracion} s`},
+    {title: 'Duración', key: 'duracionString', value: item => minutesToHour(item.identificacion.duracion)},
     {title: 'Fecha de creación', key: 'creacionString', value: item => dayjs(item.createdAt).format('DD/MM/YYYY HH:mm')},
 ]
 </script>
