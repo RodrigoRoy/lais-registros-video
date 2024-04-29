@@ -17,12 +17,15 @@
 
 <script setup>
 // // State manager
+import { useWebsiteStore } from '@/stores/website'
 import { useAuthStore } from '@/stores/auth'
+const website = useWebsiteStore()
 const auth = useAuthStore()
 
 // Antes de montar el componente principal, establecer los datos del usuario
 // es decir, si existe un token guardado, cargar en memoria la información
 onBeforeMount(async () => {
   await auth.setUserData()
+  website.setValues()
 })
 </script>

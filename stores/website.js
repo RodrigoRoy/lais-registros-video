@@ -29,7 +29,18 @@ export const useWebsiteStore = defineStore('website', () => {
     function toggleTheme() {
         theme.global.name.value = theme.global.name.value === 'dark' ? 'light' : 'dark'
         colorTheme.value = theme.global.name.value
+        // Guardar tema en memoria
+        localStorage.setItem('theme', colorTheme.value)
     }
 
-    return { isDrawerVisible, colorTheme, toggleDrawer, toggleTheme }
+    /**
+     * Inicializa todos los valores de la interfaz de usuario
+     */
+    function setValues() {
+        // Tema de color
+        theme.global.name.value = localStorage.getItem('theme') || 'dark'
+        colorTheme.value = theme.global.name.value
+    }
+
+    return { isDrawerVisible, colorTheme, setValues, toggleDrawer, toggleTheme }
 })
