@@ -1,7 +1,7 @@
 <template>
     <div class="py-2 py-10">
         <h2 class="px-4">
-            {{ video.identificacion.fecha }}
+            {{ $dayjs(video.identificacion.fecha).format('DD/MM/YYYY') }}
         </h2>
         <h1 class="px-4">
             {{ video.identificacion.codigoReferencia }}
@@ -25,7 +25,7 @@
                             </div>
                             <div v-if="video.identificacion?.fecha">
                                 <p class="text-body-1">Fecha</p>
-                                <p class="text-body-2">{{ video.identificacion.fecha }}</p>
+                                <p class="text-body-2">{{ $dayjs(video.identificacion.fecha).format('DD/MM/YYYY') }}</p>
                             </div>
                             <div v-if="video.identificacion?.lugar">
                                 <p class="text-body-1">Lugar</p>
@@ -54,8 +54,8 @@
 
             <v-col cols="4" align="center" >
                 <v-sheet class="pa-2 ma-2" >
-                        <v-card  class=" mx-auto bg-light-green-lighten-4" elevation="12" height="auto" width="auto" >
-                            <v-img :src="`/data/image/${video.adicional.imagen}`" height="auto" width="auto"></v-img>
+                        <v-card class="mx-auto bg-light-green-lighten-4 pa-2" elevation="12" height="auto" width="auto" >
+                            <v-img class="mb-2" :src="`/data/image/${video.adicional.imagen}`" height="auto" width="auto"></v-img>
                             <video controls width="100%" height="auto" >
                                 <source :src="`/data/video/${video.adicional.clipVideo}`" />
                             </video>
