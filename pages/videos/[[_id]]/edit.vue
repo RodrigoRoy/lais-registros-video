@@ -2,7 +2,7 @@
     <v-card>
         <v-form validate-on="submit lazy" @submit.prevent="submit" ref="form">
             <v-toolbar color="primary" >
-                <v-toolbar-title>Nuevo registro de video</v-toolbar-title>
+                <v-toolbar-title>Editar registro de video <span class="text-body-1">({{ video.identificacion.codigoReferencia }})</span></v-toolbar-title>
             </v-toolbar>
             
             <div class="d-flex flex-row">
@@ -145,8 +145,9 @@
                     <v-window-item value="controlDescripcion">
                         <v-card flat>
                             <v-card-text>
-                                <v-text-field v-model="auth.fullname" label="Documentalista" variant="underlined" readonly ></v-text-field>
-                                <v-text-field v-model="today" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
+                                <!-- <v-text-field v-model="auth.fullname" label="Documentalista" variant="underlined" readonly ></v-text-field> -->
+                                <v-text-field v-model="createdAt" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
+                                <v-text-field v-model="today" label="Fecha de actualización" variant="underlined" readonly ></v-text-field>
                             </v-card-text>
                         </v-card>
                     </v-window-item>
@@ -154,9 +155,29 @@
                     <v-window-item value="adicional">
                         <v-card flat>
                             <v-card-text>
-                                <v-file-input v-model="files.video" label="Archivo de video" prepend-icon="mdi-file-video-outline" :rules="formRules.clipVideo" accept="video/*" show-size chips ></v-file-input>
-                                <v-file-input v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
-                                <v-file-input v-model="files.document" label="Documento de calificación" prepend-icon="mdi-file-document-outline" :rules="formRules.documentoCalificacion" accept=".pdf" show-size chips ></v-file-input>
+                                <div class="mx-2 mb-6" v-if="video.adicional?.clipVideo">
+                                    <p class="text-body-1">Archivo de video</p>
+                                    <video controls width="auto" height="250" >
+                                        <source :src="`/data/video/${video.adicional.clipVideo}`" />
+                                    </video>
+                                    <v-btn variant="tonal" color="error" size="small" @click="video.adicional.clipVideo = null">Cambiar video</v-btn>
+                                </div>
+                                <v-file-input v-else v-model="files.video" label="Archivo de video" prepend-icon="mdi-file-video-outline" :rules="formRules.clipVideo" accept="video/*" show-size chips ></v-file-input>
+                                
+                                <div class="mx-2 mb-6" v-if="video.adicional?.imagen">
+                                    <p class="text-body-1">Imagen o portada</p>
+                                    <nuxt-img class="align-center text-white" height="250" :src="`/data/image/${video.adicional.imagen}`" placeholder fit="cover" />
+                                    <v-btn variant="tonal" color="error" size="small" @click="video.adicional.imagen = null">Cambiar portada</v-btn>
+                                </div>
+                                <v-file-input v-else v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
+                                
+                                <div class="mx-2 mb-6" v-if="video.adicional?.documentoCalificacion">
+                                    <p class="text-body-1">Documento de calificación</p>
+                                    <p><a :href="`/data/document/${video.adicional.documentoCalificacion}`" target="_blank"><v-icon icon="mdi-file-pdf-box"></v-icon> {{ video.adicional.documentoCalificacion }}</a></p>
+                                    <v-btn variant="tonal" color="error" size="small" @click="video.adicional.documentoCalificacion = null">Cambiar documento</v-btn>
+                                </div>
+                                <v-file-input v-else v-model="files.document" label="Documento de calificación" prepend-icon="mdi-file-document-outline" :rules="formRules.documentoCalificacion" accept=".pdf" show-size chips ></v-file-input>
+                                
                                 <v-checkbox v-model="video.adicional.isPublic" label="El registro de video es público" ></v-checkbox>
                             </v-card-text>
                         </v-card>
@@ -164,7 +185,7 @@
                 </v-window>
             </div>
             <div class="d-flex justify-center">
-                <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading" >Crear nuevo registro de video</v-btn>
+                <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading">Editar registro de video</v-btn>
             </div>
         </v-form>
     </v-card>
@@ -175,14 +196,26 @@
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
 
-definePageMeta({
-    middleware: [
-        'auth',
-    ]
-})
+// definePageMeta({
+//     middleware: [
+//         'auth',
+//     ]
+// })
+
+// Composable para obtener parametros desde URL
+const route = useRoute()
 
 // Biblioteca para mostrar fechas
 const dayjs = useDayjs()
+
+// Información del video
+const data = await $fetch(`/api/videos/${route.params._id}`)
+// Versión reactiva del video (shallow copy)
+const video = reactive({...data})
+// Parsing para fecha (convertir de string a date)
+video.identificacion.fecha = video.identificacion.fecha ? new Date(video.identificacion.fecha) : null
+// Auxiliar temporal para mostrar fecha de creación
+const createdAt = dayjs(video.createdAt).format('DD/MM/YYYY HH:mm')
 
 // Selector de pestaña. Debe coincidir con el prop "value" de <v-tab>
 const tab = ref('identificacion')
@@ -217,56 +250,6 @@ const files = reactive({
     image: null,
     video: null,
     document: null,
-})
-
-// Representación del registro de video que será enviado a la base de datos
-const video = reactive({
-    identificacion: {
-        codigoReferencia: null,
-        fecha: new Date(),
-        lugar: null,
-        pais: null,
-        duracion: null,
-        personasEntrevistadas: null,
-        entrevista: null,
-        camara: null,
-        iluminacion: null,
-        asistencia: null,
-        sonido: null,
-    },
-    contenidoEstructura: {
-        descripcionGeneral: null,
-        estructuraFormal: null,
-        descriptorOnomastico: null,
-        descriptorToponimico: null,
-    },
-    condicionesAccesoUso: {
-        idiomaOriginal: null,
-        soporte: null,
-        numeroCasetes: null,
-        color: null,
-        audio: null,
-        sistemaGrabacion: null,
-        resolucionGrabacion: null,
-        formatoVideoDigital: null,
-        requisitosTecnicos: null,
-    },
-    documentacionAsociada: {
-        unidadesDescripcionRelacionadas: null,
-        documentosAsociados: null,
-    },
-    notas: {
-        notas: null,
-    },
-    controlDescripcion: {
-        documentalista: auth?.id || null,
-    },
-    adicional: {
-        imagen: '',
-        clipVideo: '',
-        documentoCalificacion: '',
-        isPublic: true,
-    },
 })
 
 // Conjunto de reglas de validación para todos los campos del formulario
@@ -315,7 +298,7 @@ const isLoading = ref(false)
  * @param {string} filetype Representa el tipo de archivo a subir ("video", "image", "document")\
  * @returns {string} El nuevo nombre del archivo subido
  */
-async function uploadFile(filetype) {
+ async function uploadFile(filetype) {
     // Validación del parámetro "filetype"
     const valid = /(^video$)|(^image$)|(^document$)/gm.test(filetype)
     if(!valid) return
@@ -373,8 +356,8 @@ async function uploadFile(filetype) {
         video.adicional.documentoCalificacion = null
 
     // newVideo es el nuevo registro en base de datos. Incluye propiedad "_id"
-    const newVideo = await $fetch('/api/videos/nuevo', {
-        method: 'POST',
+    const newVideo = await $fetch(`/api/videos/${video._id}`, {
+        method: 'PUT',
         body: JSON.parse(JSON.stringify(video)),
     })
 
