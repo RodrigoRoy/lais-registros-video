@@ -21,7 +21,7 @@
                             <v-card-text>
                                 
                                 <v-container class="px-0">
-                                    <v-text-field v-model="video.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" ></v-text-field>
+                                    <v-text-field v-model="video.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" :rules="formRules.codigoReferencia" readonly></v-text-field>
                                     <v-row>
                                         <v-col xs="12" lg="6">
                                             <v-date-picker v-model="video.identificacion.fecha"></v-date-picker>
@@ -145,7 +145,7 @@
                     <v-window-item value="controlDescripcion">
                         <v-card flat>
                             <v-card-text>
-                                <!-- <v-text-field v-model="auth.fullname" label="Documentalista" variant="underlined" readonly ></v-text-field> -->
+                                <v-text-field v-model="documentalista" label="Documentalista" variant="underlined" readonly ></v-text-field>
                                 <v-text-field v-model="createdAt" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
                                 <v-text-field v-model="today" label="Fecha de actualización" variant="underlined" readonly ></v-text-field>
                             </v-card-text>
@@ -160,6 +160,7 @@
                                     <video controls width="auto" height="250" >
                                         <source :src="`/data/video/${video.adicional.clipVideo}`" />
                                     </video>
+                                    <br />
                                     <v-btn variant="tonal" color="error" size="small" @click="video.adicional.clipVideo = null">Cambiar video</v-btn>
                                 </div>
                                 <v-file-input v-else v-model="files.video" label="Archivo de video" prepend-icon="mdi-file-video-outline" :rules="formRules.clipVideo" accept="video/*" show-size chips ></v-file-input>
@@ -167,6 +168,7 @@
                                 <div class="mx-2 mb-6" v-if="video.adicional?.imagen">
                                     <p class="text-body-1">Imagen o portada</p>
                                     <nuxt-img class="align-center text-white" height="250" :src="`/data/image/${video.adicional.imagen}`" placeholder fit="cover" />
+                                    <br />
                                     <v-btn variant="tonal" color="error" size="small" @click="video.adicional.imagen = null">Cambiar portada</v-btn>
                                 </div>
                                 <v-file-input v-else v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
@@ -189,6 +191,7 @@
             </div>
         </v-form>
     </v-card>
+    {{ video }}
 </template>
 
 <script setup>
@@ -214,6 +217,9 @@ const data = await $fetch(`/api/videos/${route.params._id}`)
 const video = reactive({...data})
 // Parsing para fecha (convertir de string a date)
 video.identificacion.fecha = video.identificacion.fecha ? new Date(video.identificacion.fecha) : null
+const documentalista = video.controlDescripcion.documentalista.fullname
+// Actualizar documentalista
+video.controlDescripcion.documentalista = auth.id
 // Auxiliar temporal para mostrar fecha de creación
 const createdAt = dayjs(video.createdAt).format('DD/MM/YYYY HH:mm')
 
@@ -340,23 +346,23 @@ const isLoading = ref(false)
     // Si existe archivo de video, proceder a subirlo
     if(video.identificacion.codigoReferencia && files.video && files.video[0])
         video.adicional.clipVideo = await uploadFile('video')
-    else
+    else if(!video.adicional.clipVideo) // contempla el caso en que el video exista pero no se actualiza
         video.adicional.clipVideo = null
 
     // Si existe archivo de imagen, proceder a subirlo
     if(video.identificacion.codigoReferencia && files.image && files.image[0])
         video.adicional.imagen = await uploadFile('image')
-    else
+    else if(!video.adicional.image) // contempla el caso en que la imagen exista pero no se actualiza
         video.adicional.imagen = null
 
     // Si existe documento de texto, proceder a subirlo
     if(video.identificacion.codigoReferencia && files.document && files.document[0])
         video.adicional.documentoCalificacion = await uploadFile('document')
-    else
+    else if(!video.adicional.documentoCalificacion) // contempla el caso en que el documento exista pero no se actualiza
         video.adicional.documentoCalificacion = null
 
-    // newVideo es el nuevo registro en base de datos. Incluye propiedad "_id"
-    const newVideo = await $fetch(`/api/videos/${video._id}`, {
+    // updatedVideo es el registro actualizado en base de datos
+    const updatedVideo = await $fetch(`/api/videos/${video._id}`, {
         method: 'PUT',
         body: JSON.parse(JSON.stringify(video)),
     })
@@ -368,6 +374,6 @@ const isLoading = ref(false)
     isLoading.value = false
     
     // Concluido el proceso, reenviar a página del registro de video
-    await navigateTo(`/videos/${newVideo._id}`)
+    await navigateTo(`/videos/${updatedVideo._id}`)
 }
 </script>

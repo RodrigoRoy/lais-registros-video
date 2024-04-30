@@ -17,14 +17,14 @@
                                     </template>
                                     <!-- Lista de acciones para administración -->
                                     <v-list>
-                                        <nuxt-link v-if="true" class="text-decoration-none"><v-list-item>Editar</v-list-item></nuxt-link>
-                                        <nuxt-link v-if="true" class="text-decoration-none"><v-list-item>Borrar</v-list-item></nuxt-link>
+                                        <nuxt-link v-if="auth.canUpdate" :to="`/videos/${video._id}/edit`" class="text-decoration-none"><v-list-item>Editar</v-list-item></nuxt-link>
+                                        <nuxt-link v-if="auth.canDelete" class="text-decoration-none"><v-list-item>Borrar</v-list-item></nuxt-link>
                                     </v-list>
                                 </v-menu>
                             </template>
                             
                             <!-- incluir una imagen hace que aparezca como encabezado -->
-                            <nuxt-img class="align-center text-white" height="250" :src="`/data/image/${video.adicional.imagen}`" placeholder fit="cover" />
+                            <nuxt-picture class="align-center text-white" height="250" :src="`/data/image/${video.adicional.imagen}`" placeholder fit="cover" quality="70" />
 
                             <!-- Subtítulo (fecha) -->
                             <v-card-subtitle class="pt-4">
