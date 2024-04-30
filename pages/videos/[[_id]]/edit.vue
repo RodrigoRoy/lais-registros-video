@@ -191,7 +191,6 @@
             </div>
         </v-form>
     </v-card>
-    {{ video }}
 </template>
 
 <script setup>

@@ -17,8 +17,23 @@
                                     </template>
                                     <!-- Lista de acciones para administración -->
                                     <v-list>
-                                        <nuxt-link v-if="auth.canUpdate" :to="`/videos/${video._id}/edit`" class="text-decoration-none"><v-list-item>Editar</v-list-item></nuxt-link>
-                                        <nuxt-link v-if="auth.canDelete" class="text-decoration-none"><v-list-item>Borrar</v-list-item></nuxt-link>
+                                        <v-list-item><nuxt-link v-if="auth.canUpdate" :to="`/videos/${video._id}/edit`" class="text-decoration-none"><v-btn>Editar</v-btn></nuxt-link></v-list-item>
+
+                                        <!-- Opción para borrar con ventana emergente de confirmación -->
+                                        <v-dialog :max-width="500">
+                                            <template v-slot:activator="{ props: activatorProps }">
+                                                <v-btn v-bind="activatorProps">Borrar</v-btn>
+                                            </template>
+                                            <template v-slot:default="{ isActive }">
+                                                <v-card max-width="400" prepend-icon="mdi-alert" color="error" variant="elevated" title="Borrar registro" :text="`Por favor confirme la eliminación del registro ${video.identificacion.codigoReferencia}. Esta operación no se puede revertir y la información almacenada se perderá.`" >
+                                                    <v-card-actions>
+                                                        <v-btn @click="isActive.value = false">Cancel</v-btn>
+                                                        <v-btn @click="deleteVideo(video._id)">Borrar</v-btn>
+                                                    </v-card-actions>
+                                                </v-card>
+                                            </template>
+                                        </v-dialog>
+
                                     </v-list>
                                 </v-menu>
                             </template>
@@ -91,4 +106,11 @@ const { data } = await useFetch('/api/videos')
 
 // Auxiliar para determinar el v-card del cual se desea ver más información
 const revealId = ref(null)
+
+async function deleteVideo(id){
+    await $fetch(`/api/videos/${id}`, {
+        method: 'DELETE',
+    })
+    // TODO: Reload page
+}
 </script>
