@@ -17,29 +17,36 @@
                                     </template>
                                     <!-- Lista de acciones para administración -->
                                     <v-list>
-                                        <v-list-item><nuxt-link v-if="auth.canUpdate" :to="`/videos/${video._id}/edit`" class="text-decoration-none"><v-btn>Editar</v-btn></nuxt-link></v-list-item>
+                                        <!-- EDITAR -->
+                                        <v-list-item>
+                                            <nuxt-link v-if="auth.canUpdate" :to="`/videos/${video._id}/edit`" class="text-decoration-none"><v-btn>Editar</v-btn></nuxt-link>
+                                        </v-list-item>
+                                        
+                                        <!-- BORRAR -->
+                                        <v-list-item>
+                                            <!-- Opción para borrar con ventana emergente de confirmación -->
+                                            <v-dialog :max-width="500">
+                                                <template v-slot:activator="{ props: activatorProps }">
+                                                    <v-btn v-bind="activatorProps">Borrar</v-btn>
+                                                </template>
+                                                <template v-slot:default="{ isActive }">
+                                                    <v-card max-width="400" prepend-icon="mdi-alert" color="error" variant="elevated" title="Borrar registro" :text="`Por favor confirme la eliminación del registro ${video.identificacion.codigoReferencia}. Esta operación no se puede revertir y la información almacenada se perderá.`" >
+                                                        <v-card-actions>
+                                                            <v-btn @click="isActive.value = false" variant="elevated" color="error">Cancel</v-btn>
+                                                            <v-btn @click="deleteVideo(video._id)" variant="plain">Borrar</v-btn>
+                                                        </v-card-actions>
+                                                    </v-card>
+                                                </template>
+                                            </v-dialog>
+                                        </v-list-item>
 
-                                        <!-- Opción para borrar con ventana emergente de confirmación -->
-                                        <v-dialog :max-width="500">
-                                            <template v-slot:activator="{ props: activatorProps }">
-                                                <v-btn v-bind="activatorProps">Borrar</v-btn>
-                                            </template>
-                                            <template v-slot:default="{ isActive }">
-                                                <v-card max-width="400" prepend-icon="mdi-alert" color="error" variant="elevated" title="Borrar registro" :text="`Por favor confirme la eliminación del registro ${video.identificacion.codigoReferencia}. Esta operación no se puede revertir y la información almacenada se perderá.`" >
-                                                    <v-card-actions>
-                                                        <v-btn @click="isActive.value = false">Cancel</v-btn>
-                                                        <v-btn @click="deleteVideo(video._id)">Borrar</v-btn>
-                                                    </v-card-actions>
-                                                </v-card>
-                                            </template>
-                                        </v-dialog>
 
                                     </v-list>
                                 </v-menu>
                             </template>
                             
                             <!-- incluir una imagen hace que aparezca como encabezado -->
-                            <nuxt-picture class="align-center text-white" height="250" :src="`/data/image/${video.adicional.imagen}`" placeholder fit="cover" quality="70" />
+                            <nuxt-picture class="align-center text-white" height="250" :src="`/data/image/${video.adicional.imagen}`" fit="outside" quality="70" />
 
                             <!-- Subtítulo (fecha) -->
                             <v-card-subtitle class="pt-4">
@@ -77,7 +84,7 @@
                                             <v-icon icon="mdi-microphone-variant" size="x-small"></v-icon>
                                             {{ video.identificacion.personasEntrevistadas }}
                                         </p>
-                                        <p class="text--primary">
+                                        <p class="text-body-2">
                                             <p>{{ video.contenidoEstructura.descripcionGeneral || '(Sin descripción)' }}</p>
                                         </p>
                                     </v-card-text>
@@ -107,10 +114,21 @@ const { data } = await useFetch('/api/videos')
 // Auxiliar para determinar el v-card del cual se desea ver más información
 const revealId = ref(null)
 
+/**
+ * Función para borrar un registro de video de la base de datos
+ * @param {string} id Id (de la base de datos) del video que se desea borrar
+ */
 async function deleteVideo(id){
     await $fetch(`/api/videos/${id}`, {
         method: 'DELETE',
     })
-    // TODO: Reload page
+
+    // Reload data using native Nuxt util function
+    try{
+        await refreshNuxtData()
+    }
+    catch(error){
+        createError({statusCode:400, statusMessage: error})
+    }
 }
 </script>

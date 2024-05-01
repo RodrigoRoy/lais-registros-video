@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
         [fields, files] = await form.parse(event.node.req)
     }
     catch(err){
-        throw createError({ statusCode: 400, statusMessage: err })
+        throw createError({ statusCode: 500, statusMessage: 'Parse data error', message: err })
     }
 
     // Campos recibidos desde FormData:
@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
     const newDirPath = fields.filetype ? `${uploadDir}/${fields.filetype[0]}` : uploadDir
 
     // Caracteres finales después del punto (.) final. Por ejemplo: pdf, mp4, jpg
-    const fileExtension = files.file[0].originalFilename.match(/\.(.+)$/i)[1]
+    const fileExtension = files.file[0].originalFilename.match(/\.([^.]+)$/gm)[1]
 
     // Ubicación original del archivo
     const oldPath = `${uploadDir}/${files.file[0].originalFilename}`
@@ -67,11 +67,12 @@ export default defineEventHandler(async (event) => {
     // Mover el archivo de su ubicacion por default
     try {
         // Verificar que la ubicación exista, de lo contrario, crearla
-        if(!fs.existsSync(newDirPath)) fs.mkdirSync(newDirPath, {recursive: true})
-
+        if(!fs.existsSync(newDirPath))
+            fs.mkdirSync(newDirPath, {recursive: true})
+        
         fs.renameSync(oldPath, newPath)
     } catch (err) {
-        throw createError({ statusCode: 400, statusMessage: err })
+        throw createError({ statusCode: 400, statusMessage: 'Rename file error', message: err })
     }
 
     // Notificar que la subida de archivos fue correcta
