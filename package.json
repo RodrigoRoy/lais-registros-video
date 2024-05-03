@@ -18,6 +18,7 @@
     "formidable": "^3.5.1",
     "jsonwebtoken": "^9.0.2",
     "nuxt": "^3.10.3",
+    "nuxt3-leaflet": "^1.0.12",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },

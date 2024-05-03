@@ -24,7 +24,7 @@
                                     <v-text-field v-model="video.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" ></v-text-field>
                                     <v-row>
                                         <v-col xs="12" lg="6">
-                                            <v-date-picker v-model="video.identificacion.fecha"></v-date-picker>
+                                            <v-date-picker v-model="video.identificacion.fecha" title="Fecha" ></v-date-picker>
                                         </v-col>
                                         <v-col xs="12" lg="6">
                                             <v-text-field v-model="video.identificacion.lugar" label="Lugar" variant="underlined" clearable ></v-text-field>
@@ -158,6 +158,22 @@
                                 <v-file-input v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
                                 <v-file-input v-model="files.document" label="Documento de calificación" prepend-icon="mdi-file-document-outline" :rules="formRules.documentoCalificacion" accept=".pdf" show-size chips ></v-file-input>
                                 <v-checkbox v-model="video.adicional.isPublic" label="El registro de video es público" ></v-checkbox>
+                                
+                                <!-- Mapa interactivo (Leaflet) -->
+                                <p class="text-overline">Ubicación</p>
+                                <l-map style="height: 300px" :zoom="map.zoom" :center="map.center" :options="map.options" ref="leafletMap">
+                                    <!-- Capa principal que muestra el mapa -->
+                                    <l-tile-layer :url="map.url" attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors" layer-type="base" name="OpenStreetMap" />
+                                    <!-- Capa para mostrar botones con acciones personalidas -->
+                                    <l-control position="bottomleft">
+                                        <!-- Botón para agregar marcador -->
+                                        <v-btn @click="addMarker" v-if="!map.marker.visible" icon="mdi-map-marker-plus" variant="elevated" color="success"></v-btn>
+                                        <!-- Botón para borrar marcador -->
+                                        <v-btn @click="removeMarker" v-if="map.marker.visible" icon="mdi-map-marker-remove" variant="elevated" color="error"></v-btn>
+                                    </l-control>
+                                    <!-- Capa para mostrar el marcador que representa la ubicación -->
+                                    <l-marker :lat-lng="map.marker.latLng" :draggable="map.marker.draggable" layer-type="overlay" :visible="map.marker.visible" ref="leafletMarker" @dragend="markerDragEnd" />
+                                </l-map>
                             </v-card-text>
                         </v-card>
                     </v-window-item>
@@ -265,6 +281,10 @@ const video = reactive({
         imagen: '',
         clipVideo: '',
         documentoCalificacion: '',
+        location: {
+            lat: null,
+            lng: null,
+        },
         isPublic: true,
     },
 })
@@ -308,6 +328,66 @@ const form = ref(null)
 
 // Determina si hay validaciones en curso
 const isLoading = ref(false)
+
+// Referencia al mapa (para usar funciones del objeto Map)
+const leafletMap = ref(null)
+// Referencia al marcador del mapa (para usar funciones del objeto Marker)
+const leafletMarker = ref(null)
+// Configuraciones del mapa
+const map = reactive({
+    zoom: 11,
+    center: [19.37651880288312, -99.18512156842415], // Instituto Mora
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', // Default value for OpenStreetMaps
+    options: {
+        zoomControl: true,
+        attributionControl: true,
+        zoomSnap: true,
+        scrollWheelZoom: true,
+    },
+    marker: {
+        latLng: [19.37651880288312, -99.18512156842415],
+        visible: false,
+        draggable: true,
+    },
+})
+
+/**
+ * Agrega el marcador al mapa, usando como ubicación el centro del mapa.
+ */
+function addMarker(){
+    // Copiar coordenadas de la vista actual
+    const { lat, lng } = leafletMap.value.leafletObject.getCenter()
+    // Actualizar la ubicación del marcador
+    map.marker.latLng = [lat, lng]
+    
+    // Copiar información al registro de video
+    video.adicional.location.lat = lat
+    video.adicional.location.lng = lng
+
+    // Visibilizar la capa del marcador
+    map.marker.visible = true
+}
+
+/**
+ * Borra el marcador del mapa.
+ */
+function removeMarker(){
+    // Borrar la información de ubicación del registro de video
+    video.adicional.location.lat = null
+    video.adicional.location.lng = null
+    
+    // Ocultar la capa del marcador
+    map.marker.visible = false
+}
+
+/**
+ * Acciones a realizar para el evento @dragend del marcador.
+ * Actualiza los datos de ubicación en el registro de video.
+ */
+function markerDragEnd(){
+    video.adicional.location.lat = leafletMarker.value.leafletObject._latlng.lat
+    video.adicional.location.lng = leafletMarker.value.leafletObject._latlng.lng
+}
 
 /**
  * Sube un archivo del cliente al servidor.
