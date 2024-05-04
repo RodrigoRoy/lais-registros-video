@@ -2,14 +2,25 @@
     <h4 class="text-h4 pa-6 ma-2">
         Página personal
     </h4>
-    <v-card>
-        <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-4" elevation="4" height="250" max-width="800" width="100%" rounded >
+    <v-card color="transparent">
+        <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-4 bg-blue-grey-lighten-2" elevation="4"  max-width="800" width="100%" rounded >
             <div>
                 <h2 class="font-weight-black">
-                    <h4>Nombre: {{ user.name }} </h4>
+                    <nuxtImg src="personalPage.gif"></nuxtImg>
+                    <h6 :class="user.active? 'text-green-darken-4' : 'text-red-darken-4'">Usuario <span v-if="!user.active">in</span>activo</h6>
+                    <h4 class="text-capitalize" >Nombre: {{ user.name }} </h4>
                     <h4>Usuario: {{ user.fullname }}</h4>
                     <h4>Correo: {{ user.email }}</h4>
                     <span v-if="user.admin">Eres admin</span>
+                    
+                    <!-- Boton para editar datos del usuario -->
+                    <div class="pa-4 text-center mt-3" >
+                        <nuxt-link :to="`/usuarios/${route.params._id}/edit`" >
+                            <v-btn variant="elevated" prepend-icon="mdi-account-edit">
+                                Editar
+                            </v-btn>
+                        </nuxt-link>
+                    </div>
                 </h2>
             </div>
         </v-sheet>
@@ -53,4 +64,6 @@ const dataTableHeaders = [
     {title: 'Duración', key: 'duracionString', value: item => minutesToHour(item.identificacion.duracion)},
     {title: 'Fecha de creación', key: 'creacionString', value: item => dayjs(item.createdAt).format('DD/MM/YYYY HH:mm')},
 ]
+
+
 </script>

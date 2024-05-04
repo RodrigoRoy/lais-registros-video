@@ -3,7 +3,8 @@
         Lista de usuarios
     </h4>
 
-    <v-card>
+    <!-- Muestra cada usuario registrado, y los ordena para ahorrar espacio -->
+    <div class="d-flex align-center justify-space-around">
         <v-list v-for="user in data" :key="user._id" lines="three">
             <v-list-item>
 
@@ -45,9 +46,10 @@
                         </nuxt-link>
                     </div>
                 </v-sheet>
+                
             </v-list-item>
         </v-list>
-    </v-card>
+    </div>
 </template>
 
 <script setup>

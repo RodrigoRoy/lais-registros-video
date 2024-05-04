@@ -14,7 +14,10 @@
         
         <v-menu>
             <template v-slot:activator="{ props }">
-                <v-btn icon="mdi-dots-horizontal-circle-outline" v-bind="props"></v-btn>
+                <v-btn v-if="!auth.isLoggedIn" icon="mdi-dots-horizontal-circle-outline" v-bind="props"></v-btn>
+                <v-btn v-else color="primary" variant="plain" append-icon="mdi-logout" @click="cerrarSesion()">
+                    Cerrar sesión
+                </v-btn>
             </template>
             <v-list v-if="!auth.isLoggedIn">
                 <v-list-item>
@@ -36,7 +39,7 @@
                     </v-list-item-title>
                 </v-list-item>
             </v-list>
-            <v-list v-else>
+            <!-- <v-list v-else>
                 <v-list-item>
                     <v-list-item-title>
                         <v-btn color="primary" variant="plain" append-icon="mdi-logout" @click="cerrarSesion()">
@@ -44,7 +47,7 @@
                         </v-btn>
                     </v-list-item-title>
                 </v-list-item>
-            </v-list>
+            </v-list> -->
         </v-menu>
     </v-app-bar>
     <v-snackbar timeout=800 color=success variant="tonal" v-model="showSnackbar1">
