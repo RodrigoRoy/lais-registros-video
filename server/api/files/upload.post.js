@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
     const newDirPath = fields.filetype ? `${uploadDir}/${fields.filetype[0]}` : uploadDir
 
     // Caracteres finales después del punto (.) final. Por ejemplo: pdf, mp4, jpg
-    const fileExtension = files.file[0].originalFilename.match(/\.([^.]+)$/gm)[1]
+    const fileExtension = files.file[0].originalFilename.match(/\.([^.]+)$/i)[1]
 
     // Ubicación original del archivo
     const oldPath = `${uploadDir}/${files.file[0].originalFilename}`
