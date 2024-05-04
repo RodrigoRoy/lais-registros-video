@@ -20,6 +20,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt', // essential utilities (like useStorage)
     '@nuxt/image', // image optimization
     'dayjs-nuxt', // Parse, validate, manipulate, and display dates and times
+    'nuxt3-leaflet', // Leaflet wrapper for interactive maps
   ],
   vite: {
     vue: {
