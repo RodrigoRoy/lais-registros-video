@@ -181,6 +181,7 @@
                                 <v-file-input v-else v-model="files.document" label="Documento de calificación" prepend-icon="mdi-file-document-outline" :rules="formRules.documentoCalificacion" accept=".pdf" show-size chips ></v-file-input>
                                 
                                 <v-checkbox v-model="video.adicional.isPublic" label="El registro de video es público" ></v-checkbox>
+                                <v-checkbox v-model="video.adicional.isDraft" label="Guardar registro de video como borrador" ></v-checkbox>
 
                                 <!-- Mapa interactivo (Leaflet) -->
                                 <p class="text-overline">Ubicación</p>
@@ -207,7 +208,6 @@
             </div>
         </v-form>
     </v-card>
-    {{ video }}
 </template>
 
 <script setup>
@@ -459,8 +459,12 @@ function mapReady(){
         body: JSON.parse(JSON.stringify(video)),
     })
 
-    // Simulación de 3 segundos de espera
-    // await new Promise(resolve => setTimeout(resolve, 3000))
+    // Si es un borrador, guardar en listado de borradores del usuario
+    if(video.adicional.isDraft)
+        await $fetch(`/api/drafts/user/${auth?.id}`, {
+            method: 'PUT',
+            body: JSON.parse(JSON.stringify(updatedVideo)),
+        })
 
     // Indicar el final del proceso de subida del registro de video
     isLoading.value = false

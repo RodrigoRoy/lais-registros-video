@@ -1,5 +1,3 @@
-import { Types } from 'mongoose'
-
 export default defineEventHandler(async (event) => {
     // Buscar en base de datos y poblar datos de usuario (populate)
     try {
@@ -18,6 +16,6 @@ export default defineEventHandler(async (event) => {
         return videos.filter((video) => video.controlDescripcion.documentalista != null)
     }
     catch (error) {
-        throw createError({ statusCode: 500, statusMessage: error })
+        throw createError({ statusCode: 500, statusMessage: 'DB error', message: error })
     }
 })

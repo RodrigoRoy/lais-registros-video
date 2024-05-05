@@ -1,5 +1,6 @@
 import { defineMongooseModel } from '#nuxt/mongoose'
 import bcrypt from 'bcrypt'
+import { Types } from 'mongoose'
 
 // Definición del modelo para representar un usuario
 export const UsuarioSchema = defineMongooseModel({
@@ -18,6 +19,8 @@ export const UsuarioSchema = defineMongooseModel({
         },
         admin: { type: 'boolean', default: false },
         active: { type: 'boolean', default: true },
+        drafts: [{type: Types.ObjectId, ref: 'Video'}],
+        bookmarks: [{type: Types.ObjectId, ref: 'Video'}],
     },
 
     // Opciones adicionales del modelo

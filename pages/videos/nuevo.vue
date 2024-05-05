@@ -157,7 +157,9 @@
                                 <v-file-input v-model="files.video" label="Archivo de video" prepend-icon="mdi-file-video-outline" :rules="formRules.clipVideo" accept="video/*" show-size chips ></v-file-input>
                                 <v-file-input v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
                                 <v-file-input v-model="files.document" label="Documento de calificación" prepend-icon="mdi-file-document-outline" :rules="formRules.documentoCalificacion" accept=".pdf" show-size chips ></v-file-input>
+                                
                                 <v-checkbox v-model="video.adicional.isPublic" label="El registro de video es público" ></v-checkbox>
+                                <v-checkbox v-model="video.adicional.isDraft" label="Guardar registro de video como borrador" ></v-checkbox>
                                 
                                 <!-- Mapa interactivo (Leaflet) -->
                                 <p class="text-overline">Ubicación</p>
@@ -180,7 +182,7 @@
                 </v-window>
             </div>
             <div class="d-flex justify-center">
-                <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading" >Crear nuevo registro de video</v-btn>
+                <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading">Crear registro de video</v-btn>
             </div>
         </v-form>
     </v-card>
@@ -286,6 +288,7 @@ const video = reactive({
             lng: null,
         },
         isPublic: true,
+        isDraft: false,
     },
 })
 
@@ -458,9 +461,13 @@ async function uploadFile(filetype) {
         body: JSON.parse(JSON.stringify(video)),
     })
 
-    // Simulación de 3 segundos de espera
-    // await new Promise(resolve => setTimeout(resolve, 3000))
-
+    // Si es un borrador, guardar en listado de borradores del usuario
+    if(video.adicional.isDraft)
+        await $fetch(`/api/drafts/user/${auth?.id}`, {
+            method: 'PUT',
+            body: JSON.parse(JSON.stringify(newVideo)),
+        })
+    
     // Indicar el final del proceso de subida del registro de video
     isLoading.value = false
     
