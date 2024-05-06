@@ -16,6 +16,8 @@ export const useAuthStore = defineStore('auth', () => {
     const canUpdate = ref(null)
     const canDelete = ref(null)
     const isAdmin = ref(null)
+    const drafts = reactive([])
+    const bookmarks = reactive([])
 
     /**
      * Inicia sesión del usuario.
@@ -67,6 +69,31 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     /**
+     * Actualiza el token guardado en localStorage.
+     * Esto evita cerrar e iniciar sesión para actualizar la información
+     * guardado del usuario con sesión iniciada.
+     */
+    async function updateToken() {
+        // Verificar que exista un token en memoria
+        const token = localStorage.getItem('token')
+        if(!token) throw createError({ statusCode: 400, statusMessage: 'Token not available'})
+        
+        // Verificar validez y obtener token actualizado
+        const updatedToken = await $fetch('/api/auth/update', {
+            method: "PATCH",
+            body: {
+                token: token
+            },
+        })
+
+        // Guardar token actualizado
+        localStorage.setItem('token', updatedToken)
+
+        // Actualizar datos del store
+        await setUserData()
+    }
+
+    /**
      * Inicializa los datos del usuario.
      * Los datos se obtienen a partir de la decodificación del token (JWT)
      */
@@ -96,6 +123,8 @@ export const useAuthStore = defineStore('auth', () => {
         canUpdate.value = user.operation && user.operation.update ? user.operation.update : false
         canDelete.value = user.operation && user.operation.delete ? user.operation.delete : false
         isAdmin.value = user.admin ? user.admin : false
+        drafts.value = user.drafts ? user.drafts : []
+        bookmarks.value = user.bookmarks ? user.bookmarks : []
 
         // Indicar que la sesión está iniciada
         isLoggedIn.value = true
@@ -114,8 +143,10 @@ export const useAuthStore = defineStore('auth', () => {
         canUpdate.value = null
         canDelete.value = null
         isAdmin.value = null
+        drafts.value = []
+        bookmarks.value = []
     }
 
-    return { login, logout, setUserData, isLoggedIn, id, name, fullname, email, canCreate, canRead, canUpdate, canDelete, isAdmin }
+    return { login, logout, updateToken, setUserData, isLoggedIn, id, name, fullname, email, canCreate, canRead, canUpdate, canDelete, drafts, bookmarks, isAdmin }
     
 })

@@ -18,6 +18,6 @@ export default defineEventHandler(async (event) => {
         
         return user
     } catch (error) {
-        throw createError({ statusCode: 400, statusMessage: error})
-    }    
+        throw createError({ statusCode: 400, statusMessage: 'Decoding error', message: error})
+    }
 })

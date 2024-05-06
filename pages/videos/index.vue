@@ -63,6 +63,9 @@
 
                             <!-- Acciones / botón para mostrar más información -->
                             <v-card-actions>
+                                <v-btn size="small" :icon="video.bookmark ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="video.bookmark = !video.bookmark"></v-btn>
+                                <!-- <v-btn size="small" :icon="video.bookmark ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="toggleBookmark(video)"></v-btn> -->
+                                <v-btn size="small" prepend-icon="mdi-chart-bar">{{ Math.floor(Math.random() * 100) }}</v-btn>
                                 <v-spacer></v-spacer>
                                 <v-btn color="secondary" icon="mdi-chevron-up" @click.prevent.stop="revealId = i"></v-btn>
                             </v-card-actions>
@@ -108,11 +111,54 @@
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
 
-// Obtener información de la base de datos
 const { data } = await useFetch('/api/videos')
+
+// Iterar e identificar los videos que tiene el usuario guardados en su lista
+// onMounted(async () => {
+    // console.log('onMounted')
+    // if(auth.isLoggedIn){
+        // console.log('user is logged in')
+        // const userBookmarks = await useFetch(`/api/bookmarks/user/${auth.id}`)
+        // data.value.forEach(video => {
+        //     userBookmarks.forEach( bookmark => {
+        //         console.log(`video._id (${video._id}) === bookmark._id (${bookmark._id}) ?`)
+        //         if(video._id === bookmark._id) video.bookmark = true
+        //     })
+        // })
+    // }
+    // else{
+    //     console.log('user is NOT logged in')
+    // }
+// })
+
 
 // Auxiliar para determinar el v-card del cual se desea ver más información
 const revealId = ref(null)
+
+/**
+ * Agrega o quita un video de la lista de marcadores del usuario.
+ * Adicionalmente lo marca en la lista de videos para una interaccion
+ * lo más rápida posible.
+ * @param {object} video Representa un registro de video
+ */
+async function toggleBookmark(video){
+    if(!video.bookmark){
+        video.bookmark = true
+        await $fetch(`/api/bookmarks/user/${auth._id}`, {
+            method: 'PUT',
+            body: video,
+        })
+    }
+    else {
+        video.bookmark = false
+        await $fetch(`/api/bookmarks/user/${auth._id}`, {
+            method: 'DELETE',
+            body: video,
+        })
+    }
+    // Actualizar token (en particular, la lista de marcadores)
+    await auth.updateToken()
+}
 
 /**
  * Función para borrar un registro de video de la base de datos
