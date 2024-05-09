@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <!-- Mostrar cuadricula de elementos. Se usa nomenclatura (element, index) para generar numeración -->
-            <v-col v-for="(video, i) in data" :key="video._id" class="d-flex child-flex" cols="12" sm="6" md="4" lg="3" xl="3">
+            <v-col v-for="(video, i) in videos" :key="video._id" class="d-flex child-flex" cols="12" sm="6" md="4" lg="3" xl="3">
                 <v-hover>
                     <!-- Interacción de fondo de color cuando el mouse hace acción :hover -->
                     <template v-slot:default="{ isHovering, props }">
@@ -45,8 +45,11 @@
                                 </v-menu>
                             </template>
                             
-                            <!-- incluir una imagen hace que aparezca como encabezado -->
-                            <nuxt-picture class="align-center text-white" height="250" :src="`/data/image/${video.adicional.imagen}`" fit="outside" quality="70" />
+                            <!-- Incluir una imagen hace que aparezca como encabezado -->
+                            <!-- Note: En Linux, NuxtImage no sirve debido a error con el paquete 'sharp' -->
+                            <!-- <nuxt-picture height="250" :src="`/data/image/${video.adicional.imagen}`" fit="outside" quality="70" /> -->
+                            <!-- <nuxt-img height="250" :src="`/data/image/${video.adicional.imagen}`" fit="outside" quality="70" /> -->
+                            <v-img height="250" width="auto" :src="`/data/image/${video.adicional.imagen}`" cover ></v-img>
 
                             <!-- Subtítulo (fecha) -->
                             <v-card-subtitle class="pt-4">
@@ -63,8 +66,7 @@
 
                             <!-- Acciones / botón para mostrar más información -->
                             <v-card-actions>
-                                <v-btn size="small" :icon="video.bookmark ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="video.bookmark = !video.bookmark"></v-btn>
-                                <!-- <v-btn size="small" :icon="video.bookmark ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="toggleBookmark(video)"></v-btn> -->
+                                <v-btn size="small" :prepend-icon="video.bookmark ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="video.bookmark = !video.bookmark">{{ Math.floor(Math.random() * 10) }}</v-btn>
                                 <v-btn size="small" prepend-icon="mdi-chart-bar">{{ Math.floor(Math.random() * 100) }}</v-btn>
                                 <v-spacer></v-spacer>
                                 <v-btn color="secondary" icon="mdi-chevron-up" @click.prevent.stop="revealId = i"></v-btn>
@@ -111,26 +113,8 @@
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
 
-const { data } = await useFetch('/api/videos')
-
-// Iterar e identificar los videos que tiene el usuario guardados en su lista
-// onMounted(async () => {
-    // console.log('onMounted')
-    // if(auth.isLoggedIn){
-        // console.log('user is logged in')
-        // const userBookmarks = await useFetch(`/api/bookmarks/user/${auth.id}`)
-        // data.value.forEach(video => {
-        //     userBookmarks.forEach( bookmark => {
-        //         console.log(`video._id (${video._id}) === bookmark._id (${bookmark._id}) ?`)
-        //         if(video._id === bookmark._id) video.bookmark = true
-        //     })
-        // })
-    // }
-    // else{
-    //     console.log('user is NOT logged in')
-    // }
-// })
-
+// Lista de registros en video
+const { data: videos } = await useFetch('/api/videos') // reasignación de variable 'data' a 'videos'
 
 // Auxiliar para determinar el v-card del cual se desea ver más información
 const revealId = ref(null)
@@ -141,24 +125,24 @@ const revealId = ref(null)
  * lo más rápida posible.
  * @param {object} video Representa un registro de video
  */
-async function toggleBookmark(video){
-    if(!video.bookmark){
-        video.bookmark = true
-        await $fetch(`/api/bookmarks/user/${auth._id}`, {
-            method: 'PUT',
-            body: video,
-        })
-    }
-    else {
-        video.bookmark = false
-        await $fetch(`/api/bookmarks/user/${auth._id}`, {
-            method: 'DELETE',
-            body: video,
-        })
-    }
-    // Actualizar token (en particular, la lista de marcadores)
-    await auth.updateToken()
-}
+// async function toggleBookmark(video){
+//     if(!video.bookmark){
+//         video.bookmark = true
+//         await $fetch(`/api/bookmarks/user/${auth._id}`, {
+//             method: 'PUT',
+//             body: video,
+//         })
+//     }
+//     else {
+//         video.bookmark = false
+//         await $fetch(`/api/bookmarks/user/${auth._id}`, {
+//             method: 'DELETE',
+//             body: video,
+//         })
+//     }
+//     // Actualizar token (en particular, la lista de marcadores)
+//     await auth.updateToken()
+// }
 
 /**
  * Función para borrar un registro de video de la base de datos
