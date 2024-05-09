@@ -51,11 +51,12 @@ export const VideoSchema = defineMongooseModel({
             clipVideo: {type: 'string', trim: true}, // referencia al clip de video
             documentoCalificacion: {type: 'string', trim: true}, // referencia al pdf
             isPublic: {type: 'boolean', default: true}, // define si el registro es público
-            isDraft: {type: 'boolean', default: 'false'},
             location: { // geolocalización
                 lat: {type: 'number'},
                 lng: {type: 'number'},
             },
+            isDraft: {type: 'boolean', default: 'false'},
+            bookmarkedBy: [{type: Types.ObjectId, ref:"Usuario"}],
         },
     },
     

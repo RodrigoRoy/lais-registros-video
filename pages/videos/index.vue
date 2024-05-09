@@ -66,7 +66,7 @@
 
                             <!-- Acciones / botón para mostrar más información -->
                             <v-card-actions>
-                                <v-btn size="small" :prepend-icon="video.bookmark ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="video.bookmark = !video.bookmark">{{ Math.floor(Math.random() * 10) }}</v-btn>
+                                <v-btn size="small" :prepend-icon="video.adicional.bookmarkedBy.includes(auth.id) ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="toggleBookmark(video)">{{ video.adicional.bookmarkedBy.length }}</v-btn>
                                 <v-btn size="small" prepend-icon="mdi-chart-bar">{{ Math.floor(Math.random() * 100) }}</v-btn>
                                 <v-spacer></v-spacer>
                                 <v-btn color="secondary" icon="mdi-chevron-up" @click.prevent.stop="revealId = i"></v-btn>
@@ -120,29 +120,37 @@ const { data: videos } = await useFetch('/api/videos') // reasignación de varia
 const revealId = ref(null)
 
 /**
- * Agrega o quita un video de la lista de marcadores del usuario.
- * Adicionalmente lo marca en la lista de videos para una interaccion
- * lo más rápida posible.
+ * Agrega o quita un video de la lista de marcadores.
+ * Nota: Para evitar recargar la información de la lista de videos,
+ * además de realizar la petición a la BD para actualizar, 
+ * se modifica directamente la propiedad "adicional.bookmarkedBy"
  * @param {object} video Representa un registro de video
  */
-// async function toggleBookmark(video){
-//     if(!video.bookmark){
-//         video.bookmark = true
-//         await $fetch(`/api/bookmarks/user/${auth._id}`, {
-//             method: 'PUT',
-//             body: video,
-//         })
-//     }
-//     else {
-//         video.bookmark = false
-//         await $fetch(`/api/bookmarks/user/${auth._id}`, {
-//             method: 'DELETE',
-//             body: video,
-//         })
-//     }
-//     // Actualizar token (en particular, la lista de marcadores)
-//     await auth.updateToken()
-// }
+async function toggleBookmark(video){
+    // Sin sesión iniciada, no realizar cambios
+    if(!auth.id) return
+    
+    // Si hay sesión iniciada y está incluida en lista de marcadores
+    if(video.adicional.bookmarkedBy.includes(auth.id)){
+        // Quitar de la lista de marcadores
+        video.adicional.bookmarkedBy.splice(video.adicional.bookmarkedBy.indexOf(auth.id), 1)
+        await $fetch(`/api/bookmarks/user/${auth.id}`, {
+            method: 'DELETE',
+            body: video,
+        })
+    }
+    else {
+        // Agregar a la lista de marcadores
+        video.adicional.bookmarkedBy.push(auth.id)
+        // Actualizar en la base de datos
+        await $fetch(`/api/bookmarks/user/${auth.id}`, {
+            method: 'PUT',
+            body: video,
+        })
+    }
+    // Actualizar token (en particular, la lista de marcadores)
+    await auth.updateToken()
+}
 
 /**
  * Función para borrar un registro de video de la base de datos

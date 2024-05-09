@@ -10,11 +10,17 @@ export default defineEventHandler(async (event) => {
 
     // Actualizar lista de marcadores del usuario
     try {
-        return await UsuarioSchema.findByIdAndUpdate(
+        const updatedUser = await UsuarioSchema.findByIdAndUpdate(
             event.context.params._id, 
             { $pull: { bookmarks: video._id } }, 
-            { new: true}
+            { new: true}, 
         )
+        const updatedVideo = await VideoSchema.findByIdAndUpdate(
+            video._id,
+            { $pull: { 'adicional.bookmarkedBy': event.context.params._id } },
+            { new: true},
+        )
+        return { user: updatedUser, video: updatedVideo }
     }
     catch (error) {
         throw createError({ statusCode: 500, statusMessage: 'DB error', message: error })
