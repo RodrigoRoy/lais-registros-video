@@ -39,8 +39,6 @@
                                                 </template>
                                             </v-dialog>
                                         </v-list-item>
-
-
                                     </v-list>
                                 </v-menu>
                             </template>
