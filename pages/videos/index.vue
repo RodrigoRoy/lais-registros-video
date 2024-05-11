@@ -49,14 +49,6 @@
                             <!-- <nuxt-img height="250" :src="`/data/image/${video.adicional.imagen}`" fit="outside" quality="70" /> -->
                             <v-img height="250" width="auto" :src="`/data/image/${video.adicional.imagen}`" cover ></v-img>
 
-                            <!-- Subtítulo (fecha) -->
-                            <v-card-subtitle class="pt-4">
-                                <p>
-                                    <v-icon icon="mdi-calendar-blank" size="x-small"></v-icon>
-                                    {{ $dayjs(video.identificacion.fecha).format('DD/MM/YYYY') }}
-                                </p>
-                            </v-card-subtitle>
-
                             <!-- Resto del texto (descripción a una línea) -->
                             <v-card-text>
                                 <p class="text-truncate">{{ video.contenidoEstructura?.descripcionGeneral || '(Sin descripcion)'}}</p>
@@ -77,6 +69,10 @@
                                         <p class="text-caption text--primary">
                                             {{ video.identificacion.codigoReferencia }}
                                         </p>
+                                        <p>
+                                            <v-icon icon="mdi-calendar-blank" size="x-small"></v-icon>
+                                            {{ $dayjs(video.identificacion.fecha).format('DD/MM/YYYY') }}
+                                        </p>
                                         <p v-if="video.identificacion?.pais || video.identificacion?.lugar" class="text-body-2">
                                             <v-icon icon="mdi-map-marker" size="x-small"></v-icon>
                                             <span v-if="video.identificacion.pais">{{ video.identificacion.pais }}</span>
@@ -84,7 +80,7 @@
                                             <span v-if="video.identificacion.lugar">{{ video.identificacion.lugar }}</span>
                                         </p>
                                         <p v-if="video.identificacion?.personasEntrevistadas" class="text-body-2">
-                                            <v-icon icon="mdi-microphone-variant" size="x-small"></v-icon>
+                                            <v-icon icon="mdi-account" size="x-small"></v-icon>
                                             {{ video.identificacion.personasEntrevistadas }}
                                         </p>
                                         <p class="text-body-2">

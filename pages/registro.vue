@@ -4,14 +4,14 @@
         <v-form fast-fail validate-on="submit lazy" @submit.prevent="submit" ref="form">
             <p class="mb-6 text-h5 text-center text-high-emphasis text-uppercase">Registro</p>
             
-            <div class="text-subtitle-1 text-medium-emphasis">Usuario</div>
-            <v-text-field v-model="name" density="compact" placeholder="Nombre de usuario" prepend-inner-icon="mdi-account" variant="outlined" :rules="formRules.usuario" ></v-text-field>
-
             <div class="text-subtitle-1 text-medium-emphasis">Nombre completo</div>
-            <v-text-field v-model="fullname" density="compact" placeholder="Nombre real" prepend-inner-icon="mdi-badge-account" variant="outlined" :rules="formRules.fullname" ></v-text-field>
-
+            <v-text-field v-model="fullname" density="compact" placeholder="Lilia Guerrero" prepend-inner-icon="mdi-badge-account" variant="outlined" :rules="formRules.fullname" ></v-text-field>
+            
             <div class="text-subtitle-1 text-medium-emphasis">Correo</div>
-            <v-text-field v-model="email" density="compact" placeholder="Correo electrónico" prepend-inner-icon="mdi-email-outline" variant="outlined" :rules="formRules.email" ></v-text-field>
+            <v-text-field v-model="email" density="compact" placeholder="lguerrero@mupi.sv" prepend-inner-icon="mdi-email-outline" variant="outlined" :rules="formRules.email" ></v-text-field>
+            
+            <div class="text-subtitle-1 text-medium-emphasis">Nombre de usuario</div>
+            <v-text-field v-model="name" density="compact" placeholder="Lilia21" prepend-inner-icon="mdi-account" variant="outlined" :rules="formRules.usuario" ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
                 Contraseña
