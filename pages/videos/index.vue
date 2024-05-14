@@ -65,7 +65,7 @@
                             <!-- Acciones / botón para mostrar más información -->
                             <v-card-actions>
                                 <v-btn size="small" :prepend-icon="video.adicional.bookmarkedBy.includes(auth.id) ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="toggleBookmark(video)">{{ video.adicional.bookmarkedBy.length }}</v-btn>
-                                <v-btn size="small" prepend-icon="mdi-chart-bar">{{ Math.floor(Math.random() * 100) }}</v-btn>
+                                <v-btn size="small" prepend-icon="mdi-chart-bar">{{ video.adicional?.fetchCount || 0 }}</v-btn>
                                 <v-spacer></v-spacer>
                                 <v-btn color="secondary" icon="mdi-chevron-up" @click.prevent.stop="revealId = i"></v-btn>
                             </v-card-actions>
