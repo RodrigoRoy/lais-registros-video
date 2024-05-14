@@ -254,7 +254,8 @@
                             <!-- Acciones / botón para mostrar más información -->
                             <v-card-actions>
                                 <v-btn size="small" :prepend-icon="video.adicional.bookmarkedBy.includes(auth.id) ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="toggleBookmark(video)">{{ video.adicional.bookmarkedBy.length }}</v-btn>
-                                <v-btn size="small" prepend-icon="mdi-chart-bar">{{ video.adicional?.fetchCount || 0 }}</v-btn>
+                                <v-btn size="small" prepend-icon="mdi-chart-bar">{{ video.adicional.fetchCount }}</v-btn>
+                                <v-btn size="small" prepend-icon="mdi-play">{{ video.adicional.playCount }}</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
