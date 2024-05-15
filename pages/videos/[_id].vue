@@ -243,7 +243,7 @@
             <v-col cols="12" md="4" align="center">
                 <v-sheet class="pa-2 ma-2">
                         <v-card elevation="2" height="auto" width="auto" >
-                            <video controls width="100%" height="auto" :poster="`/data/image/${video.adicional.imagen}`" loop="true" muted="true">
+                            <video ref="videoClip" @play="videoClipStarPlaying" @pause="videoClipStopPlaying(video)" controls width="100%" height="auto" :poster="`/data/image/${video.adicional.imagen}`" :loop="false" :muted="false">
                                 <source :src="`/data/video/${video.adicional.clipVideo}`" />
                                 <p>
                                     Tu navegador no soporta video HTML. Aquí hay un
@@ -254,7 +254,8 @@
                             <!-- Acciones / botón para mostrar más información -->
                             <v-card-actions>
                                 <v-btn size="small" :prepend-icon="video.adicional.bookmarkedBy.includes(auth.id) ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="toggleBookmark(video)">{{ video.adicional.bookmarkedBy.length }}</v-btn>
-                                <v-btn size="small" prepend-icon="mdi-chart-bar">{{ Math.floor(Math.random() * 100) }}</v-btn>
+                                <v-btn size="small" prepend-icon="mdi-chart-bar">{{ video.adicional.fetchCount }}</v-btn>
+                                <v-btn size="small" prepend-icon="mdi-play">{{ video.adicional.playCount }}</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -281,14 +282,58 @@ const auth = useAuthStore()
 // Composable para obtener parametros desde URL
 const route = useRoute()
 
+// Información del registro de video
+const { data: video} = await useFetch(`/api/videos/${route.params._id}`)
+
 // Nombre de la pestaña actual
 const tab = ref('identificacion')
 
-// Imagen de prueba
-const testImage = ref('/imagenVideo.png')
+// Referencia al videoclip
+const videoClip = ref(null)
 
-// Información del registro de video
-const { data: video} = await useFetch(`/api/videos/${route.params._id}`)
+// Información auxiliar para detectar vistas del clip de video
+const videoClipData = reactive({
+    start: 0, // tiempo en segundo del video cuando se reproduce
+    stop: 0, // tiempo en segundo del video cuando se pausa
+    played: false, // evita multiples conteos
+    duration: 0, // duración total del video clip
+    playedPercent: 0, // porcentaje (entero) de reproducción
+    acceptedPercent: 20, // porcentaje para considerar el video como visto
+})
+
+/**
+ * Acciones cuando se comienza a reproducir el videoclip
+ */
+function videoClipStarPlaying(){
+    videoClipData.start = videoClip.value?.currentTime
+}
+
+/**
+ * Acciones cuando se pausa el video.
+ * Calcula el porcentaje de vista del videoclip y lo marca como visto.
+ * @param {object} video Representa un registro de video
+ */
+async function videoClipStopPlaying(video){
+    videoClipData.stop = videoClip.value?.currentTime
+    videoClipData.duration = videoClip.value?.duration
+    videoClipData.playedPercent = parseInt((Math.abs( videoClipData.start - videoClipData.stop ) * 100) / videoClipData.duration)
+    
+    // Calculo alternativo: valor global, en lugar de contar segmentos de reproducción
+    // videoClipData.playedPercent = parseInt((videoClipData.stop * 100) / videoClipData.duration)
+
+    // console.log(`${videoClipData.playedPercent}% played`)
+    
+    if(videoClipData.playedPercent >= videoClipData.acceptedPercent && !videoClipData.played){
+        videoClipData.played = true // evitar multiples conteos de vistas
+        video.adicional.playCount = video.adicional.playCount + 1
+        
+        // Actualizar contador de vistas del video en la base de datos
+        await $fetch(`/api/videos/${video._id}`, {
+            method: 'PUT',
+            body: JSON.parse(JSON.stringify(video)),
+        })
+    }
+}
 
 /**
  * Agrega o quita un video de la lista de marcadores.

@@ -26,12 +26,40 @@
         </v-sheet>
     </v-card>
 
+    <!-- Lista de marcadores del usuario -->
+    <v-container v-if="userBookmarks?.length > 0">
+        <v-row>
+            <v-col>
+                <p>Videos guardados</p>
+                <v-data-table :headers="dataTableHeaders" :items="userBookmarks" density="compact" hide-no-data :hide-default-footer="userBookmarks?.length <= 10">
+                    <template v-slot:item._id="{ value }">
+                        <nuxt-link :to="`/videos/${value}`" class="text-decoration-none">
+                            <v-btn icon="mdi-video" density="compact"></v-btn>
+                        </nuxt-link>
+                        <nuxt-link :to="`/videos/${value}/edit`" class="text-decoration-none">
+                            <v-btn icon="mdi-pencil" density="compact"></v-btn>
+                        </nuxt-link>
+                    </template>
+                </v-data-table>
+            </v-col>
+        </v-row>
+    </v-container>
+
     <!-- Lista de videos que ha creado el usuario -->
     <v-container v-if="userVideosList?.length > 0">
         <v-row>
             <v-col>
                 <p>Registros creados</p>
-                <v-data-table :headers="dataTableHeaders" :items="userVideosList"></v-data-table>
+                <v-data-table :headers="dataTableHeaders" :items="userVideosList" density="compact" hide-no-data :hide-default-footer="userVideosList?.length <= 10">
+                    <template v-slot:item._id="{ value }">
+                        <nuxt-link :to="`/videos/${value}`" class="text-decoration-none">
+                            <v-btn icon="mdi-video" density="compact"></v-btn>
+                        </nuxt-link>
+                        <nuxt-link :to="`/videos/${value}/edit`" class="text-decoration-none">
+                            <v-btn icon="mdi-pencil" density="compact"></v-btn>
+                        </nuxt-link>
+                    </template>
+                </v-data-table>
             </v-col>
         </v-row>
     </v-container>
@@ -52,10 +80,13 @@ const route = useRoute()
 const dayjs = useDayjs()
 
 // Información del usuario
-const user = await $fetch(`/api/usuarios/${route.params._id}`)
+const { data: user } = await useFetch(`/api/usuarios/${route.params._id}`)
+
+// Lista de marcadores del usuario
+const { data: userBookmarks } = await useFetch(`/api/bookmarks/user/${route.params._id}`)
 
 // Lista de videos creados por el usuario
-const userVideosList = await $fetch(`/api/videos/user/${route.params._id}`)
+const { data: userVideosList } = await useFetch(`/api/videos/user/${route.params._id}`)
 
 // Encabezados con los datos relevantes a mostrar para la lista de videos
 const dataTableHeaders = [
@@ -63,7 +94,6 @@ const dataTableHeaders = [
     {title: 'Fecha del registro', key: 'fechaString', value: item => dayjs(item.identificacion.fecha).format('DD/MM/YYYY')},
     {title: 'Duración', key: 'duracionString', value: item => minutesToHour(item.identificacion.duracion)},
     {title: 'Fecha de creación', key: 'creacionString', value: item => dayjs(item.createdAt).format('DD/MM/YYYY HH:mm')},
+    {title: 'Acciones', key: '_id'},
 ]
-
-
 </script>
