@@ -295,10 +295,9 @@ const videoClip = ref(null)
 const videoClipData = reactive({
     start: 0, // tiempo en segundo del video cuando se reproduce
     stop: 0, // tiempo en segundo del video cuando se pausa
-    played: false, // evita multiples conteos
     duration: 0, // duración total del video clip
     playedPercent: 0, // porcentaje (entero) de reproducción
-    acceptedPercent: 20, // porcentaje para considerar el video como visto
+    acceptedPercent: 25, // porcentaje para considerar el video como visto
 })
 
 /**
@@ -318,13 +317,8 @@ async function videoClipStopPlaying(video){
     videoClipData.duration = videoClip.value?.duration
     videoClipData.playedPercent = parseInt((Math.abs( videoClipData.start - videoClipData.stop ) * 100) / videoClipData.duration)
     
-    // Calculo alternativo: valor global, en lugar de contar segmentos de reproducción
-    // videoClipData.playedPercent = parseInt((videoClipData.stop * 100) / videoClipData.duration)
-
-    // console.log(`${videoClipData.playedPercent}% played`)
-    
-    if(videoClipData.playedPercent >= videoClipData.acceptedPercent && !videoClipData.played){
-        videoClipData.played = true // evitar multiples conteos de vistas
+    // Verificar que el tiempo de reproducción cuente como una vista
+    if(videoClipData.playedPercent >= videoClipData.acceptedPercent){
         video.adicional.playCount = video.adicional.playCount + 1
         
         // Actualizar contador de vistas del video en la base de datos
