@@ -44,6 +44,9 @@
                         <nuxt-link :to="`/usuarios/${user._id}`">
                             <v-btn color="primary" variant="text">Página personal</v-btn>
                         </nuxt-link>
+                        <nuxt-link :to="`/usuarios/${user._id}/edit`" v-if="auth?.isAdmin || user._id === auth?.id " >
+                            <v-btn color="primary" variant="text">Editar</v-btn>
+                        </nuxt-link>
                     </div>
                 </v-sheet>
                 
@@ -60,6 +63,10 @@
 //         'admin',
 //     ]
 // })
+
+// State manager
+import { useAuthStore } from '@/stores/auth'
+const auth = useAuthStore()
 
 // Datos de los usuarios
 const { data } = await useFetch('/api/usuarios')

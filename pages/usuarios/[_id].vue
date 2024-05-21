@@ -6,7 +6,7 @@
         <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-4 bg-blue-grey-lighten-2" elevation="4"  max-width="800" width="100%" rounded >
             <div>
                 <h2 class="font-weight-black">
-                    <nuxtImg src="personalPage.gif"></nuxtImg>
+                    <v-img height="120" src="~/assets/personalPage.gif"></v-img>
                     <h6 :class="user.active? 'text-green-darken-4' : 'text-red-darken-4'">Usuario <span v-if="!user.active">in</span>activo</h6>
                     <h4 class="text-capitalize" >Nombre: {{ user.name }} </h4>
                     <h4>Usuario: {{ user.fullname }}</h4>
@@ -31,7 +31,12 @@
         <v-row>
             <v-col>
                 <p>Videos guardados</p>
-                <v-data-table :headers="dataTableHeaders" :items="userBookmarks" density="compact" hide-no-data :hide-default-footer="userBookmarks?.length <= 10">
+                <v-data-table :headers="dataTableHeaders" :items="userBookmarks" density="compact" hide-no-data :hide-default-footer="userBookmarks?.length <= 10" hover items-per-page="5" :no-filter="true">
+                    <!-- Portada -->
+                    <template v-slot:item.portada="{ value }">
+                        <v-img :src="`/data/image/${value}`" cover></v-img>
+                    </template>
+                    <!-- Botones de acción (ver, editar) -->
                     <template v-slot:item._id="{ value }">
                         <nuxt-link :to="`/videos/${value}`" class="text-decoration-none">
                             <v-btn icon="mdi-video" density="compact"></v-btn>
@@ -50,7 +55,12 @@
         <v-row>
             <v-col>
                 <p>Registros creados</p>
-                <v-data-table :headers="dataTableHeaders" :items="userVideosList" density="compact" hide-no-data :hide-default-footer="userVideosList?.length <= 10">
+                <v-data-table :headers="dataTableHeaders" :items="userVideosList" density="compact" hide-no-data :hide-default-footer="userVideosList?.length <= 10" hover items-per-page="5" :no-filter="true">
+                    <!-- Portada -->
+                    <template v-slot:item.portada="{ value }">
+                        <v-img :src="`/data/image/${value}`" cover></v-img>
+                    </template>
+                    <!-- Botones de acción (ver, editar) -->
                     <template v-slot:item._id="{ value }">
                         <nuxt-link :to="`/videos/${value}`" class="text-decoration-none">
                             <v-btn icon="mdi-video" density="compact"></v-btn>
@@ -90,10 +100,11 @@ const { data: userVideosList } = await useFetch(`/api/videos/user/${route.params
 
 // Encabezados con los datos relevantes a mostrar para la lista de videos
 const dataTableHeaders = [
-    {title: 'Código de referencia', value: 'identificacion.codigoReferencia'},
-    {title: 'Fecha del registro', key: 'fechaString', value: item => dayjs(item.identificacion.fecha).format('DD/MM/YYYY')},
-    {title: 'Duración', key: 'duracionString', value: item => minutesToHour(item.identificacion.duracion)},
-    {title: 'Fecha de creación', key: 'creacionString', value: item => dayjs(item.createdAt).format('DD/MM/YYYY HH:mm')},
-    {title: 'Acciones', key: '_id'},
+    {title: 'Portada', key: 'portada', value: 'adicional.imagen', sortable: false},
+    {title: 'Código de referencia', key: 'codigoReferencia', value: 'identificacion.codigoReferencia', sortable: false},
+    {title: 'Fecha del registro', key: 'fechaString', value: item => dayjs(item.identificacion.fecha).format('DD/MM/YYYY'), sortable: false},
+    {title: 'Duración', key: 'duracionString', value: item => minutesToHour(item.identificacion.duracion), sortable: false},
+    {title: 'Fecha de creación', key: 'creacionString', value: item => dayjs(item.createdAt).format('DD/MM/YYYY HH:mm'), sortable: false},
+    {title: 'Acciones', key: '_id', value: '_id', sortable: false},
 ]
 </script>
