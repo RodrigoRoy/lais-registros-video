@@ -90,9 +90,14 @@ export const ConjuntoSchema = defineMongooseModel({
             imagen: {type: 'string', trim: true},
             documentoCalificacion: {type: 'string', trim: true},
             presentacion: {type: 'string', trim: true},
-            isPublic: {type: 'boolean', default: true},
+            isPublic: {type: 'boolean', default: true}, // define si el registro es público
+            tipo: {type: 'string', enum: ['Colección', 'Grupo documental']},
+            isDraft: {type: 'boolean', default: 'false'},
+            fetchCount: {type: 'number', default: 0},
+            parent: {type: Types.ObjectId, ref: 'Conjunto'},
+            child: [{type: Types.ObjectId, ref: 'Conjunto'}],
+            depth: {type: 'number', default: 0},
         },
-        tipo: {type: 'string', enum: ['Colección', 'Grupo documental']},
     },
     
     // Opciones adicionales del modelo

@@ -54,7 +54,9 @@ export default function (fieldName){
         notas: 'Notas',
             // Área de control de la descripción
         controlDescripcion: 'Control de la descripción',
-        documentalista: 'Documentalista',
+        documentalista: 'Archivista',
+        createdAt: 'Fecha de creación',
+        updatedAt: 'Fecha de actualización',
             // Información adicional
         adicional: 'Adicional',
         imagen: 'Imagen',
