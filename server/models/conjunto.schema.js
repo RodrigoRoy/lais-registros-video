@@ -76,7 +76,7 @@ export const ConjuntoSchema = defineMongooseModel({
         },
         controlDescripcion: {
             // COMPARTIDOS
-            documentalista: [{type: Types.ObjectId, ref: 'Usuario'}],
+            documentalista: {type: Types.ObjectId, ref: 'Usuario'},
             // fechaCreacion = createdAt
             // fechaActualizacion = updatedAt
 
@@ -88,7 +88,6 @@ export const ConjuntoSchema = defineMongooseModel({
         },
         adicional: {
             imagen: {type: 'string', trim: true},
-            documentoCalificacion: {type: 'string', trim: true},
             presentacion: {type: 'string', trim: true},
             isPublic: {type: 'boolean', default: true}, // define si el registro es público
             tipo: {type: 'string', enum: ['Colección', 'Grupo documental']},
@@ -96,6 +95,7 @@ export const ConjuntoSchema = defineMongooseModel({
             fetchCount: {type: 'number', default: 0},
             parent: {type: Types.ObjectId, ref: 'Conjunto'},
             child: [{type: Types.ObjectId, ref: 'Conjunto'}],
+            videos: [{type: Types.ObjectId, ref: 'Video'}],
             depth: {type: 'number', default: 0},
         },
     },

@@ -59,6 +59,7 @@ export const VideoSchema = defineMongooseModel({
             bookmarkedBy: [{type: Types.ObjectId, ref:"Usuario"}],
             fetchCount: {type: 'number', default: 0},
             playCount: {type: 'number', default: 0},
+            conjunto: {type: Types.ObjectId, ref:"Conjunto"}
         },
     },
     

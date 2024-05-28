@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
 
     // Buscar y borrar video en base de datos
     try {
-        return await VideoSchema.findOneAndDelete({ _id: event.context.params._id })
+        return await VideoSchema.findByIdAndDelete(event.context.params._id)
     }
     catch (error) {
         throw createError({ statusCode: 500, statusMessage: 'DB delete error', message: error })

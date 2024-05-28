@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
     // Actualizar información en base de datos
     try {
-        return await VideoSchema.findByIdAndUpdate(
+        return await ConjuntoSchema.findByIdAndUpdate(
             // busqueda por id
             event.context.params._id, 
             // reemplazar con el nuevo objeto (body)
@@ -16,6 +16,6 @@ export default defineEventHandler(async (event) => {
         )
     }
     catch (error) {
-        throw createError({ statusCode: 500, statusMessage: error })
+        throw createError({ statusCode: 500, statusMessage: 'Error en BD', message: error })
     }
 })

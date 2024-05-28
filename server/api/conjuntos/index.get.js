@@ -4,7 +4,7 @@
  */
 export default defineEventHandler( async (event) => {
     try {
-        return await VideoSchema.find({ 'adicional.isPublic': true, 'adicional.isDraft': false})
+        return await ConjuntoSchema.find({ 'adicional.isPublic': true, 'adicional.isDraft': false})
     }
     catch (error) {
         throw createError({statusCode: 500, statusMessage: 'Error en BD', message: error})
