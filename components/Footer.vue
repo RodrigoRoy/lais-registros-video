@@ -7,13 +7,13 @@
                     <v-container  fill-height class="text-center">
                         <v-row align="center">
                             <v-col >
-                                <v-img height="100" src="~/assets/LogoCONAHCYT.png"></v-img>
+                                <v-img height="100" src="~/assets/Logo CONAHCYT.png"></v-img>
                             </v-col>
                             <v-col >
-                                <v-img height="100" src="~/assets/LogoMora.png"></v-img>
+                                <v-img height="100" src="~/assets/Logo Mora.png"></v-img>
                             </v-col>
                             <v-col >
-                                <v-img height="100" src="~/assets/LogoLAIS.png"></v-img>
+                                <v-img height="100" src="~/assets/Logo LAIS.png"></v-img>
                             </v-col>
                         </v-row>
                     </v-container>

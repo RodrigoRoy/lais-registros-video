@@ -34,7 +34,7 @@
                                     </v-row>
 
                                     <v-row>
-                                        <v-col md="6">
+                                        <v-col xs="12" md="6">
                                             <v-text-field v-model="video.identificacion.personasEntrevistadas" label="Personas entrevistadas" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                         <v-col md="6">
@@ -43,19 +43,19 @@
                                     </v-row>
 
                                     <v-row>
-                                        <v-col md="6">
+                                        <v-col xs="12" md="6">
                                             <v-text-field v-model="video.identificacion.camara" label="Cámara" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col md="6">
+                                        <v-col xs="12" md="6">
                                             <v-text-field v-model="video.identificacion.iluminacion" label="Iluminación" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                     </v-row>
 
                                     <v-row>
-                                        <v-col md="6">
+                                        <v-col xs="12" md="6">
                                             <v-text-field v-model="video.identificacion.asistencia" label="Asistencia" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col md="6">
+                                        <v-col xs="12" md="6">
                                             <v-text-field v-model="video.identificacion.sonido" label="Sonido" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                     </v-row>
@@ -145,7 +145,7 @@
                     <v-window-item value="controlDescripcion">
                         <v-card flat>
                             <v-card-text>
-                                <v-text-field v-model="auth.fullname" label="Documentalista" variant="underlined" readonly ></v-text-field>
+                                <v-text-field v-model="auth.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
                                 <v-text-field v-model="today" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
                             </v-card-text>
                         </v-card>
@@ -158,8 +158,8 @@
                                 <v-file-input v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
                                 <v-file-input v-model="files.document" label="Documento de calificación" prepend-icon="mdi-file-document-outline" :rules="formRules.documentoCalificacion" accept=".pdf" show-size chips ></v-file-input>
                                 
-                                <v-checkbox v-model="video.adicional.isPublic" label="El registro de video es público" ></v-checkbox>
-                                <v-checkbox v-model="video.adicional.isDraft" label="Guardar registro de video como borrador" ></v-checkbox>
+                                <v-checkbox v-model="video.adicional.isPublic" label="Registro público" ></v-checkbox>
+                                <v-checkbox v-model="video.adicional.isDraft" label="Guardar como borrador" ></v-checkbox>
                                 
                                 <!-- Mapa interactivo (Leaflet) -->
                                 <p class="text-overline">Ubicación</p>
