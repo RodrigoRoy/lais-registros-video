@@ -47,6 +47,7 @@ export const VideoSchema = defineMongooseModel({
             documentalista: {type: Types.ObjectId, ref: 'Usuario'},
         },
         adicional: {
+            updates: [{type: Types.ObjectId, ref: 'Usuario'}], // lista de personas que actualizan el registro de video
             imagen: {type: 'string', trim: true}, // referencia a la portada
             clipVideo: {type: 'string', trim: true}, // referencia al clip de video
             documentoCalificacion: {type: 'string', trim: true}, // referencia al pdf

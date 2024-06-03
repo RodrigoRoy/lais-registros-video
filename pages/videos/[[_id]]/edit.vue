@@ -234,8 +234,8 @@ const video = reactive({...data})
 // Parsing para fecha (convertir de string a date)
 video.identificacion.fecha = video.identificacion.fecha ? new Date(video.identificacion.fecha) : null
 const documentalista = video.controlDescripcion.documentalista.fullname
-// Actualizar documentalista
-video.controlDescripcion.documentalista = auth.id
+// Editar listado de archivistas que han editado el registro
+video.adicional.updates = getUpdatedDocumentalistasList(video.adicional.updates, auth.id)
 // Auxiliar temporal para mostrar fecha de creación
 const createdAt = dayjs(video.createdAt).format('DD/MM/YYYY HH:mm')
 
@@ -388,6 +388,18 @@ function mapReady(){
     else{
         video.adicional.location = { lat: null, lng: null }
     }
+}
+
+/**
+ * Agrega al usuario actual a la lista de actualizaciones
+ * @param {[string]} updatesArray Lista de usuarios que han actualizado el registro (adicional.updates)
+ * @param {string} idUser Id del usuario que está editando el registro
+ * @returns {[string]} Arreglo actualizado y sin repeticiones de (Id's de) usuarios que han editado el registro
+ */
+function getUpdatedDocumentalistasList(updatesArray, idUser){
+    const updates = new Set(updatesArray)
+    updates.add(idUser)
+    return Array.from(updates)
 }
 
 /**

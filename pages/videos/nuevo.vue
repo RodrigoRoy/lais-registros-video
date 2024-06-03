@@ -280,6 +280,7 @@ const video = reactive({
         documentalista: auth?.id || null,
     },
     adicional: {
+        updates: [],
         imagen: '',
         clipVideo: '',
         documentoCalificacion: '',
