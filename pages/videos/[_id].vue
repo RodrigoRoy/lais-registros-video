@@ -493,7 +493,7 @@ function showPDF(video){
 
         // Imágenes codificas en formato Base64
         images: {
-            lais: getBase64Img()
+            lais: getLogosBase64()
         },
         
         // Encabezado (código de referencia)
