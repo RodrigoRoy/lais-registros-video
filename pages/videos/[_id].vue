@@ -373,11 +373,55 @@ async function videoClipStopPlaying(video){
 
 /**
  * Determina si un área/propiedad de la unidad documental está vacía
- * @param {Object} area Objecto que representa el conjunto de propiedades del área por verificar
+ * @param {string} areaString Nombre textual del área por verificar, tal como aparecen en el esquema de la BD
+ * @param {Object} areaObject Objecto que representa el conjunto de propiedades del área por verificar
  * @returns {boolean} True si todas las propiedades del área son vacias, falso en otro caso
  */
- function isAreaEmpty(area){
-    return !Object.values(area).every(x => x === null || x === 0 || !!x)
+ function isAreaEmpty(areaString, areaObject){
+    switch(areaString){
+        case 'identificacion':
+            if(areaObject.codigoReferencia) return false
+            if(areaObject.fecha) return false
+            if(areaObject.lugar) return false
+            if(areaObject.pais) return false
+            if(areaObject.duracion) return false
+            if(areaObject.personasEntrevistadas) return false
+            if(areaObject.entrevista) return false
+            if(areaObject.camara) return false
+            if(areaObject.iluminacion) return false
+            if(areaObject.asistencia) return false
+            if(areaObject.sonido) return false
+            return true
+        case 'contenidoEstructura':
+            if(areaObject.descripcionGeneral) return false
+            if(areaObject.estructuraFormal) return false
+            if(areaObject.descriptorOnomastico) return false
+            if(areaObject.descriptorToponimico) return false
+            return true
+        case 'condicionesAccesoUso':
+            if(areaObject.idiomaOriginal) return false
+            if(areaObject.soporte) return false
+            if(areaObject.numeroCasetes) return false
+            if(areaObject.color) return false
+            if(areaObject.audio) return false
+            if(areaObject.sistemaGrabacion) return false
+            if(areaObject.resolucionGrabacion) return false
+            if(areaObject.formatoVideoDigital) return false
+            if(areaObject.requisitosTecnicos) return false
+            return true
+        case 'documentacionAsociada':
+            if(areaObject.unidadesDescripcionRelacionadas) return false
+            if(areaObject.documentosAsociados) return false
+            return true
+        case 'notas':
+            if(areaObject.notas) return false
+            return true
+        case 'controlDescripcion':
+            if(areaObject.documentalista) return false
+            return true
+        default:
+            return true
+    }
 }
 
 /**
@@ -525,8 +569,8 @@ function showPDF(video){
             {text: 'Catalogación del fondo de registros en video del Laboratorio Audiovisual de Investigación Social del Instituto Mora.'},
 
             // Área de identificación
-            isAreaEmpty(video.identificacion) ? '' : {text: 'Área de identificación', style: 'subheader'},
-            isAreaEmpty(video.identificacion) ? '' : {
+            isAreaEmpty('identificacion', video.identificacion) ? '' : {text: 'Área de identificación', style: 'subheader'},
+            isAreaEmpty('identificacion', video.identificacion) ? '' : {
                 style: 'table',
                 table: {
                     widths: [100, '*'],
@@ -541,8 +585,8 @@ function showPDF(video){
             },
 
             // Área de contenido y estructura
-            isAreaEmpty(video.contenidoEstructura) ? '' : {text: 'Área de contenido y estructura', style: 'subheader'},
-            isAreaEmpty(video.contenidoEstructura) ? '' : {
+            isAreaEmpty('contenidoEstructura', video.contenidoEstructura) ? '' : {text: 'Área de contenido y estructura', style: 'subheader'},
+            isAreaEmpty('contenidoEstructura', video.contenidoEstructura) ? '' : {
                 style: 'table',
                 table: {
                     widths: [100, '*'],
@@ -557,8 +601,8 @@ function showPDF(video){
             },
 
             // Área de condiciones de acceso y uso
-            isAreaEmpty(video.condicionesAccesoUso) ? '' : {text: 'Área de condiciones de acceso y uso', style: 'subheader'},
-            isAreaEmpty(video.condicionesAccesoUso) ? '' : {
+            isAreaEmpty('condicionesAccesoUso', video.condicionesAccesoUso) ? '' : {text: 'Área de condiciones de acceso y uso', style: 'subheader'},
+            isAreaEmpty('condicionesAccesoUso', video.condicionesAccesoUso) ? '' : {
                 style: 'table',
                 table: {
                     widths: [100, '*'],
@@ -573,8 +617,8 @@ function showPDF(video){
             },
 
             // Área de documentación asociada
-            isAreaEmpty(video.documentacionAsociada) ? '' : {text: 'Área de documentación asociada', style: 'subheader'},
-            isAreaEmpty(video.documentacionAsociada) ? '' : {
+            isAreaEmpty('documentacionAsociada', video.documentacionAsociada) ? '' : {text: 'Área de documentación asociada', style: 'subheader'},
+            isAreaEmpty('documentacionAsociada', video.documentacionAsociada) ? '' : {
                 style: 'table',
                 table: {
                     widths: [100, '*'],
@@ -589,8 +633,8 @@ function showPDF(video){
             },
 
             // Área de notas
-            isAreaEmpty(video.notas) ? '' : {text: 'Área de notas', style: 'subheader'},
-            isAreaEmpty(video.notas) ? '' : {
+            isAreaEmpty('notas', video.notas) ? '' : {text: 'Área de notas', style: 'subheader'},
+            isAreaEmpty('notas', video.notas) ? '' : {
                 style: 'table',
                 table: {
                     widths: [100, '*'],
@@ -605,8 +649,8 @@ function showPDF(video){
             },
 
             // Área de control de la descripción
-            isAreaEmpty(video.controlDescripcion) ? '' : {text: 'Área de control de la descripción', style: 'subheader'},
-            isAreaEmpty(video.controlDescripcion) ? '' : {
+            isAreaEmpty('controlDescripcion', video.controlDescripcion) ? '' : {text: 'Área de control de la descripción', style: 'subheader'},
+            isAreaEmpty('controlDescripcion', video.controlDescripcion) ? '' : {
                 style: 'table',
                 table: {
                     widths: [100, '*'],
