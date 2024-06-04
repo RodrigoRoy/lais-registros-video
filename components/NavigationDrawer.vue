@@ -2,7 +2,10 @@
     
     <v-navigation-drawer v-model="website.isDrawerVisible" temporary>
         <v-list v-show="auth.isLoggedIn">
-            <nuxt-link :to="`/usuarios/${auth.id}`" class="text-decoration-none"><v-list-item :title="auth.fullname" :subtitle="auth.email" prepend-icon="mdi-account"></v-list-item></nuxt-link>
+            <nuxt-link :to="`/usuarios/${auth.id}`" class="text-decoration-none">
+                <v-list-item v-if="auth.profileImage" :title="auth.fullname" :subtitle="auth.email" :prepend-avatar="`/data/profile/${auth.profileImage}`"></v-list-item>
+                <v-list-item v-else :title="auth.fullname" :subtitle="auth.email"  prepend-icon="mdi-account"></v-list-item>
+            </nuxt-link>
         </v-list>
         
         <v-divider></v-divider>

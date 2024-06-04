@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
                     operation: body.operation,
                     admin: body.admin,
                     active: body.active,
+                    profileImage: body.profileImage ? body.profileImage : null, // la imagen de perfil es el único campo opcional
                 }
             },
             { new: true}

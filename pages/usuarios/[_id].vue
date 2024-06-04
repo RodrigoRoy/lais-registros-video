@@ -6,7 +6,8 @@
         <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-4 bg-blue-grey-lighten-2" elevation="4"  max-width="800" width="100%" rounded >
             <div>
                 <h2 class="font-weight-black">
-                    <v-img height="120" src="~/assets/personalPage.gif"></v-img>
+                    <v-img v-if="user.profileImage" class="align-center text-white" height="120" :src="`/data/profile/${user.profileImage}`" fit="cover" aspect-ratio="1/1"></v-img>
+                    <v-img v-else height="120" src="~/assets/personalPage.gif"></v-img>
                     <h6 :class="user.active? 'text-green-darken-4' : 'text-red-darken-4'">Usuario <span v-if="!user.active">in</span>activo</h6>
                     <h4 class="text-capitalize" >Nombre: {{ user.name }} </h4>
                     <h4>Usuario: {{ user.fullname }}</h4>

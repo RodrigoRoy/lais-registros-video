@@ -18,6 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
     const isAdmin = ref(null)
     const drafts = reactive([])
     const bookmarks = reactive([])
+    const profileImage = ref(null)
 
     /**
      * Inicia sesión del usuario.
@@ -125,6 +126,7 @@ export const useAuthStore = defineStore('auth', () => {
         isAdmin.value = user.admin ? user.admin : false
         drafts.value = user.drafts ? user.drafts : []
         bookmarks.value = user.bookmarks ? user.bookmarks : []
+        profileImage.value = user.profileImage ? user.profileImage : ''
 
         // Indicar que la sesión está iniciada
         isLoggedIn.value = true
@@ -145,8 +147,9 @@ export const useAuthStore = defineStore('auth', () => {
         isAdmin.value = null
         drafts.value = []
         bookmarks.value = []
+        profileImage.value = null
     }
 
-    return { login, logout, updateToken, setUserData, isLoggedIn, id, name, fullname, email, canCreate, canRead, canUpdate, canDelete, drafts, bookmarks, isAdmin }
+    return { login, logout, updateToken, setUserData, isLoggedIn, id, name, fullname, email, canCreate, canRead, canUpdate, canDelete, drafts, bookmarks, isAdmin, profileImage }
     
 })
