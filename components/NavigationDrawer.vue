@@ -13,13 +13,15 @@
         <v-list>
             <v-list-subheader>Navegación</v-list-subheader>
             <nuxt-link to="/videos" class="text-decoration-none" ><v-list-item prepend-icon="mdi-video" title="Registros de video"></v-list-item></nuxt-link>
+            <nuxt-link to="/conjuntos" class="text-decoration-none" ><v-list-item prepend-icon="mdi-folder-multiple" title="Grupos documentales"></v-list-item></nuxt-link>
         </v-list>
         
         <v-divider></v-divider>
 
         <v-list v-show="auth.isLoggedIn && auth.isAdmin">
             <v-list-subheader>Administración</v-list-subheader>
-            <nuxt-link to="/videos/nuevo" class="text-decoration-none"><v-list-item prepend-icon="mdi-video-plus" title="Crear registro"></v-list-item></nuxt-link>
+            <nuxt-link to="/videos/nuevo" class="text-decoration-none"><v-list-item prepend-icon="mdi-file-video" title="Crear registro"></v-list-item></nuxt-link>
+            <nuxt-link to="/conjuntos/nuevo" class="text-decoration-none"><v-list-item prepend-icon="mdi-folder-play" title="Crear grupo documental"></v-list-item></nuxt-link>
             <nuxt-link to="/usuarios" class="text-decoration-none"><v-list-item prepend-icon="mdi-account-multiple" title="Lista de usuarios"></v-list-item></nuxt-link>
         </v-list>
         

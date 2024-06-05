@@ -22,15 +22,18 @@
                                 
                                 <v-container class="px-0">
                                     <v-text-field v-model="conjunto.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" ></v-text-field>
-                                    <v-text-field v-model="conjunto.identificacion.titulo" label="Título" variant="underlined" clearable ></v-text-field>
+                                    <v-text-field v-model="conjunto.identificacion.titulo" label="Título" variant="underlined" clearable :rules="formRules.titulo" ></v-text-field>
                                     <v-row>
-                                        <v-col xs="12" lg="6">
-                                            <v-date-picker v-model="conjunto.identificacion.fecha" title="Fecha" ></v-date-picker>
+                                        <v-col xs="12" md="6">
+                                            <v-text-field v-model="conjunto.identificacion.fecha" label="Fecha (periodo)" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col xs="12" lg="6">
+                                        <v-col xs="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.pais" label="País" variant="underlined" clearable ></v-text-field>
+                                        </v-col>
+                                        <v-col xs="12" md="6">
                                             <v-select v-model="conjunto.identificacion.nivelDescripcion" label="Nivel de descripción" variant="underlined" clearable :items="selectLists.nivelDescripcion" ></v-select>
                                         </v-col>
+
                                     </v-row>
 
                                     <!-- solo colección -->
@@ -123,18 +126,18 @@
                     <v-window-item value="adicional">
                         <v-card flat>
                             <v-card-text>
-                                <v-file-input v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
                                 <v-textarea v-model="conjunto.adicional.presentacion" label="Presentación" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                <v-file-input v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
                                 
-                                <v-checkbox v-model="video.adicional.isPublic" label="Registro público" ></v-checkbox>
-                                <v-checkbox v-model="video.adicional.isDraft" label="Guardar como borrador" ></v-checkbox>
+                                <v-checkbox v-model="conjunto.adicional.isPublic" label="Registro público" ></v-checkbox>
+                                <v-checkbox v-model="conjunto.adicional.isDraft" label="Guardar como borrador" ></v-checkbox>
                             </v-card-text>
                         </v-card>
                     </v-window-item>
                 </v-window>
             </div>
             <div class="d-flex justify-center">
-                <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading">Crear registro de video</v-btn>
+                <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading">Crear conjunto documental</v-btn>
             </div>
         </v-form>
     </v-card>
@@ -194,7 +197,7 @@ const conjunto = reactive({
         // colección y grupo documental
         codigoReferencia: null,
         pais: null,
-        fecha: new Date(),
+        fecha: null,
         nivelDescripcion: null,
         titulo: null,
 
@@ -263,7 +266,17 @@ const formRules = {
             return 'El código de referencia es necesario'
         },
     ],
+    titulo: [
+        value => {
+            if(value) return true
+            return 'El título es necesario'
+        },
+    ],
     imagen: [
+        value => {
+            if (!value) return true
+            return ''
+        },
         value => {
             if (value && value.length && value[0].size < 1000000) return true
             return 'El tamaño de la imagen debe ser menor a 1 MB'

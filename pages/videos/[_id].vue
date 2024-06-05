@@ -293,9 +293,6 @@ const route = useRoute()
 // Información del registro de video
 const { data: video} = await useFetch(`/api/videos/${route.params._id}`)
 
-// Nombre de la pestaña actual
-const tab = ref('identificacion')
-
 // Referencia al videoclip
 const videoClip = ref(null)
 
