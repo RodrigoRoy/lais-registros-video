@@ -53,6 +53,7 @@
                                 </div>
                                 <v-container>
                                     <v-row>
+                                        <!-- Sección compartidos -->
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.codigoReferencia">
                                             <p class="text-body-1 font-weight-medium text-secondary">Código de referencia </p>
                                             <p class="text-body-1">{{ conjunto.identificacion.codigoReferencia }}</p>
@@ -73,7 +74,7 @@
                                             <p class="text-body-1 font-weight-medium text-secondary">Nivel de descripción</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.nivelDescripcion }}</p>
                                         </v-col>
-                                        <!-- Solo colección -->
+                                        <!-- Sección colección -->
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.volumenSoporte">
                                             <p class="text-body-1 font-weight-medium text-secondary">Volumen y soporte</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.volumenSoporte }}</p>
@@ -82,108 +83,104 @@
                                             <p class="text-body-1 font-weight-medium text-secondary">Coordinación</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.coordinacion }}</p>
                                         </v-col>
-                                        <!-- Solo grupo documental -->
+                                        <!-- Sección grupo documental -->
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.proyectoInvestigacion">
                                             <p class="text-body-1 font-weight-medium text-secondary">Proyecto de investigación</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.proyectoInvestigacion }}</p>
                                         </v-col>
-                                        <!-- <v-col cols="12" sm="4" v-if="conjunto.identificacion?.entrevista">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Entrevistador/a</p>
-                                            <p class="text-body-1">{{ conjunto.identificacion.entrevista }}</p>
+                                        <v-col cols="12" sm="4" v-if="conjunto.identificacion?.entidadProductora">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Entidad productora</p>
+                                            <p class="text-body-1">{{ conjunto.identificacion.entidadProductora }}</p>
                                         </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.identificacion?.camara">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Cámara</p>
-                                            <p class="text-body-1">{{ conjunto.identificacion.camara }}</p>
+                                        <v-col cols="12" sm="4" v-if="conjunto.identificacion?.investigacion">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Investigación</p>
+                                            <p class="text-body-1">{{ conjunto.identificacion.investigacion }}</p>
                                         </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.identificacion?.iluminacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Iluminación</p>
-                                            <p class="text-body-1">{{ conjunto.identificacion.iluminacion }}</p>
+                                        <v-col cols="12" sm="4" v-if="conjunto.identificacion?.coordinacionProyecto">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Coordinación del proyecto</p>
+                                            <p class="text-body-1">{{ conjunto.identificacion.coordinacionProyecto }}</p>
                                         </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.identificacion?.asistencia">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Asistencia</p>
-                                            <p class="text-body-1">{{ conjunto.identificacion.asistencia }}</p>
+                                        <v-col cols="12" sm="4" v-if="conjunto.identificacion?.coordinacionProduccionAudiovisual">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Coordinación de producción audiovisual</p>
+                                            <p class="text-body-1">{{ conjunto.identificacion.coordinacionProduccionAudiovisual }}</p>
                                         </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.identificacion?.sonido">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Sonido</p>
-                                            <p class="text-body-1">{{ conjunto.identificacion.sonido }}</p>
-                                        </v-col> -->
                                     </v-row>
                                 </v-container>
                             </div>
 
-                            <!-- ÁREA DE CONTENIDO Y ESTRUCTURA -->
-                            <!-- <div v-if="conjunto.contenidoEstructura?.descripcionGeneral || conjunto.contenidoEstructura?.descriptorOnomastico || conjunto.contenidoEstructura?.descriptorToponimico || conjunto.contenidoEstructura?.estructuraFormal" class="mt-2 mb-4">
+                            <!-- ÁREA DE CONTEXTO -->
+                            <div v-if="conjunto.contexto?.semblanzaBiografica || conjunto.contexto?.historiaInstitucional || conjunto.contexto?.historiaArchivistica" class="mt-2 mb-4">
+                                <div>
+                                    <p class="text-h6 font-italic font-weight-light">Área de contexto</p>
+                                </div>
+                                <v-container>
+                                    <v-row>
+                                        <!-- Sección de compartidos -->
+                                        <v-col cols="12" v-if="conjunto.contexto?.semblanzaBiografica">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Semblanza biográfica</p>
+                                            <p class="text-body-1">{{ conjunto.contexto.semblanzaBiografica }}</p>
+                                        </v-col>
+                                        <!-- Sección nivel de colección -->
+                                        <v-col cols="12" v-if="conjunto.contexto?.historiaInstitucional">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Historia institucional</p>
+                                            <p class="text-body-1">{{ conjunto.contexto.historiaInstitucional }}</p>
+                                        </v-col>
+                                        <v-col cols="12" v-if="conjunto.contexto?.historiaArchivistica">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Historia archivistica</p>
+                                            <p class="text-body-1">{{ conjunto.contexto.historiaArchivistica }}</p>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </div>
+
+                            <!-- ÁREA DE CONTENIDO ESTRUCTURA-->
+                            <div v-if="conjunto.contenidoEstructura?.alcanceContenido || conjunto.contenidoEstructura?.valoracionSeleccionEliminacion || conjunto.contenidoEstructura?.nuevosIngresos || conjunto.contenidoEstructura?.organizacion" class="mt-2 mb-4">
                                 <div>
                                     <p class="text-h6 font-italic font-weight-light">Área de contenido y estructura</p>
                                 </div>
                                 <v-container>
                                     <v-row>
-                                        <v-col cols="12" v-if="conjunto.contenidoEstructura?.descripcionGeneral">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Descripción general</p>
-                                            <p class="text-body-1">{{ conjunto.contenidoEstructura.descripcionGeneral }}</p>
+                                        <!-- Sección compartidos -->
+                                        <v-col cols="12" sm="4" v-if="conjunto.contenidoEstructura?.alcanceContenido">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Alcance de contenido</p>
+                                            <p class="text-body-1">{{ conjunto.contenidoEstructura.alcanceContenido }}</p>
                                         </v-col>
-                                        <v-col cols="12" v-if="conjunto.contenidoEstructura?.descriptorOnomastico">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Descriptor onomástico</p>
-                                            <p class="text-body-1">{{ conjunto.contenidoEstructura.descriptorOnomastico }}</p>
+                                        <v-col cols="12" sm="4" v-if="conjunto.contenidoEstructura?.valoracionSeleccionEliminacion">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Valoración de la selección de eliminación</p>
+                                            <p class="text-body-1">{{ conjunto.contenidoEstructura.valoracionSeleccionEliminacion }}</p>
                                         </v-col>
-                                        <v-col cols="12" v-if="conjunto.contenidoEstructura?.descriptorToponimico">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Descriptor toponímico</p>
-                                            <p class="text-body-1">{{ conjunto.contenidoEstructura.descriptorToponimico }}</p>
+                                        <!-- Sección nivel de colección -->
+                                        <v-col cols="12" sm="4" v-if="conjunto.contenidoEstructura?.nuevosIngresos">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Nuevos ingresos</p>
+                                            <p class="text-body-1">{{ conjunto.contenidoEstructura.nuevosIngresos }}</p>
                                         </v-col>
-                                        <v-col cols="12" v-if="conjunto.contenidoEstructura?.estructuraFormal">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Estructura formal</p>
-                                            <p class="text-body-1">{{ conjunto.contenidoEstructura.estructuraFormal }}</p>
+                                        <v-col cols="12" sm="4" v-if="conjunto.contenidoEstructura?.organizacion">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Organización</p>
+                                            <p class="text-body-1">{{ conjunto.contenidoEstructura.organizacion }}</p>
                                         </v-col>
                                     </v-row>
                                 </v-container>
-                            </div> -->
+                            </div>
 
-                            <!-- ÁREA DE CONDICIONES DE ACCESO Y USO-->
-                            <!-- <div v-if="conjunto.condicionesAccesoUso?.idiomaOriginal || conjunto.condicionesAccesoUso?.soporte || conjunto.condicionesAccesoUso?.numeroCasetes || conjunto.condicionesAccesoUso?.color || conjunto.condicionesAccesoUso?.audio || conjunto.condicionesAccesoUso?.sistemaGrabacion || conjunto.condicionesAccesoUso?.resolucionGrabacion || conjunto.condicionesAccesoUso?.formatoVideoDigital || conjunto.condicionesAccesoUso?.requisitosTecnicos" class="mt-2 mb-4">
+                            <!-- ÁREA DE CONDICIONES DE ACCESO DE USO -->
+                            <div v-if="conjunto.condicionesAccesoUso?.condicionesAcceso || conjunto.condicionesAccesoUso?.condicionesReproduccion" class="mt-2 mb-4">
                                 <div>
-                                    <p class="text-h6 font-italic font-weight-light">Área de condiciones de acceso y uso</p>
+                                    <p class="text-h6 font-italic font-weight-light">Área de condiciones de acceso de uso</p>
                                 </div>
                                 <v-container>
                                     <v-row>
-                                        <v-col cols="12" sm="4" v-if="conjunto.condicionesAccesoUso?.idiomaOriginal">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Idioma original</p>
-                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.idiomaOriginal }}</p>
+                                        <!-- Sección de compartidos -->
+                                        <v-col cols="12" v-if="conjunto.condicionesAccesoUso?.condicionesAcceso">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Condiciones de acceso</p>
+                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.condicionesAcceso }}</p>
                                         </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.condicionesAccesoUso?.soporte">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Soporte</p>
-                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.soporte }}</p>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.condicionesAccesoUso?.numeroCasetes">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Número de casetes</p>
-                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.numeroCasetes }}</p>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.condicionesAccesoUso?.color">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Color</p>
-                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.color }}</p>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.condicionesAccesoUso?.audio">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Audio</p>
-                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.audio }}</p>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.condicionesAccesoUso?.sistemaGrabacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Sistema de grabación</p>
-                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.sistemaGrabacion }}</p>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.condicionesAccesoUso?.resolucionGrabacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Resolución de grabación</p>
-                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.resolucionGrabacion }}</p>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.condicionesAccesoUso?.formatoVideoDigital">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Formato de video digital</p>
-                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.formatoVideoDigital }}</p>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.condicionesAccesoUso?.requisitosTecnicos">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Requisitos técnicos</p>
-                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.requisitosTecnicos }}</p>
+                                        <v-col cols="12" v-if="conjunto.condicionesAccesoUso?.condicionesReproduccion">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Condiciones de reproducción</p>
+                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.condicionesReproduccion }}</p>
                                         </v-col>
                                     </v-row>
                                 </v-container>
-                            </div> -->
+                            </div>
 
                             <!-- ÁREA DE NOTAS -->
                             <div v-if="conjunto.notas?.notas" class="mt-2 mb-4">
@@ -192,6 +189,7 @@
                                 </div>
                                 <v-container>
                                     <v-row>
+                                        <!-- Sección de compartidos -->
                                         <v-col cols="12" v-if="conjunto.notas?.notas">
                                             <p class="text-body-1 font-weight-medium text-secondary">Notas</p>
                                             <p class="text-body-1">{{ conjunto.notas.notas }}</p>
@@ -201,29 +199,26 @@
                             </div>
 
                             <!-- ÁREA DE CONTROL DE LA DESCRIPCIÓN -->
-                            <div v-if="conjunto.controlDescripcion" class="mt-2 mb-4">
+                            <div v-if="conjunto.controlDescripcion?.documentalista || conjunto.controlDescripcion?.reglasNormas" class="mt-2 mb-4">
                                 <div>
                                     <p class="text-h6 font-italic font-weight-light">Área de control de la descripción</p>
                                 </div>
                                 <v-container>
                                     <v-row>
+                                        <!-- Sección de compartidos -->
                                         <v-col cols="12" sm="4" v-if="conjunto.controlDescripcion?.documentalista">
                                             <p class="text-body-1 font-weight-medium text-secondary">Archivista</p>
                                             <p class="text-body-1">{{ conjunto.controlDescripcion.documentalista.fullname }}</p>
                                         </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.createdAt">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Fecha de creación</p>
-                                            <p class="text-body-1">{{ $dayjs(conjunto.createdAt).format('DD/MM/YYYY HH:mm') }}</p>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.updatedAt">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Fecha de actualización</p>
-                                            <p class="text-body-1">{{ $dayjs(conjunto.updatedAt).format('DD/MM/YYYY HH:mm') }}</p>
+                                        <!-- Sección de nivel de colección -->
+                                        <v-col cols="12" sm="4" v-if="conjunto.controlDescripcion.reglasNormas">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Reglas de normas</p>
+                                            <p class="text-body-1">{{ $dayjs(conjunto.controlDescripcion.reglasNormas).format('DD/MM/YYYY HH:mm') }}</p>
                                         </v-col>
                                     </v-row>
                                 </v-container>
                             </div>
 
-                            <!-- TODO: Área adicional no debe mostrarse en esta página -->
                         </v-card-text>
                     </v-card>
                 </v-sheet>
@@ -270,56 +265,55 @@ const dayjs = useDayjs()
 const route = useRoute()
 
 // Información del conjunto documental
-const { data: conjunto} = await useFetch(`/api/conjuntos/${route.params._id}`)
+const { data: conjunto } = await useFetch(`/api/conjuntos/${route.params._id}`)
 
 /**
- * TODO: ACTUALIZAR AL ESQUEMA DE CONJUNTO
  * Determina si un área/propiedad de la unidad documental está vacía
  * @param {string} areaString Nombre textual del área por verificar, tal como aparecen en el esquema de la BD
  * @param {Object} areaObject Objecto que representa el conjunto de propiedades del área por verificar
  * @returns {boolean} True si todas las propiedades del área son vacias, falso en otro caso
  */
  function isAreaEmpty(areaString, areaObject){
-    switch(areaString){
-        case 'identificacion':
+     switch(areaString){
+         case 'identificacion':
+            // Sección compartidos
             if(areaObject.codigoReferencia) return false
-            if(areaObject.fecha) return false
-            if(areaObject.lugar) return false
             if(areaObject.pais) return false
-            if(areaObject.duracion) return false
-            if(areaObject.personasEntrevistadas) return false
-            if(areaObject.entrevista) return false
-            if(areaObject.camara) return false
-            if(areaObject.iluminacion) return false
-            if(areaObject.asistencia) return false
-            if(areaObject.sonido) return false
+            if(areaObject.fecha) return false
+            if(areaObject.nivelDescripcion) return false
+            if(areaObject.titulo) return false
+            // Sección nivel colección
+            if(areaObject.volumenSoporte) return false
+            if(areaObject.coordinacion) return false
+            // Sección nivel grupo documental
+            if(areaObject.proyectoInvestigacion) return false
+            if(areaObject.entidadProductora) return false
+            if(areaObject.investigacion) return false
+            if(areaObject.coordinacionProyecto) return false
+            if(areaObject.coordinacionProduccionAudiovisual) return false
             return true
+        case 'contexto':
+            if(areaObject.semblanzaBiografica) return false
+            // Nivel de colección
+            if(areaObject.historiaInstitucional) return false
+            if(areaObject.historiaArchivistica) return false
+            return true    
         case 'contenidoEstructura':
-            if(areaObject.descripcionGeneral) return false
-            if(areaObject.estructuraFormal) return false
-            if(areaObject.descriptorOnomastico) return false
-            if(areaObject.descriptorToponimico) return false
+            if(areaObject.alcanceContenido) return false
+            if(areaObject.valoracionSeleccionEliminacion) return false
+            if(areaObject.nuevosIngresos) return false
+            if(areaObject.organizacion) return false
             return true
         case 'condicionesAccesoUso':
-            if(areaObject.idiomaOriginal) return false
-            if(areaObject.soporte) return false
-            if(areaObject.numeroCasetes) return false
-            if(areaObject.color) return false
-            if(areaObject.audio) return false
-            if(areaObject.sistemaGrabacion) return false
-            if(areaObject.resolucionGrabacion) return false
-            if(areaObject.formatoVideoDigital) return false
-            if(areaObject.requisitosTecnicos) return false
-            return true
-        case 'documentacionAsociada':
-            if(areaObject.unidadesDescripcionRelacionadas) return false
-            if(areaObject.documentosAsociados) return false
+            if(areaObject.condicionesAcceso) return false
+            if(areaObject.condicionesReproduccion) return false
             return true
         case 'notas':
             if(areaObject.notas) return false
             return true
         case 'controlDescripcion':
             if(areaObject.documentalista) return false
+            if(areaObject.reglasNormas) return false
             return true
         default:
             return true
@@ -327,62 +321,59 @@ const { data: conjunto} = await useFetch(`/api/conjuntos/${route.params._id}`)
 }
 
 /**
- * TODO: ACTUALIZAR AL ESQUEMA DE CONJUNTO DOCUMENTAL
- * Convierte una sección de la unidad documental (en video) a un arreglo de texto
+ * Convierte una sección del conjunto documental a un arreglo de texto
  * compatible para una tabla en formato de pdfmake.
  * @param {string} areaName Nombre del área/propiedad que se desea convertir
- * @param {Object} video Esquema de la base de datos para la unidad documental (video)
+ * @param {Object} conjunto Esquema de la base de datos para el conjunto documental
  * @returns {Array} Tabla de valores compatible con el formato de pdfmake
  */
-function area2bodytable(areaName, video){
+function area2bodytable(areaName, conjunto){
     let parsedFields = []
-
     switch(areaName){
         case 'identificacion':
             if(conjunto.identificacion.codigoReferencia) parsedFields.push([format('codigoReferencia'), conjunto.identificacion.codigoReferencia])
-            if(conjunto.identificacion.fecha) parsedFields.push([format('fecha'), conjunto.identificacion.fecha])
-            if(conjunto.identificacion.lugar) parsedFields.push([format('lugar'), conjunto.identificacion.lugar])
             if(conjunto.identificacion.pais) parsedFields.push([format('pais'), conjunto.identificacion.pais])
-            if(conjunto.identificacion.duracion) parsedFields.push([format('duracion'), conjunto.identificacion.duracion])
-            if(conjunto.identificacion.personasEntrevistadas) parsedFields.push([format('personasEntrevistadas'), conjunto.identificacion.personasEntrevistadas])
-            if(conjunto.identificacion.entrevista) parsedFields.push([format('entrevista'), conjunto.identificacion.entrevista])
-            if(conjunto.identificacion.camara) parsedFields.push([format('camara'), conjunto.identificacion.camara])
-            if(conjunto.identificacion.iluminacion) parsedFields.push([format('iluminacion'), conjunto.identificacion.iluminacion])
-            if(conjunto.identificacion.asistencia) parsedFields.push([format('asistencia'), conjunto.identificacion.asistencia])
-            if(conjunto.identificacion.sonido) parsedFields.push([format('sonido'), conjunto.identificacion.sonido])
+            if(conjunto.identificacion.fecha) parsedFields.push([format('fecha'), conjunto.identificacion.fecha])
+            if(conjunto.identificacion.nivelDescripcion) parsedFields.push([format('nivelDescripcion'), conjunto.identificacion.nivelDescripcion])
+            if(conjunto.identificacion.titulo) parsedFields.push([format('titulo'), conjunto.identificacion.titulo])
+            // Sección compartidos
+            if(conjunto.identificacion.volumenSoporte) parsedFields.push([format('volumenSoporte'), conjunto.identificacion.volumenSoporte])
+            if(conjunto.identificacion.coordinacion) parsedFields.push([format('coordinacion'), conjunto.identificacion.coordinacion])
+            // Sección nivel de grupo documental
+            if(conjunto.identificacion.proyectoInvestigacion) parsedFields.push([format('proyectoInvestigacion'), conjunto.identificacion.proyectoInvestigacion])
+            if(conjunto.identificacion.entidadProductora) parsedFields.push([format('entidadProductora'), conjunto.identificacion.entidadProductora])
+            if(conjunto.identificacion.investigacion) parsedFields.push([format('investigacion'), conjunto.identificacion.investigacion])
+            if(conjunto.identificacion.coordinacionProyecto) parsedFields.push([format('coordinacionProyecto'), conjunto.identificacion.coordinacionProyecto])
+            if(conjunto.identificacion.coordinacionProduccionAudiovisual) parsedFields.push([format('coordinacionProduccionAudiovisual'), conjunto.identificacion.coordinacionProduccionAudiovisual])
+            break
+        case 'contexto':
+            if(conjunto.contexto.semblanzaBiografica) parsedFields.push([format('semblanzaBiografica'), conjunto.contexto.semblanzaBiografica])
+            if(conjunto.contexto.historiaInstitucional) parsedFields.push([format('historiaInstitucional'), conjunto.contexto.historiaInstitucional])
+            if(conjunto.contexto.historiaArchivistica) parsedFields.push([format('historiaArchivistica'), conjunto.contexto.historiaArchivistica])
             break
         case 'contenidoEstructura':
-            if(conjunto.contenidoEstructura.descripcionGeneral) parsedFields.push([format('descripcionGeneral'), conjunto.contenidoEstructura.descripcionGeneral])
-            if(conjunto.contenidoEstructura.estructuraFormal) parsedFields.push([format('estructuraFormal'), conjunto.contenidoEstructura.estructuraFormal])
-            if(conjunto.contenidoEstructura.descriptorOnomastico) parsedFields.push([format('descriptorOnomastico'), conjunto.contenidoEstructura.descriptorOnomastico])
-            if(conjunto.contenidoEstructura.descriptorToponimico) parsedFields.push([format('descriptorToponimico'), conjunto.contenidoEstructura.descriptorToponimico])
+            if(conjunto.contenidoEstructura.alcanceContenido) parsedFields.push([format('alcanceContenido'), conjunto.contenidoEstructura.alcanceContenido])
+            if(conjunto.contenidoEstructura.valoracionSeleccionEliminacion) parsedFields.push([format('valoracionSeleccionEliminacion'), conjunto.contenidoEstructura.valoracionSeleccionEliminacion])
+            if(conjunto.contenidoEstructura.nuevosIngresos) parsedFields.push([format('nuevosIngresos'), conjunto.contenidoEstructura.nuevosIngresos])
+            if(conjunto.contenidoEstructura.organizacion) parsedFields.push([format('organizacion'), conjunto.contenidoEstructura.organizacion])
             break
         case 'condicionesAccesoUso':
-            if(conjunto.condicionesAccesoUso.idiomaOriginal) parsedFields.push([format('idiomaOriginal'), conjunto.condicionesAccesoUso.idiomaOriginal])
-            if(conjunto.condicionesAccesoUso.soporte) parsedFields.push([format('soporte'), conjunto.condicionesAccesoUso.soporte])
-            if(conjunto.condicionesAccesoUso.numeroCasetes) parsedFields.push([format('numeroCasetes'), conjunto.condicionesAccesoUso.numeroCasetes])
-            if(conjunto.condicionesAccesoUso.color) parsedFields.push([format('color'), conjunto.condicionesAccesoUso.color])
-            if(conjunto.condicionesAccesoUso.audio) parsedFields.push([format('audio'), conjunto.condicionesAccesoUso.audio])
-            if(conjunto.condicionesAccesoUso.sistemaGrabacion) parsedFields.push([format('sistemaGrabacion'), conjunto.condicionesAccesoUso.sistemaGrabacion])
-            if(conjunto.condicionesAccesoUso.resolucionGrabacion) parsedFields.push([format('resolucionGrabacion'), conjunto.condicionesAccesoUso.resolucionGrabacion])
-            if(conjunto.condicionesAccesoUso.formatoVideoDigital) parsedFields.push([format('formatoVideoDigital'), conjunto.condicionesAccesoUso.formatoVideoDigital])
-            if(conjunto.condicionesAccesoUso.requisitosTecnicos) parsedFields.push([format('requisitosTecnicos'), conjunto.condicionesAccesoUso.requisitosTecnicos])
-            break
-        case 'documentacionAsociada':
-            if(conjunto.documentacionAsociada.unidadesDescripcionRelacionadas) parsedFields.push([format('unidadesDescripcionRelacionadas'), conjunto.documentacionAsociada.unidadesDescripcionRelacionadas])
-            if(conjunto.documentacionAsociada.documentosAsociados) parsedFields.push([format('documentosAsociados'), conjunto.documentacionAsociada.documentosAsociados])
+            if(conjunto.condicionesAccesoUso.condicionesAcceso) parsedFields.push([format('condicionesAcceso'), conjunto.condicionesAccesoUso.condicionesAcceso])
+            if(conjunto.condicionesAccesoUso.condicionesReproduccion) parsedFields.push([format('condicionesReproduccion'), conjunto.condicionesAccesoUso.condicionesReproduccion])
             break
         case 'notas':
             if(conjunto.notas.notas) parsedFields.push([format('notas'), conjunto.notas.notas])
             break
         case 'controlDescripcion':
             if(conjunto.controlDescripcion.documentalista) parsedFields.push([format('documentalista'), conjunto.controlDescripcion.documentalista.fullname])
+            if(conjunto.controlDescripcion.reglasNormas) parsedFields.push([format('reglasNormas'), conjunto.controlDescripcion.reglasNormas])
             parsedFields.push([format('createdAt'), dayjs(conjunto.createdAt).format('DD/MM/YYYY HH:mm')])
             parsedFields.push([format('updatedAt'), dayjs(conjunto.updatedAt).format('DD/MM/YYYY HH:mm')])
             break
     }
 
     return parsedFields
+    //return [['Hello world', 'Hola mundo']]
 }
 
 // Auxiliares para mostrar imagen de referencia del video en PDF (pdfmake)
@@ -417,9 +408,9 @@ function getBase64Img(imageHTMLRef){
 
 /**
  * Acción para mostrar/descargar la documentación en formato PDF
- * @param {Object} video Esquema de la base de datos para la unidad documental (video)
+ * @param {Object} conjunto Esquema de la base de datos para el conjunto
  */
-function showPDF(video){
+function showPDF(conjunto){
     const docDefinition = {
         // Estilos para reusar durante la definición del documento
         styles: {
@@ -464,7 +455,6 @@ function showPDF(video){
                 layout: 'noBorders'
             }
         },
-
         // Definición del documento
         content: [
             {image: 'lais', fit: [110, 40], alignment: 'right'},

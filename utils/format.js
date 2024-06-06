@@ -64,6 +64,31 @@ export default function (fieldName){
         documentoCalificacion: 'Documento de calificación',
         isPublic: 'Visibilidad',
         location: 'Ubicación',
+        // CONJUNTO DOCUMENTAL
+            // Área de identificación
+        nivelDescripcion: 'Nivel de descripción',
+        titulo: 'Título',
+        volumenSoporte: 'Volumen y soporte',
+        coordinacion: 'Coordinación',
+        proyectoInvestigacion: 'Proyecto de investigación',
+        entidadProductora: 'Entidad productora',
+        investigacion: 'Investigación',
+        coordinacionProyecto: 'Coordinación de proyecto',
+        coordinacionProduccionAudiovisual: 'Coordinación de producción audiovisual',
+            // Área de contexto
+        semblanzaBiografica: 'Semblanza biográfica',
+        historiaInstitucional: 'Historia institucional',
+        historiaArchivistica: 'Historia archivistica',
+            //Área de contenido y estructura
+        alcanceContenido: 'Alcance y contenido',
+        valoracionSeleccionEliminacion: 'Valoración, selección y eliminación',
+        nuevosIngresos: 'Nuevos ingresos',
+        organizacion: 'Organización',
+            // Área de condiciones de acceso y uso
+        condicionesAcceso: 'Condiciones de acceso',
+        condicionesReproduccion: 'Condiciones de reproducción',
+            // Área de control de la descripción
+        reglasNormas: 'Reglas y normas',
     }
 
     // Si no existe la traducción deseada, devolver cadena vacía

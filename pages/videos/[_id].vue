@@ -214,7 +214,7 @@
                             </div>
 
                             <!-- ÁREA DE CONTROL DE LA DESCRIPCIÓN -->
-                            <div v-if="video.controlDescripcion" class="mt-2 mb-4">
+                            <div v-if="video.controlDescripcion?.documentalista" class="mt-2 mb-4">
                                 <div>
                                     <p class="text-h6 font-italic font-weight-light">Área de control de la descripción</p>
                                 </div>
