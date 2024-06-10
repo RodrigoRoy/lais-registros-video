@@ -72,12 +72,12 @@ const formRules = {
     fullname: [
         value => {
             if (value) return true
-            return 'Nombre es necesario'
+            return 'Nombre completo es necesario'
         }
     ],
     profileImage: [
         value => {
-            if (value.length && value[0].size < 1000000) return true
+            if (!value || (value.length && value[0].size < 1000000)) return true
             return 'El tamaño de la imagen debe ser menor a 1 MB'
         }
     ],

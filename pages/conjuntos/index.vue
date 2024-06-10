@@ -67,9 +67,6 @@
                                 <v-card v-if="revealId === i" class="position-absolute w-100" height="100%" style="bottom: 0;">
                                     <v-card-text class="pb-0">
                                         <p class="text-caption text--primary">
-                                            {{ conjunto.identificacion.titulo }}
-                                        </p>
-                                        <p class="text-caption text--primary">
                                             {{ conjunto.identificacion.codigoReferencia }}
                                         </p>
                                         <p class="text-caption text--primary">

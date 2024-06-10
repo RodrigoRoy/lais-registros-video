@@ -289,19 +289,19 @@ const formRules = {
     ],
     imagen: [
         value => {
-            if (value && value.length && value[0].size < 1000000) return true
+            if (!value || (value && value.length && value[0].size < 1000000)) return true
             return 'El tamaño de la imagen debe ser menor a 1 MB'
         }
     ],
     clipVideo: [
         value => {
-            if (value && value.length && value[0].size < 9000000) return true
+            if (!value || (value && value.length && value[0].size < 9000000)) return true
             return 'El tamaño del video debe ser menor a 9 MB'
         }
     ],
     documentoCalificacion: [
         value => {
-            if (value && value.length && value[0].size < 1000000) return true
+            if (!value || (value && value.length && value[0].size < 1000000)) return true
             return 'El tamaño del video debe ser menor a 1 MB'
         }
     ],

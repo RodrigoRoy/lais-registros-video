@@ -46,10 +46,16 @@
                         </template>
 
                         <v-card-text>
+                            <!-- Presentación del conjunto documental -->
+                            <div v-if="conjunto.adicional?.presentacion">
+                                <p class="text-body-1 font-weight-light mb-6">
+                                    {{ conjunto.adicional.presentacion }}
+                                </p>
+                            </div>
                             <!-- ÁREA DE IDENTIFICACIÓN -->
                             <div v-if="conjunto.identificacion?.codigoReferencia || conjunto.identificacion?.pais || conjunto.identificacion?.fecha || conjunto.identificacion?.nivelDescripcion || conjunto.identificacion?.titulo || conjunto.identificacion?.volumenSoporte || conjunto.identificacion?.coordinacion || conjunto.identificacion?.proyectoInvestigacion || conjunto.identificacion?.entidadProductora || conjunto.identificacion?.investigacion || conjunto.identificacion?.coordinacionProyecto || conjunto.identificacion?.coordinacionProduccionAudiovisual" class="mt-2 mb-4">
                                 <div>
-                                    <p class=" text-h6 font-italic font-weight-light">Área de identificación</p>
+                                    <p class="text-h6 font-italic font-weight-light">Área de identificación</p>
                                 </div>
                                 <v-container>
                                     <v-row>
@@ -203,6 +209,11 @@
                                 </div>
                                 <v-container>
                                     <v-row>
+                                        <!-- Colección -->
+                                        <v-col cols="12" v-if="conjunto.controlDescripcion.reglasNormas">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Reglas o normas</p>
+                                            <p class="text-body-1">{{ conjunto.controlDescripcion.reglasNormas }}</p>
+                                        </v-col>
                                         <!-- Compartidos -->
                                         <v-col cols="12" sm="4" v-if="conjunto.controlDescripcion?.documentalista">
                                             <p class="text-body-1 font-weight-medium text-secondary">Archivista</p>
@@ -215,11 +226,6 @@
                                         <v-col cols="12" sm="4" v-if="conjunto.updatedAt">
                                             <p class="text-body-1 font-weight-medium text-secondary">Fecha de actualización</p>
                                             <p class="text-body-1">{{ $dayjs(conjunto.updatedAt).format('DD/MM/YYYY HH:mm') }}</p>
-                                        </v-col>
-                                        <!-- Colección -->
-                                        <v-col cols="12" v-if="conjunto.controlDescripcion.reglasNormas">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Reglas o normas</p>
-                                            <p class="text-body-1">{{ $dayjs(conjunto.controlDescripcion.reglasNormas).format('DD/MM/YYYY HH:mm') }}</p>
                                         </v-col>
                                     </v-row>
                                 </v-container>
@@ -234,7 +240,7 @@
                 <v-sheet class="pa-2 ma-2">
                         <v-card elevation="2" height="auto" width="auto" >
                             <img v-if="conjunto.adicional?.imagen" :src="`/data/image/${conjunto.adicional.imagen}`" width="100%" height="auto" ref="image" id="image"></img>
-                            <img v-else src="~/assets/Logo LAIS.png" width="auto" height="300" ref="image" id="image"></img>
+                            <img v-else src="~/assets/Logo LAIS.png" width="100%" height="auto" ref="image" id="image"></img>
 
                             <!-- Acciones / botón para mostrar más información -->
                             <v-card-actions>

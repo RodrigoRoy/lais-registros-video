@@ -118,7 +118,7 @@
                         <v-card flat>
                             <v-card-text>
                                 <v-text-field v-model="conjunto.controlDescripcion.documentalista.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
-                                <v-text-field v-model="conjunto.controlDescripcion.reglasNormas" label="Reglas o normas" variant="underlined" readonly ></v-text-field>
+                                <v-text-field v-model="conjunto.controlDescripcion.reglasNormas" label="Reglas o normas" variant="underlined" ></v-text-field>
                                 <v-text-field v-model="createdAt" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
                                 <v-text-field v-model="today" label="Fecha de actualización" variant="underlined" readonly ></v-text-field>
                             </v-card-text>
@@ -150,7 +150,6 @@
             </div>
         </v-form>
     </v-card>
-    {{ conjunto }}
 </template>
 
 <script setup>
@@ -229,11 +228,7 @@ const formRules = {
     ],
     imagen: [
         value => {
-            if (!value) return true
-            return ''
-        },
-        value => {
-            if (value && value.length && value[0].size < 1000000) return true
+            if (!value || (value && value.length && value[0].size < 1000000)) return true
             return 'El tamaño de la imagen debe ser menor a 1 MB'
         }
     ],
