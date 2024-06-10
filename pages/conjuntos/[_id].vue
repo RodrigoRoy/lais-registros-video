@@ -53,13 +53,13 @@
                                 </div>
                                 <v-container>
                                     <v-row>
-                                        <!-- Sección compartidos -->
+                                        <!-- Compartidos -->
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.codigoReferencia">
                                             <p class="text-body-1 font-weight-medium text-secondary">Código de referencia </p>
                                             <p class="text-body-1">{{ conjunto.identificacion.codigoReferencia }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.titulo">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Título </p>
+                                            <p class="text-body-1 font-weight-medium text-secondary">Título</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.titulo }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.pais">
@@ -67,14 +67,14 @@
                                             <p class="text-body-1">{{ conjunto.identificacion.pais }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.fecha">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Fecha</p>
+                                            <p class="text-body-1 font-weight-medium text-secondary">Fecho o periodo</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.fecha }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.nivelDescripcion">
                                             <p class="text-body-1 font-weight-medium text-secondary">Nivel de descripción</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.nivelDescripcion }}</p>
                                         </v-col>
-                                        <!-- Sección colección -->
+                                        <!-- Colección -->
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.volumenSoporte">
                                             <p class="text-body-1 font-weight-medium text-secondary">Volumen y soporte</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.volumenSoporte }}</p>
@@ -83,7 +83,7 @@
                                             <p class="text-body-1 font-weight-medium text-secondary">Coordinación</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.coordinacion }}</p>
                                         </v-col>
-                                        <!-- Sección grupo documental -->
+                                        <!-- Grupo documental -->
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.proyectoInvestigacion">
                                             <p class="text-body-1 font-weight-medium text-secondary">Proyecto de investigación</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.proyectoInvestigacion }}</p>
@@ -115,12 +115,12 @@
                                 </div>
                                 <v-container>
                                     <v-row>
-                                        <!-- Sección de compartidos -->
+                                        <!-- Compartidos -->
                                         <v-col cols="12" v-if="conjunto.contexto?.semblanzaBiografica">
                                             <p class="text-body-1 font-weight-medium text-secondary">Semblanza biográfica</p>
                                             <p class="text-body-1">{{ conjunto.contexto.semblanzaBiografica }}</p>
                                         </v-col>
-                                        <!-- Sección nivel de colección -->
+                                        <!-- Colección -->
                                         <v-col cols="12" v-if="conjunto.contexto?.historiaInstitucional">
                                             <p class="text-body-1 font-weight-medium text-secondary">Historia institucional</p>
                                             <p class="text-body-1">{{ conjunto.contexto.historiaInstitucional }}</p>
@@ -133,28 +133,28 @@
                                 </v-container>
                             </div>
 
-                            <!-- ÁREA DE CONTENIDO ESTRUCTURA-->
+                            <!-- ÁREA DE CONTENIDO Y ESTRUCTURA-->
                             <div v-if="conjunto.contenidoEstructura?.alcanceContenido || conjunto.contenidoEstructura?.valoracionSeleccionEliminacion || conjunto.contenidoEstructura?.nuevosIngresos || conjunto.contenidoEstructura?.organizacion" class="mt-2 mb-4">
                                 <div>
                                     <p class="text-h6 font-italic font-weight-light">Área de contenido y estructura</p>
                                 </div>
                                 <v-container>
                                     <v-row>
-                                        <!-- Sección compartidos -->
-                                        <v-col cols="12" sm="4" v-if="conjunto.contenidoEstructura?.alcanceContenido">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Alcance de contenido</p>
+                                        <!-- Compartidos -->
+                                        <v-col cols="12" v-if="conjunto.contenidoEstructura?.alcanceContenido">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Alcance y contenido</p>
                                             <p class="text-body-1">{{ conjunto.contenidoEstructura.alcanceContenido }}</p>
                                         </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.contenidoEstructura?.valoracionSeleccionEliminacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Valoración de la selección de eliminación</p>
+                                        <v-col cols="12" v-if="conjunto.contenidoEstructura?.valoracionSeleccionEliminacion">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Valoración, selección y eliminación</p>
                                             <p class="text-body-1">{{ conjunto.contenidoEstructura.valoracionSeleccionEliminacion }}</p>
                                         </v-col>
-                                        <!-- Sección nivel de colección -->
-                                        <v-col cols="12" sm="4" v-if="conjunto.contenidoEstructura?.nuevosIngresos">
+                                        <!-- Colección -->
+                                        <v-col cols="12" v-if="conjunto.contenidoEstructura?.nuevosIngresos">
                                             <p class="text-body-1 font-weight-medium text-secondary">Nuevos ingresos</p>
                                             <p class="text-body-1">{{ conjunto.contenidoEstructura.nuevosIngresos }}</p>
                                         </v-col>
-                                        <v-col cols="12" sm="4" v-if="conjunto.contenidoEstructura?.organizacion">
+                                        <v-col cols="12" v-if="conjunto.contenidoEstructura?.organizacion">
                                             <p class="text-body-1 font-weight-medium text-secondary">Organización</p>
                                             <p class="text-body-1">{{ conjunto.contenidoEstructura.organizacion }}</p>
                                         </v-col>
@@ -165,11 +165,10 @@
                             <!-- ÁREA DE CONDICIONES DE ACCESO DE USO -->
                             <div v-if="conjunto.condicionesAccesoUso?.condicionesAcceso || conjunto.condicionesAccesoUso?.condicionesReproduccion" class="mt-2 mb-4">
                                 <div>
-                                    <p class="text-h6 font-italic font-weight-light">Área de condiciones de acceso de uso</p>
+                                    <p class="text-h6 font-italic font-weight-light">Área de condiciones de acceso y uso</p>
                                 </div>
                                 <v-container>
                                     <v-row>
-                                        <!-- Sección de compartidos -->
                                         <v-col cols="12" v-if="conjunto.condicionesAccesoUso?.condicionesAcceso">
                                             <p class="text-body-1 font-weight-medium text-secondary">Condiciones de acceso</p>
                                             <p class="text-body-1">{{ conjunto.condicionesAccesoUso.condicionesAcceso }}</p>
@@ -189,7 +188,6 @@
                                 </div>
                                 <v-container>
                                     <v-row>
-                                        <!-- Sección de compartidos -->
                                         <v-col cols="12" v-if="conjunto.notas?.notas">
                                             <p class="text-body-1 font-weight-medium text-secondary">Notas</p>
                                             <p class="text-body-1">{{ conjunto.notas.notas }}</p>
@@ -205,14 +203,22 @@
                                 </div>
                                 <v-container>
                                     <v-row>
-                                        <!-- Sección de compartidos -->
+                                        <!-- Compartidos -->
                                         <v-col cols="12" sm="4" v-if="conjunto.controlDescripcion?.documentalista">
                                             <p class="text-body-1 font-weight-medium text-secondary">Archivista</p>
                                             <p class="text-body-1">{{ conjunto.controlDescripcion.documentalista.fullname }}</p>
                                         </v-col>
-                                        <!-- Sección de nivel de colección -->
-                                        <v-col cols="12" sm="4" v-if="conjunto.controlDescripcion.reglasNormas">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Reglas de normas</p>
+                                        <v-col cols="12" sm="4" v-if="conjunto.createdAt">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Fecha de creación</p>
+                                            <p class="text-body-1">{{ $dayjs(conjunto.createdAt).format('DD/MM/YYYY HH:mm') }}</p>
+                                        </v-col>
+                                        <v-col cols="12" sm="4" v-if="conjunto.updatedAt">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Fecha de actualización</p>
+                                            <p class="text-body-1">{{ $dayjs(conjunto.updatedAt).format('DD/MM/YYYY HH:mm') }}</p>
+                                        </v-col>
+                                        <!-- Colección -->
+                                        <v-col cols="12" v-if="conjunto.controlDescripcion.reglasNormas">
+                                            <p class="text-body-1 font-weight-medium text-secondary">Reglas o normas</p>
                                             <p class="text-body-1">{{ $dayjs(conjunto.controlDescripcion.reglasNormas).format('DD/MM/YYYY HH:mm') }}</p>
                                         </v-col>
                                     </v-row>
@@ -268,7 +274,7 @@ const route = useRoute()
 const { data: conjunto } = await useFetch(`/api/conjuntos/${route.params._id}`)
 
 /**
- * Determina si un área/propiedad de la unidad documental está vacía
+ * Determina si un área/propiedad del conjunto documental está vacía
  * @param {string} areaString Nombre textual del área por verificar, tal como aparecen en el esquema de la BD
  * @param {Object} areaObject Objecto que representa el conjunto de propiedades del área por verificar
  * @returns {boolean} True si todas las propiedades del área son vacias, falso en otro caso
@@ -332,10 +338,10 @@ function area2bodytable(areaName, conjunto){
     switch(areaName){
         case 'identificacion':
             if(conjunto.identificacion.codigoReferencia) parsedFields.push([format('codigoReferencia'), conjunto.identificacion.codigoReferencia])
+            if(conjunto.identificacion.titulo) parsedFields.push([format('titulo'), conjunto.identificacion.titulo])
             if(conjunto.identificacion.pais) parsedFields.push([format('pais'), conjunto.identificacion.pais])
             if(conjunto.identificacion.fecha) parsedFields.push([format('fecha'), conjunto.identificacion.fecha])
             if(conjunto.identificacion.nivelDescripcion) parsedFields.push([format('nivelDescripcion'), conjunto.identificacion.nivelDescripcion])
-            if(conjunto.identificacion.titulo) parsedFields.push([format('titulo'), conjunto.identificacion.titulo])
             // Sección compartidos
             if(conjunto.identificacion.volumenSoporte) parsedFields.push([format('volumenSoporte'), conjunto.identificacion.volumenSoporte])
             if(conjunto.identificacion.coordinacion) parsedFields.push([format('coordinacion'), conjunto.identificacion.coordinacion])
@@ -373,10 +379,9 @@ function area2bodytable(areaName, conjunto){
     }
 
     return parsedFields
-    //return [['Hello world', 'Hola mundo']]
 }
 
-// Auxiliares para mostrar imagen de referencia del video en PDF (pdfmake)
+// Auxiliares para mostrar imagen de referencia del conjunto para PDF (pdfmake)
 const image = ref()
 const imageWidth = ref(0)
 const imageHeight = ref(0)

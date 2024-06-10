@@ -479,7 +479,7 @@ function area2bodytable(areaName, video){
     return parsedFields
 }
 
-// Auxiliares para mostrar imagen de referencia del video en PDF (pdfmake)
+// Auxiliares para mostrar imagen de referencia del video para PDF (pdfmake)
 const image = ref()
 const imageWidth = ref(0)
 const imageHeight = ref(0)

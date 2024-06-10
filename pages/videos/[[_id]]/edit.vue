@@ -145,7 +145,7 @@
                     <v-window-item value="controlDescripcion">
                         <v-card flat>
                             <v-card-text>
-                                <v-text-field v-model="documentalista" label="Documentalista" variant="underlined" readonly ></v-text-field>
+                                <v-text-field v-model="video.controlDescripcion.documentalista.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
                                 <v-text-field v-model="createdAt" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
                                 <v-text-field v-model="today" label="Fecha de actualización" variant="underlined" readonly ></v-text-field>
                             </v-card-text>
@@ -233,7 +233,6 @@ const data = await $fetch(`/api/videos/${route.params._id}`)
 const video = reactive({...data})
 // Parsing para fecha (convertir de string a date)
 video.identificacion.fecha = video.identificacion.fecha ? new Date(video.identificacion.fecha) : null
-const documentalista = video.controlDescripcion.documentalista.fullname
 // Editar listado de archivistas que han editado el registro
 video.adicional.updates = getUpdatedDocumentalistasList(video.adicional.updates, auth.id)
 // Auxiliar temporal para mostrar fecha de creación
@@ -432,7 +431,7 @@ function getUpdatedDocumentalistasList(updatesArray, idUser){
 }
 
 /**
- * Acciones al dar clic al botón de Crear nuevo registro de video.
+ * Acciones al dar clic al botón de confirmación de edición.
  * Se realizan validaciones, si todo es correcto se envia información a la base de datos
  */
  async function submit(){
