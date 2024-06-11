@@ -1,17 +1,22 @@
 <template>
     <h4 class="text-h4 pa-6 ma-2">
-        Página personal
+        Perfil
     </h4>
     <v-card color="transparent">
         <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-4 bg-blue-grey-lighten-2" elevation="4"  max-width="800" width="100%" rounded >
             <div>
-                <h2 class="font-weight-black">
-                    <v-img v-if="user.profileImage" class="align-center text-white" height="120" :src="`/data/profile/${user.profileImage}`" fit="cover" aspect-ratio="1/1"></v-img>
-                    <v-img v-else height="120" src="~/assets/personalPage.gif"></v-img>
-                    <h6 :class="user.active? 'text-green-darken-4' : 'text-red-darken-4'">Usuario <span v-if="!user.active">in</span>activo</h6>
-                    <h4 class="text-capitalize" >Nombre: {{ user.name }} </h4>
-                    <h4>Usuario: {{ user.fullname }}</h4>
-                    <h4>Correo: {{ user.email }}</h4>
+                <div>
+                    <v-avatar icon="mdi-account" :image="user.profileImage ? `/data/profile/${user.profileImage}` : ''" style="height: 128px; width: 128px;" class="my-4"></v-avatar>
+                    <div>
+                        <p class="text-h6 text-md-h5 text-lg-h4"> {{ user.fullname }} </p>
+                        <p class="mb-4"> @{{ user.name }} </p>
+                    </div>
+                    <div>
+                        <v-icon icon="mdi-email"></v-icon>
+                        {{ user.email }}
+                    </div>
+                    
+                    <p :class="user.active? 'text-green-darken-4' : 'text-red-darken-4'">Usuario <span v-if="!user.active">in</span>activo</p>
                     <span v-if="user.admin">Eres admin</span>
                     
                     <!-- Boton para editar datos del usuario -->
@@ -22,7 +27,7 @@
                             </v-btn>
                         </nuxt-link>
                     </div>
-                </h2>
+                </div>
             </div>
         </v-sheet>
     </v-card>
