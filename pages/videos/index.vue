@@ -7,7 +7,7 @@
                     <!-- Interacción de fondo de color cuando el mouse hace acción :hover -->
                     <template v-slot:default="{ isHovering, props }">
                         <!-- Cada elemento es un v-card, al dar clic se navega a su página -->
-                        <v-card :title="video.identificacion.codigoReferencia" v-bind="props" :color="isHovering ? 'teal-darken-4' : undefined" class="mx-auto" max-width="400" link @click="navigateTo(`/videos/${video._id}`)">
+                        <v-card :title="video.identificacion.codigoReferencia" v-bind="props" :color="isHovering ? 'teal-darken-4' : undefined" class="mx-auto" :class="{ 'opacity-30': video.adicional.isDraft }" max-width="400" link @click="navigateTo(`/videos/${video._id}`)" v-if="!video.adicional.isDraft || (video.adicional.isDraft && auth.id === video.controlDescripcion.documentalista)">
                             
                             <!-- Menu para edición y borrado (requiere permisos) -->
                             <template v-slot:append v-if="auth.isLoggedIn && (auth.canUpdate || auth.canDelete)">

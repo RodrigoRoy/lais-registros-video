@@ -28,6 +28,6 @@
     "dayjs-nuxt": "^2.1.9",
     "nuxt-mongoose": "^1.0.6",
     "vite-plugin-vuetify": "^2.0.2",
-    "vuetify": "^3.5.8"
+    "vuetify": "^3.6.8"
   }
 }
