@@ -23,7 +23,7 @@
                                         </v-list-item>
                                         
                                         <!-- BORRAR -->
-                                        <v-list-item>
+                                        <v-list-item v-if="auth.canDelete">
                                             <!-- Opción para borrar con ventana emergente de confirmación -->
                                             <v-dialog :max-width="500">
                                                 <template v-slot:activator="{ props: activatorProps }">

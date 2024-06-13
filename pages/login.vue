@@ -18,7 +18,6 @@
             <v-snackbar timeout="3000" color=error variant="tonal" v-model="showSnackbar">
                 <p class="text-center font-weight-bold">Error al iniciar sesión</p>
             </v-snackbar>
-
             <v-card-text class="text-center">
                 <nuxt-link class="text-blue text-decoration-none" to="/registro">Crear cuenta <v-icon icon="mdi-chevron-right"></v-icon> </nuxt-link>
             </v-card-text>
@@ -31,6 +30,12 @@
 // State manager
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
+
+// definePageMeta({
+//     middleware: [
+//         'auth',
+//     ]
+// })
 
 const form = ref(null) // Referencia a formulario (util para funciones de validación)
 const usuario = ref('') // Username/email

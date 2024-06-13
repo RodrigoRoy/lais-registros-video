@@ -19,7 +19,7 @@
                             </v-list-item>
                             
                             <!-- BORRAR -->
-                            <v-list-item>
+                            <v-list-item v-if="auth.canDelete">
                                 <!-- Opción para borrar con ventana emergente de confirmación -->
                                 <v-dialog :max-width="500">
                                     <template v-slot:activator="{ props: activatorProps }">
@@ -43,7 +43,8 @@
                 <!-- Note: En Linux, NuxtImage no sirve debido a error con el paquete 'sharp' -->
                 <!-- <nuxt-picture height="250" :src="`/data/image/${video.adicional.imagen}`" fit="outside" quality="70" /> -->
                 <!-- <nuxt-img height="250" :src="`/data/image/${video.adicional.imagen}`" fit="outside" quality="70" /> -->
-                <v-img height="250" width="auto" :src="`/data/image/${video.adicional.imagen}`" cover ></v-img>
+                <v-img v-if="video.adicional?.imagen" height="250" width="auto" :src="`/data/image/${video.adicional.imagen}`" cover ></v-img>
+                <v-img v-else height="250" width="auto" src="~/assets/Logo LAIS.png" cover class="bg-blue-grey-darken-4"></v-img>
                 
                 <!-- Resto del texto (descripción a una línea) -->
                 <v-card-text>

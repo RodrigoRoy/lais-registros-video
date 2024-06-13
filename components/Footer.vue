@@ -33,9 +33,12 @@
                                 </nuxt-link>
                             </v-col>
                             <v-col >
-                                <nuxt-link to="/login">
-                                    <v-btn color="" variant="text">Inicio sesión</v-btn>
+                                <nuxt-link v-if="!auth.isLoggedIn" to="/login">
+                                    <v-btn color="" variant="text"> Inicio sesión </v-btn>
                                 </nuxt-link>
+                                <v-btn v-else color="" variant="text" @click="auth.logout">
+                                    Cerrar sesión
+                                </v-btn>
                             </v-col>
                         </v-row>
                         
@@ -58,8 +61,11 @@
     </v-footer>
   </template>
 <script setup>
-import { useDisplay } from 'vuetify'
+// State manager
+import { useAuthStore } from '@/stores/auth'
+const auth = useAuthStore()
 
+import { useDisplay } from 'vuetify'
 const { name } = useDisplay()
 
 const logoHeight = computed(() => {

@@ -1,5 +1,5 @@
 <template>
-    <v-card :prepend-icon="user.profileImage ? '' : 'mdi-account'" :prepend-avatar="user.profileImage ? `/data/profile/${user.profileImage}` : ''" :title="user.fullname" @click="navigateTo(`/usuarios/${user._id}`)">
+    <v-card :prepend-icon="user.profileImage ? '' : 'mdi-account'" :prepend-avatar="user.profileImage ? `/data/profile/${user.profileImage}` : ''" :title="user.fullname" @click="navigateTo(`/usuarios/${user._id}`)" :class="{ 'opacity-30': !user.active }">
         <template v-slot:subtitle>
             {{ user.email }}
         </template>
@@ -82,8 +82,8 @@
             <br />
             
             <!-- Permisos para borrar -->
-            <span :class="{'text-success': user.operation.borrar, 'text-error': !user.operation.borrar}">
-                <v-icon size="x-small" :icon="user.operation.borrar ? 'mdi-checkbox-marked-circle' : 'mdi-cancel'"></v-icon>
+            <span :class="{'text-success': user.operation.delete, 'text-error': !user.operation.delete}">
+                <v-icon size="x-small" :icon="user.operation.delete ? 'mdi-checkbox-marked-circle' : 'mdi-cancel'"></v-icon>
                 Borrar
             </span>
         </v-card-text>

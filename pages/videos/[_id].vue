@@ -264,9 +264,8 @@
 
                 <v-sheet class="pa-2 ma-2">
                         <v-card elevation="2" height="auto" width="auto" >
-                            <v-btn class="text-none" variant="tonal" block prepend-icon="mdi-file-document">Documento de calificación</v-btn>
-                            <br>
-                            <v-btn class="text-none" variant="tonal" block prepend-icon="mdi-file-pdf-box" @click="showPDF(video)">Descargar PDF</v-btn>
+                            <v-btn v-if="video.adicional.documentoCalificacion" class="text-none my-4 mx-2" variant="tonal" block prepend-icon="mdi-file-document" :href="getDocumentURL(video.adicional.documentoCalificacion)">Documento de calificación</v-btn>
+                            <v-btn class="text-none my-4 mx-2" variant="tonal" block prepend-icon="mdi-file-pdf-box" @click="showPDF(video)">Descargar PDF</v-btn>
                         </v-card>
                 </v-sheet>
             </v-col>
@@ -292,6 +291,9 @@ const route = useRoute()
 
 // Información del registro de video
 const { data: video} = await useFetch(`/api/videos/${route.params._id}`)
+
+
+
 
 // Referencia al videoclip
 const videoClip = ref(null)
@@ -367,6 +369,13 @@ async function videoClipStopPlaying(video){
     await auth.updateToken()
 }
 
+/**
+ * Devuelve el path (ruta completa) del documento de calificación
+ * @param {string} filename Nombre del archivo según la base de datos
+ */
+function getDocumentURL(filename){
+    return `/data/document/${filename}`
+}
 
 /**
  * Determina si un área/propiedad de la unidad documental está vacía

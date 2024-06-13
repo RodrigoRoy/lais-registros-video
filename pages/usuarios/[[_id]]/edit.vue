@@ -77,7 +77,7 @@ const formRules = {
     ],
     profileImage: [
         value => {
-            if (!value || (value.length && value[0].size < 1000000)) return true
+            if (!value || value && value.length === 0 || (value && value.length && value[0].size < 1000000)) return true
             return 'El tamaño de la imagen debe ser menor a 1 MB'
         }
     ],

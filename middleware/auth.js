@@ -15,7 +15,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     // on the client side, localStorage is available
     if (import.meta.client){
         await auth.setUserData()
-        if(auth.isLoggedIn)
+        // Incluye comprobación para el caso especial en que se quiera ir a la página /login
+        if(auth.isLoggedIn && to.path !== '/login')
             return
         else
             return navigateTo('/login')
