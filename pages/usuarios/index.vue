@@ -7,7 +7,7 @@
         </v-row>
         <v-row>
             <v-col cols="12" sm="6" md="4" xl="3" v-for="usuario in usuarios" :key="usuario._id">
-                <user-card :user="usuario" @switch-activation="switchActivation(usuario)" />
+                <user-card :user="usuario" @delete-user="refresh" />
             </v-col>
         </v-row>
     </v-container>
@@ -29,18 +29,9 @@ const auth = useAuthStore()
 const { data: usuarios } = await useFetch('/api/usuarios')
 
 /**
- * Desactiva o activa al usuario tanto en la vista como en la BD.
- * @param {object} user Datos del usuario, según el esquema de la BD
+ * Reload data using native Nuxt util function
  */
-async function switchActivation(user){
-    // Cambio en la vista
-    user.active = !user.active
-
-    // Cambio en la BD
-    await useFetch(`/api/usuarios/${user._id}`, {
-        method: 'PUT',
-        body: isProxy(user) ? toRaw(user) : user
-    })
+async function refresh(){
+    await refreshNuxtData()
 }
-
 </script>

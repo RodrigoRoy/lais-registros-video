@@ -3,7 +3,7 @@
         <v-row>
             <!-- Mostrar cuadricula de elementos. Se usa nomenclatura (element, index) para generar numeración -->
             <v-col v-for="(video, i) in videos" :key="video._id" class="d-flex child-flex" cols="12" sm="6" md="4" lg="3" xl="3">
-                <video-card :video="video" :revealId="revealId" @delete-video="deleteVideo(video._id)"></video-card>
+                <video-card :video="video" :revealId="revealId" @delete-video="refresh"></video-card>
             </v-col>
         </v-row>
     </v-container>
@@ -22,20 +22,9 @@ const { data: videos } = await useFetch('/api/videos') // reasignación de varia
 const revealId = ref(null)
 
 /**
- * Función para borrar un registro de video de la base de datos
- * @param {string} id Id (de la base de datos) del video que se desea borrar
+ * Reload data using native Nuxt util function
  */
-async function deleteVideo(id){
-    await $fetch(`/api/videos/${id}`, {
-        method: 'DELETE',
-    })
-
-    // Reload data using native Nuxt util function
-    try{
-        await refreshNuxtData()
-    }
-    catch(error){
-        createError({statusCode:400, statusMessage: error})
-    }
+ async function refresh(){
+    await refreshNuxtData()
 }
 </script>

@@ -19,7 +19,7 @@
 
                     <!-- DESACTIVAR -->
                     <v-list-item v-if="user._id !== auth.id">
-                        <v-btn @click="$emit('switch-activation')">
+                        <v-btn @click="switchActivation(user)">
                             <span v-if="!user.active">Activar</span>
                             <span v-else>Desactivar</span>
                         </v-btn>
@@ -36,7 +36,7 @@
                                 <v-card max-width="400" prepend-icon="mdi-alert" color="error" variant="elevated" title="Borrar usuario" :text="`Por favor confirme la eliminación de ${user.fullname}. Esta operación no se puede revertir y la información almacenada se perderá.`" >
                                     <v-card-actions>
                                         <v-btn @click="isActive.value = false" variant="elevated" color="error">Cancel</v-btn>
-                                        <v-btn @click="deleteUser(user._id); isActive.value = false" variant="plain">Borrar</v-btn>
+                                        <v-btn @click="deleteUser(user._id)" variant="plain">Borrar</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </template>
@@ -92,27 +92,38 @@
 
 <script setup>
 defineProps(['user'])
-defineEmits(['switch-activation'])
+const emit = defineEmits(['delete-user'])
 
 // State manager
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
 
 /**
- * Función para borrar un usuario de la base de datos
+ * Desactiva o activa al usuario tanto en la vista como en la BD.
+ * @param {object} user Datos del usuario, según el esquema de la BD
+ */
+ async function switchActivation(user){
+    // Cambio en la vista
+    user.active = !user.active
+
+    // Cambio en la BD
+    await useFetch(`/api/usuarios/${user._id}`, {
+        method: 'PUT',
+        body: isProxy(user) ? toRaw(user) : user
+    })
+}
+
+/**
+ * Borra un usuario de la base de datos
  * @param {string} id Id (de la base de datos) del usuario que se desea borrar
  */
-async function deleteUser(id){
+ async function deleteUser(id){
     await useFetch(`/api/usuarios/${id}`, {
         method: 'DELETE',
     })
 
-    // Reload data using native Nuxt util function
-    try{
-        await refreshNuxtData()
-    }
-    catch(error){
-        createError({statusCode:400, statusMessage: 'Refresh Nuxt data error', message: error})
-    }
+    // Emite evento de borrado, util para saber cuándo recargar el contenido
+    emit('delete-user')
 }
+
 </script>

@@ -29,7 +29,7 @@
                                         <v-card max-width="400" prepend-icon="mdi-alert" color="error" variant="elevated" title="Borrar registro" :text="`Por favor confirme la eliminación del registro ${video.identificacion.codigoReferencia}. Esta operación no se puede revertir y la información almacenada se perderá.`" >
                                             <v-card-actions>
                                                 <v-btn @click="isActive.value = false" variant="elevated" color="error">Cancel</v-btn>
-                                                <v-btn @click="$emit('delete-video')" variant="plain">Borrar</v-btn>
+                                                <v-btn @click="deleteVideo(video._id)" variant="plain">Borrar</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </template>
@@ -99,7 +99,7 @@
 
 <script setup>
 defineProps(['video', 'revealId'])
-defineEmits(['delete-video'])
+const emit = defineEmits(['delete-video'])
 
 // State manager
 import { useAuthStore } from '@/stores/auth'
@@ -136,5 +136,18 @@ const auth = useAuthStore()
     }
     // Actualizar token (en particular, la lista de marcadores)
     await auth.updateToken()
+}
+
+/**
+ * Borra un registro de video de la base de datos
+ * @param {string} id Id (de la base de datos) del video que se desea borrar
+ */
+ async function deleteVideo(id){
+    await $fetch(`/api/videos/${id}`, {
+        method: 'DELETE',
+    })
+
+    // Emite evento de borrado, util para saber cuándo recargar el contenido
+    emit('delete-video')
 }
 </script>
