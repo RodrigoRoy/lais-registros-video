@@ -12,16 +12,19 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event)
     const populateDrafts = query?.drafts && query.drafts === 'true' ? true : false
     const populateBookmarks = query?.bookmarks && query.bookmarks === 'true' ? true : false
+    const populateVideos = query?.videos && query.videos === 'true' ? true : false
 
     // Buscar en base de datos
     try {
-        if(populateDrafts && populateBookmarks)
-            return await UsuarioSchema.findById(event.context.params?._id).populate('drafts').populate('bookmarks').exec()
-        if(populateBookmarks)
-            return await UsuarioSchema.findById(event.context.params?._id).populate('bookmarks').exec()
+        const mongooseQuery = UsuarioSchema.findById(event.context.params?._id)
         if(populateDrafts)
-            return await UsuarioSchema.findById(event.context.params?._id).populate('drafts').exec()
-        return await UsuarioSchema.findById(event.context.params?._id)
+            mongooseQuery.populate('drafts')
+        if(populateBookmarks)
+            mongooseQuery.populate('bookmarks')
+        if(populateVideos)
+            mongooseQuery.populate('videos')
+
+        return await mongooseQuery.exec()
     }
     catch (error) {
         throw createError({ statusCode: 500, statusMessage: error })

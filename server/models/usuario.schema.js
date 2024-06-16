@@ -21,6 +21,7 @@ export const UsuarioSchema = defineMongooseModel({
         active: { type: 'boolean', default: true },
         drafts: [{type: Types.ObjectId, ref: 'Video'}],
         bookmarks: [{type: Types.ObjectId, ref: 'Video'}],
+        videos: [{type: Types.ObjectId, ref: 'Video'}],
         profileImage: { type: 'string', default: null },
     },
 

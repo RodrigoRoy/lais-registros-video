@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
         return await UsuarioSchema.findByIdAndUpdate(
             event.context.params._id, 
             { $pull: { drafts: video._id } }, 
-            { new: true}
+            { new: true, timestamps: false }
         )
     }
     catch (error) {

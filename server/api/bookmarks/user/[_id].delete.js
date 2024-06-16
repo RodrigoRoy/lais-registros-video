@@ -13,12 +13,12 @@ export default defineEventHandler(async (event) => {
         const updatedUser = await UsuarioSchema.findByIdAndUpdate(
             event.context.params._id, 
             { $pull: { bookmarks: video._id } }, 
-            { new: true}, 
+            { new: true, timestamps: false}, 
         )
         const updatedVideo = await VideoSchema.findByIdAndUpdate(
             video._id,
             { $pull: { 'adicional.bookmarkedBy': event.context.params._id } },
-            { new: true},
+            { new: true, timestamps: false},
         )
         return { user: updatedUser, video: updatedVideo }
     }

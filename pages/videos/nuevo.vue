@@ -463,6 +463,7 @@ async function uploadFile(filetype) {
     const newVideo = await $fetch('/api/videos/nuevo', {
         method: 'POST',
         body: JSON.parse(JSON.stringify(video)),
+        query: { id: auth?.id},
     })
 
     // Si es un borrador, guardar en listado de borradores del usuario

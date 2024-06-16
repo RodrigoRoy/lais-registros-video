@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
         const updatedVideo = await VideoSchema.findByIdAndUpdate(
             video._id,
             { $addToSet: { 'adicional.bookmarkedBy': event.context.params._id } },
-            { new: true},
+            { new: true, timestamps: false }
         )
         return { user: updatedUser, video: updatedVideo }
     }

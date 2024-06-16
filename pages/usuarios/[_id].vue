@@ -59,11 +59,11 @@
     </v-container>
 
     <!-- Lista de videos que ha creado el usuario -->
-    <v-container v-if="userVideosList?.length > 0">
+    <v-container v-if="user.videos?.length > 0">
         <v-row>
             <v-col>
                 <p>Registros creados</p>
-                <v-data-table :headers="dataTableHeaders" :items="userVideosList" density="compact" hide-no-data :hide-default-footer="userVideosList?.length <= 5" hover items-per-page="5" :no-filter="true">
+                <v-data-table :headers="dataTableHeaders" :items="user.videos" density="compact" hide-no-data :hide-default-footer="user.videos?.length <= 5" hover items-per-page="5" :no-filter="true">
                     <!-- Portada -->
                     <template v-slot:item.portada="{ value }">
                         <v-img :src="`/data/image/${value}`" cover></v-img>
@@ -123,10 +123,7 @@ const route = useRoute()
 const dayjs = useDayjs()
 
 // Información del usuario
-const { data: user } = await useFetch(`/api/usuarios/${route.params._id}`, {query: {drafts: true, bookmarks: true}})
-
-// Lista de videos creados por el usuario
-const { data: userVideosList } = await useFetch(`/api/videos/user/${route.params._id}`)
+const { data: user } = await useFetch(`/api/usuarios/${route.params._id}`, {query: {drafts: true, bookmarks: true, videos: true}})
 
 // Encabezados con los datos relevantes a mostrar para la lista de videos
 const dataTableHeaders = [
