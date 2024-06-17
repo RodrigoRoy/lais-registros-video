@@ -123,7 +123,7 @@ const route = useRoute()
 const dayjs = useDayjs()
 
 // Información del usuario
-const { data: user } = await useFetch(`/api/usuarios/${route.params._id}`, {query: {drafts: true, bookmarks: true, videos: true}})
+const { data: user } = await useFetch(`/api/usuarios/${route.params._id}`, {method: 'GET', query: {drafts: true, bookmarks: true, videos: true}})
 
 // Encabezados con los datos relevantes a mostrar para la lista de videos
 const dataTableHeaders = [
