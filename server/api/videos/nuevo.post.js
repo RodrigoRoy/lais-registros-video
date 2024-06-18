@@ -10,7 +10,6 @@ export default defineEventHandler(async (event) => {
 
     // Guardar en base de datos
     try{
-        // return await new VideoSchema(body).save()
         const newVideo = await new VideoSchema(body).save()
         if(userId)
             await UsuarioSchema.findByIdAndUpdate(

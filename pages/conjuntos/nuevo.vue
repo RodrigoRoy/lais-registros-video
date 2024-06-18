@@ -119,7 +119,7 @@
                             <v-card-text>
                                 <v-text-field v-model="auth.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
                                 <v-text-field v-model="today" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
-                                <v-text-field v-model="conjunto.controlDescripcion.reglasNormas" label="Reglas o normas" variant="underlined" readonly ></v-text-field>
+                                <v-text-field v-model="conjunto.controlDescripcion.reglasNormas" label="Reglas o normas" variant="underlined" ></v-text-field>
                             </v-card-text>
                         </v-card>
                     </v-window-item>
@@ -342,6 +342,7 @@ async function uploadFile(filetype) {
     const newConjunto = await $fetch('/api/conjuntos/nuevo', {
         method: 'POST',
         body: JSON.parse(JSON.stringify(conjunto)),
+        query: { id: auth?.id }
     })
 
     // Si es un borrador, guardar en listado de borradores del usuario
