@@ -114,6 +114,7 @@ const revealId = ref(null)
 async function deleteConjunto(id){
     await $fetch(`/api/conjuntos/${id}`, {
         method: 'DELETE',
+        query: { id: auth?.id }
     })
 
     // Reload data using native Nuxt util function

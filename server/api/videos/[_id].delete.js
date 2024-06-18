@@ -2,6 +2,10 @@
  * Borrar un registro de video de la base de datos
  */
 export default defineEventHandler(async (event) => {
+    // Parámetros URL: userId
+    const query = getQuery(event)
+    const userId = query?.id ? query.id : ''
+
     // Buscar si el registro tiene archivos asociados que deben borrarse
     try {
         const video = await VideoSchema.findOne({ _id: event.context.params._id })
@@ -39,7 +43,15 @@ export default defineEventHandler(async (event) => {
 
     // Buscar y borrar video en base de datos
     try {
-        return await VideoSchema.findByIdAndDelete(event.context.params._id)
+        const deletedVideo = await VideoSchema.findByIdAndDelete(event.context.params._id)
+        // Borrar referencia de la lista de videos del usuario
+        if(userId)
+            await UsuarioSchema.findByIdAndUpdate(
+                userId,
+                { $pull: { videos: deletedVideo._id} },
+                { timestamps: false }
+            )
+        return deletedVideo
     }
     catch (error) {
         throw createError({ statusCode: 500, statusMessage: 'DB delete error', message: error })

@@ -145,6 +145,7 @@ const auth = useAuthStore()
  async function deleteVideo(id){
     await $fetch(`/api/videos/${id}`, {
         method: 'DELETE',
+        query: { id: auth?.id }
     })
 
     // Emite evento de borrado, util para saber cuándo recargar el contenido
