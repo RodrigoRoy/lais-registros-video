@@ -17,7 +17,7 @@
             <div v-if="usuario.profileImage">
                 <nuxt-img class="align-center text-white" height="100" :src="`/data/profile/${usuario.profileImage}`" fit="cover" />
                 <br />
-                <v-btn variant="tonal" color="error" size="small" @click="usuario.profileImage = null">Cambiar portada</v-btn>
+                <v-btn variant="tonal" color="error" size="small" @click="usuario.profileImage = null">Borrar imagen</v-btn>
             </div>
             <v-file-input v-else v-model="files.profileImage" label="Imagen de perfil" prepend-icon="mdi-account-box" :rules="formRules.profileImage" accept="image/*" show-size chips ></v-file-input>
             
@@ -36,6 +36,8 @@
             </v-snackbar>
         </v-form>
     </v-card>
+
+    {{ files }}
 </template>
 
 <script setup>
@@ -86,14 +88,15 @@ const formRules = {
 /**
  * Sube un archivo del cliente al servidor, en este caso, la imagen de perfil.
  * El archivo a subir debe estar especificado en alguno de los <v-file-input>
+ * @param {object} file Archivo subido desde input file
  * @returns {string} El nuevo nombre del archivo subido
  */
- async function uploadFile() {
+ async function uploadFile(file) {
     // Crear un nuevo formulario
     const formData = new FormData()
 
     // Agregar campos necesarios, incluyendo el archivo. El nombre de cada campo se usará en el API
-    formData.append('file', files.profileImage[0])
+    formData.append('file', file)
     formData.append('id', usuario.value._id)
 
     // Petición al API para procesar la información del formulario
@@ -122,8 +125,8 @@ async function submit(){
         }
 
         // Subir imagen de perfil, en caso de estar establecida
-        if(usuario.value._id && files.profileImage && files.profileImage[0])
-            usuario.value.profileImage = await uploadFile()
+        if(usuario.value._id && files.profileImage)
+            usuario.value.profileImage = await uploadFile(files.profileImage)
         else if(!usuario.value.profileImage) // contempla el caso en que el video exista pero no se actualiza
             usuario.value.profileImage = null
         

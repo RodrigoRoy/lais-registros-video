@@ -399,10 +399,11 @@ function markerDragEnd(){
 /**
  * Sube un archivo del cliente al servidor.
  * El archivo a subir debe estar especificado en alguno de los <v-file-input>
+ * @param {object} file Archivo subido desde input file
  * @param {string} filetype Representa el tipo de archivo a subir ("video", "image", "document")\
  * @returns {string} El nuevo nombre del archivo subido
  */
-async function uploadFile(filetype) {
+async function uploadFile(file, filetype) {
     // Validación del parámetro "filetype"
     const valid = /(^video$)|(^image$)|(^document$)/gm.test(filetype)
     if(!valid) return
@@ -411,7 +412,7 @@ async function uploadFile(filetype) {
     const formData = new FormData()
 
     // Agregar campos necesarios, incluyendo el archivo. El nombre de cada campo se usará en el API
-    formData.append('file', files[filetype][0])
+    formData.append('file', file)
     formData.append('codigoReferencia', video.identificacion.codigoReferencia)
     formData.append('filetype', filetype)
 
@@ -442,20 +443,20 @@ async function uploadFile(filetype) {
     }
 
     // Si existe archivo de video, proceder a subirlo
-    if(video.identificacion.codigoReferencia && files.video && files.video[0])
-        video.adicional.clipVideo = await uploadFile('video')
+    if(video.identificacion.codigoReferencia && files.video)
+        video.adicional.clipVideo = await uploadFile(files.video, 'video')
     else
         video.adicional.clipVideo = null
 
     // Si existe archivo de imagen, proceder a subirlo
-    if(video.identificacion.codigoReferencia && files.image && files.image[0])
-        video.adicional.imagen = await uploadFile('image')
+    if(video.identificacion.codigoReferencia && files.image)
+        video.adicional.imagen = await uploadFile(files.image, 'image')
     else
         video.adicional.imagen = null
 
     // Si existe documento de texto, proceder a subirlo
-    if(video.identificacion.codigoReferencia && files.document && files.document[0])
-        video.adicional.documentoCalificacion = await uploadFile('document')
+    if(video.identificacion.codigoReferencia && files.document)
+        video.adicional.documentoCalificacion = await uploadFile(files.document, 'document')
     else
         video.adicional.documentoCalificacion = null
 

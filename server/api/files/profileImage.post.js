@@ -4,6 +4,13 @@ import * as fs from 'fs' // Biblioteca de Node para editar y mover archivos
 export default defineEventHandler(async (event) => {
     // Ubicación para almacenar archivos
     const uploadDir = 'public/data/profile'
+    try {
+        // Verificar que la ubicación exista, de lo contrario, crearla
+        if(!fs.existsSync(uploadDir))
+            fs.mkdirSync(uploadDir, {recursive: true})
+    } catch (err) {
+        throw createError({ statusCode: 400, statusMessage: 'Directory creation error', message: err })
+    }
     
     // Crear instancia para parsing de datos del formulario
     const form = formidable({
@@ -60,11 +67,7 @@ export default defineEventHandler(async (event) => {
     const newPath = `${uploadDir}/${fields.id[0]}.${fileExtension}`
 
     // Mover el archivo de su ubicacion por default
-    try {
-        // Verificar que la ubicación exista, de lo contrario, crearla
-        if(!fs.existsSync(uploadDir))
-            fs.mkdirSync(uploadDir, {recursive: true})
-        
+    try {        
         fs.renameSync(oldPath, newPath)
     } catch (err) {
         throw createError({ statusCode: 400, statusMessage: 'Rename file error', message: err })
