@@ -44,13 +44,22 @@ export default defineEventHandler(async (event) => {
     // Buscar y borrar video en base de datos
     try {
         const deletedVideo = await VideoSchema.findByIdAndDelete(event.context.params._id)
-        // Borrar referencia de la lista de videos del usuario
-        if(userId)
+        
+        if(userId){
+            // Borrar referencia de la lista de videos del usuario
             await UsuarioSchema.findByIdAndUpdate(
                 userId,
                 { $pull: { videos: deletedVideo._id} },
                 { timestamps: false }
             )
+            // Borrar referencia de la lista de borradores (drafts) del usuario
+            await UsuarioSchema.findByIdAndUpdate(
+                userId,
+                { $pull: { drafts: deletedVideo._id} },
+                { timestamps: false }
+            )
+        }
+        
         return deletedVideo
     }
     catch (error) {

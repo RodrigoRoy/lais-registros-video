@@ -311,11 +311,16 @@ function getUpdatedDocumentalistasList(updatesArray, idUser){
         body: JSON.parse(JSON.stringify(conjunto.value)),
     })
 
-    // Si es un borrador, guardar en listado de borradores del usuario
+    // Si es un borrador, guardar en listado de borradores (conjunto) del usuario
     if(conjunto.value.adicional.isDraft)
-        await $fetch(`/api/drafts/user/${auth?.id}`, {
+        await $fetch(`/api/drafts/conjuntos/user/${auth?.id}`, {
             method: 'PUT',
             body: JSON.parse(JSON.stringify(updatedConjunto)),
+        })
+    else // en caso contrario, quitarlo para evitar inconsistencias
+        await useFetch(`/api/drafts/conjuntos/user/${auth?.id}`, {
+            method: 'DELETE',
+            body: JSON.parse(JSON.stringify(updatedConjunto))
         })
 
     // Indicar el final del proceso de subida del conjunto doccumental

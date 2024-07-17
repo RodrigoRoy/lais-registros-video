@@ -473,9 +473,14 @@ function getUpdatedDocumentalistasList(updatesArray, idUser){
 
     // Si es un borrador, guardar en listado de borradores del usuario
     if(video.adicional.isDraft)
-        await $fetch(`/api/drafts/user/${auth?.id}`, {
+        await $fetch(`/api/drafts/videos/user/${auth?.id}`, {
             method: 'PUT',
             body: JSON.parse(JSON.stringify(updatedVideo)),
+        })
+    else // en caso contrario, quitarlo para evitar inconsistencias
+        await useFetch(`/api/drafts/videos/user/${auth?.id}`, {
+            method: 'DELETE',
+            body: JSON.parse(JSON.stringify(updatedVideo))
         })
 
     // Indicar el final del proceso de subida del registro de video

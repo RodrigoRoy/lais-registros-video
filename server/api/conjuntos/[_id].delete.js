@@ -32,13 +32,22 @@ export default defineEventHandler(async (event) => {
     // Buscar y borrar video en base de datos
     try {
         const deletedConjunto = await ConjuntoSchema.findByIdAndDelete(event.context.params._id)
-        // Borrar referencia de la lista de conjuntos del usuario
-        if(userId)
+        
+        if(userId){
+            // Borrar referencia de la lista de conjuntos del usuario
             await UsuarioSchema.findByIdAndUpdate(
                 userId,
                 { $pull: { conjuntos: deletedConjunto._id} },
                 { timestamps: false }
             )
+            // Borrar referencia de la lista de borradores (draftsConjuntos) del usuario
+            // await UsuarioSchema.findByIdAndUpdate(
+            //     userId,
+            //     { $pull: { draftsConjuntos: deletedConjunto._id} },
+            //     { timestamps: false }
+            // )
+        }
+
         return deletedConjunto
     }
     catch (error) {

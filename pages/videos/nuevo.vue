@@ -470,7 +470,7 @@ async function uploadFile(file, filetype) {
 
     // Si es un borrador, guardar en listado de borradores del usuario
     if(video.adicional.isDraft)
-        await $fetch(`/api/drafts/user/${auth?.id}`, {
+        await useFetch(`/api/drafts/videos/user/${auth?.id}`, {
             method: 'PUT',
             body: JSON.parse(JSON.stringify(newVideo)),
         })

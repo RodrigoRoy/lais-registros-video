@@ -19,10 +19,11 @@ export const UsuarioSchema = defineMongooseModel({
         },
         admin: { type: 'boolean', default: false },
         active: { type: 'boolean', default: true },
-        drafts: [{type: Types.ObjectId, ref: 'Video'}],
-        bookmarks: [{type: Types.ObjectId, ref: 'Video'}],
         videos: [{type: Types.ObjectId, ref: 'Video'}],
         conjuntos: [{type: Types.ObjectId, ref: 'Conjunto'}],
+        bookmarks: [{type: Types.ObjectId, ref: 'Video'}],
+        drafts: [{type: Types.ObjectId, ref: 'Video'}],
+        draftsConjuntos: [{type: Types.ObjectId, ref: 'Conjunto'}],
         profileImage: { type: 'string', default: null },
     },
 

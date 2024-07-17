@@ -348,7 +348,7 @@ async function uploadFile(filetype) {
 
     // Si es un borrador, guardar en listado de borradores del usuario
     if(conjunto.adicional.isDraft)
-        await $fetch(`/api/drafts/user/${auth?.id}`, {
+        await $fetch(`/api/drafts/conjuntos/user/${auth?.id}`, {
             method: 'PUT',
             body: JSON.parse(JSON.stringify(newConjunto)),
         })
