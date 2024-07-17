@@ -2,8 +2,8 @@ import { useAuthStore } from '~/stores/auth'
 const auth = useAuthStore()
 
 /**
- * Middleware para detectar si el usuario tiene sesión iniciada.
- * En caso de no tener dicho permiso, se redirige a /login
+ * Middleware para detectar si el usuario NO tiene sesión iniciada.
+ * Útil para rutas como /login
  */
 export default defineNuxtRouteMiddleware(async (to, from) => {
     // skip middleware on server side entirely
@@ -17,9 +17,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         // confirm user status value
         await auth.setUserData()
 
-        if(auth.isLoggedIn)
+        if(!auth.isLoggedIn)
             return
         else
-            return navigateTo('/login')
+            return navigateTo('/')
     }
 })

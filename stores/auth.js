@@ -99,11 +99,19 @@ export const useAuthStore = defineStore('auth', () => {
      * Los datos se obtienen a partir de la decodificación del token (JWT)
      */
     async function setUserData() {
+        const token = localStorage.getItem('token')
+
+        // Si no hay token en local storage, establecer valores por default
+        if(!token){
+            clearUserData()
+            return
+        }
+        
         // Obtener info del usuario
         const user = await $fetch('/api/auth/me', {
             method: 'POST',
             body: {
-                token: localStorage.getItem('token')
+                token: token
             },
         })
 

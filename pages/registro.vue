@@ -39,6 +39,12 @@
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
 
+definePageMeta({
+    middleware: [
+        'no-auth',
+    ]
+})
+
 const form = ref(null) // Referencia a formulario (util para funciones de validación)
 const name = ref('') // username
 const fullname = ref('')  // nombre real 

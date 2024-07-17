@@ -31,11 +31,11 @@
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
 
-// definePageMeta({
-//     middleware: [
-//         'auth',
-//     ]
-// })
+definePageMeta({
+    middleware: [
+        'no-auth',
+    ]
+})
 
 const form = ref(null) // Referencia a formulario (util para funciones de validación)
 const usuario = ref('') // Username/email

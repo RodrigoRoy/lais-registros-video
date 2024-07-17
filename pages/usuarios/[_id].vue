@@ -68,13 +68,6 @@
 </template>
 
 <script setup>
-// Nota: descomentar middleware para incluir restricciones de acceso, comentar para pruebas rápidas
-// definePageMeta({
-//     middleware: [
-//         'auth',
-//     ]
-// })
-
 // Composable para obtener parametros desde URL
 const route = useRoute()
 

@@ -215,11 +215,12 @@
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
 
-// definePageMeta({
-//     middleware: [
-//         'auth',
-//     ]
-// })
+definePageMeta({
+    middleware: [
+        'auth',
+        'update',
+    ]
+})
 
 // Composable para obtener parametros desde URL
 const route = useRoute()
