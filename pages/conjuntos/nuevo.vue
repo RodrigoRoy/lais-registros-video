@@ -291,10 +291,11 @@ const isLoading = ref(false)
 /**
  * Sube un archivo del cliente al servidor.
  * El archivo a subir debe estar especificado en alguno de los <v-file-input>
+ * @param {object} file Archivo subido desde input file
  * @param {string} filetype Representa el tipo de archivo a subir ("video", "image", "document")\
  * @returns {string} El nuevo nombre del archivo subido
  */
-async function uploadFile(filetype) {
+async function uploadFile(file, filetype) {
     // Validación del parámetro "filetype"
     const valid = /(^video$)|(^image$)|(^document$)/gm.test(filetype)
     if(!valid) return
@@ -303,7 +304,7 @@ async function uploadFile(filetype) {
     const formData = new FormData()
 
     // Agregar campos necesarios, incluyendo el archivo. El nombre de cada campo se usará en el API
-    formData.append('file', files[filetype][0])
+    formData.append('file', file)
     formData.append('codigoReferencia', conjunto.identificacion.codigoReferencia)
     formData.append('filetype', filetype)
 
@@ -334,13 +335,13 @@ async function uploadFile(filetype) {
     }
 
     // Si existe archivo de imagen, proceder a subirlo
-    if(conjunto.identificacion.codigoReferencia && files.image && files.image[0])
-        conjunto.adicional.imagen = await uploadFile('image')
+    if(conjunto.identificacion.codigoReferencia && files.image)
+        conjunto.adicional.imagen = await uploadFile(files.image, 'image')
     else
         conjunto.adicional.imagen = null
 
     // newConjunto es el nuevo registro en base de datos. Incluye propiedad "_id"
-    const newConjunto = await $fetch('/api/conjuntos/nuevo', {
+    const { data: newConjunto } = await useFetch('/api/conjuntos/nuevo', {
         method: 'POST',
         body: JSON.parse(JSON.stringify(conjunto)),
         query: { id: auth?.id }
@@ -348,15 +349,15 @@ async function uploadFile(filetype) {
 
     // Si es un borrador, guardar en listado de borradores del usuario
     if(conjunto.adicional.isDraft)
-        await $fetch(`/api/drafts/conjuntos/user/${auth?.id}`, {
+        await useFetch(`/api/drafts/conjuntos/user/${auth?.id}`, {
             method: 'PUT',
-            body: JSON.parse(JSON.stringify(newConjunto)),
+            body: JSON.parse(JSON.stringify(newConjunto.value)),
         })
     
     // Indicar el final del proceso de subida del conjunto documental
     isLoading.value = false
     
     // Concluido el proceso, reenviar a página del conjunto documental
-    await navigateTo(`/conjuntos/${newConjunto._id}`)
+    await navigateTo(`/conjuntos/${newConjunto.value._id}`)
 }
 </script>

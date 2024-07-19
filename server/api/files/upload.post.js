@@ -7,8 +7,8 @@ export default defineEventHandler(async (event) => {
     // Mover el archivo de su ubicacion por default
     try {
         // Verificar que la ubicación exista, de lo contrario, crearla
-        if(!fs.existsSync(newDirPath))
-            fs.mkdirSync(newDirPath, {recursive: true})
+        if(!fs.existsSync(uploadDir))
+            fs.mkdirSync(uploadDir, {recursive: true})
     } catch (err) {
         throw createError({ statusCode: 400, statusMessage: 'Directory creation error', message: err })
     }
