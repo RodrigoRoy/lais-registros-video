@@ -1,6 +1,6 @@
 /**
  * Obtiene todos los registros de video.
- * Se excluyen aquellos marcados como "no públicos" y como borradores
+ * Se excluyen aquellos marcados como "no públicos"
  */
 export default defineEventHandler( async (event) => {
     try {
