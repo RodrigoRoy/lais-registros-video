@@ -292,6 +292,7 @@ const video = reactive({
         isPublic: true,
         isDraft: false,
         bookmarkedBy: [],
+        parent: null,
         fetchCount: 0,
         playCount: 0,
     },
