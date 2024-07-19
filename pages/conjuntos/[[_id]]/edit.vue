@@ -160,7 +160,7 @@ const auth = useAuthStore()
 definePageMeta({
     middleware: [
         'auth',
-        'edit',
+        'update',
     ]
 })
 

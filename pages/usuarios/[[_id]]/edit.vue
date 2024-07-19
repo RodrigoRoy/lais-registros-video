@@ -48,6 +48,7 @@ const auth = useAuthStore()
 definePageMeta({
     middleware: [
         'auth',
+        'update',
     ]
 })
 
