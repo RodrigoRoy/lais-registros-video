@@ -1,5 +1,7 @@
 <template>
-    <v-hover>
+    <video-card v-if="type === 'video'" :video="data" :revealId="revealId" @delete-video="emit('delete')"></video-card>
+    
+    <v-hover v-else-if="type === 'conjunto'">
         <!-- Interacción de fondo de color cuando el mouse hace acción :hover -->
         <template v-slot:default="{ isHovering, props }">
             <!-- Cada elemento es un v-card, al dar clic se navega a su página -->
@@ -89,7 +91,7 @@
 </template>
 
 <script setup>
-defineProps(['data', 'revealId'])
+defineProps(['data', 'revealId', 'type'])
 const emit = defineEmits(['delete'])
 
 // State manager
