@@ -1,4 +1,5 @@
 <template>
+    <breadcrumbs :items="breadcrumbsItems"></breadcrumbs>
     <v-container>
         <v-row no-gutters>
             <v-col cols="12" md="8" align-self="start">
@@ -291,9 +292,8 @@ const route = useRoute()
 
 // Información del registro de video
 const { data: video} = await useFetch(`/api/videos/${route.params._id}`)
-
-
-
+// Breadcrumbs
+const { data: breadcrumbsItems} = await useFetch('/api/breadcrumbs', { query: { id: video.value._id, type: 'video', disable: true } } )
 
 // Referencia al videoclip
 const videoClip = ref(null)

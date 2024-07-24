@@ -1,5 +1,5 @@
 <template>
-    <Breadcrumb :id="conjunto._id"></Breadcrumb>
+    <breadcrumbs :items="breadcrumbsItems"></breadcrumbs>
     <v-container>
         <v-row>
             <!-- Mostrar cuadricula de elementos. Se usa nomenclatura (element, index) para generar numeración -->
@@ -24,6 +24,7 @@ const auth = useAuthStore()
 const route = useRoute()
 
 const { data: conjunto } = await useFetch('/api/nav', { query: { id: route.query?.id } })
+const { data: breadcrumbsItems} = await useFetch('/api/breadcrumbs', { query: { id: route.query?.id, disable: true } } )
 
 // Auxiliar para determinar el v-card del cual se desea ver más información
 const revealId = ref(null)
@@ -39,8 +40,10 @@ const revealId = ref(null)
 watch(
     () => route.fullPath,
     async (fullPath) => {
-        const data = await $fetch('/api/nav', { query: { id: route.query?.id } })
-        conjunto.value = data
+        const newConjunto = await $fetch('/api/nav', { query: { id: route.query?.id } })
+        conjunto.value = newConjunto
+        const newBreadcrumbs = await $fetch('/api/breadcrumbs', { query: { id: route.query?.id } } )
+        breadcrumbsItems.value = newBreadcrumbs
     },
     { inmediate: true }
 )
