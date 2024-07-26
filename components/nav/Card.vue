@@ -1,11 +1,9 @@
 <template>
-    <video-card v-if="type === 'video'" :video="data" :revealId="revealId" @delete-video="emit('delete')"></video-card>
-    
-    <v-hover v-else-if="type === 'conjunto'">
+    <v-hover>
         <!-- Interacción de fondo de color cuando el mouse hace acción :hover -->
         <template v-slot:default="{ isHovering, props }">
             <!-- Cada elemento es un v-card, al dar clic se navega a su página -->
-            <v-card :title="data.identificacion.titulo" v-bind="props" :color="isHovering ? 'lime-darken-4' : undefined" class="mx-auto" :class="{ 'opacity-30': data.adicional.isDraft }" max-width="400" link @click="navigateTo({ path: '/nav', query: {id: data._id} })" v-if="!data.adicional.isDraft || (data.adicional.isDraft && auth.id === data.controlDescripcion.documentalista)">
+            <v-card :title="type === 'video' ? data.identificacion.codigoReferencia : (type === 'conjunto' ? data.identificacion.titulo : '')" v-bind="props" :color="isHovering && color ? color : undefined" class="mx-auto" :class="{ 'opacity-30': data.adicional.isDraft }" max-width="400" link @click="navigate(type, data._id, nav)" v-if="!data.adicional.isDraft || (data.adicional.isDraft && (auth.id === data.controlDescripcion.documentalista || auth.id == data.controlDescripcion.documentalista._id))">
                 
                 <!-- Menu para edición y borrado (requiere permisos) -->
                 <template v-slot:append v-if="auth.isLoggedIn && (auth.canUpdate || auth.canDelete)">
@@ -17,7 +15,7 @@
                         <v-list>
                             <!-- EDITAR -->
                             <v-list-item>
-                                <nuxt-link v-if="auth.canUpdate" :to="`/conjuntos/${data._id}/edit`" class="text-decoration-none"><v-btn>Editar</v-btn></nuxt-link>
+                                <nuxt-link v-if="auth.canUpdate" :to="`/${type === 'videos' ? 'video' : 'conjuntos'}/${data._id}/edit`" class="text-decoration-none"><v-btn>Editar</v-btn></nuxt-link>
                             </v-list-item>
                             
                             <!-- BORRAR -->
@@ -28,10 +26,10 @@
                                         <v-btn v-bind="activatorProps">Borrar</v-btn>
                                     </template>
                                     <template v-slot:default="{ isActive }">
-                                        <v-card max-width="400" prepend-icon="mdi-alert" color="error" variant="elevated" title="Borrar grupo documental" :text="`Por favor confirme la eliminación del grupo documental ${data.identificacion.titulo}. Esta operación no se puede revertir y la información almacenada se perderá.`" >
+                                        <v-card max-width="400" prepend-icon="mdi-alert" color="error" variant="elevated" title="Borrado de información" :text="`Esta operación no se puede revertir y la información almacenada se eliminará permanentemente.`" >
                                             <v-card-actions>
                                                 <v-btn @click="isActive.value = false" variant="elevated" color="error">Cancel</v-btn>
-                                                <v-btn @click="deleteConjunto(data._id)" variant="plain">Borrar</v-btn>
+                                                <v-btn @click="deleteData(data._id, type)" variant="plain">Borrar</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </template>
@@ -46,17 +44,27 @@
                 <!-- <nuxt-picture height="250" :src="`/data/image/${data.adicional.imagen}`" fit="outside" quality="70" /> -->
                 <!-- <nuxt-img height="250" :src="`/data/image/${data.adicional.imagen}`" fit="outside" quality="70" /> -->
                 <v-img v-if="data.adicional?.imagen" height="250" width="auto" :src="`/data/image/${data.adicional.imagen}`" cover ></v-img>
-                <v-img v-else height="250" width="auto" src="~/assets/Logo LAIS.png" cover class="bg-blue-grey-darken-4"></v-img>
+                <v-img v-else height="250" width="auto" src="~/assets/Logo LAIS.png" cover :class="defaultBgColor"></v-img>
                 
                 <!-- Resto del texto (descripción a una línea) -->
                 <v-card-text>
-                    <p class="text-truncate">{{ data.adicional?.presentacion || '(Sin descripcion)'}}</p>
+                    <p class="text-truncate">{{ type === 'video' ? data.contenidoEstructura?.descripcionGeneral : data.adicional.presentacion || '(Sin descripcion)'}}</p>
                 </v-card-text>
                 
                 <!-- Acciones / botón para mostrar más información -->
                 <v-card-actions>
+                    <!-- Marcador / favorito -->
+                    <v-btn v-if="type === 'video'" size="small" :prepend-icon="data.adicional.bookmarkedBy.includes(auth.id) ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="toggleBookmark(data)">{{ data.adicional.bookmarkedBy.length }}</v-btn>
+
+                    <!-- Número de vistas -->
                     <v-btn size="small" prepend-icon="mdi-chart-bar">{{ data.adicional.fetchCount }}</v-btn>
+
+                    <!-- Número de reproducciones -->
+                    <v-btn v-if="type === 'video'" size="small" prepend-icon="mdi-play">{{ data.adicional.playCount }}</v-btn>
+
                     <v-spacer></v-spacer>
+                    
+                    <!-- Más información -->
                     <v-btn color="secondary" icon="mdi-chevron-up" @click.prevent.stop="revealId = i"></v-btn>
                 </v-card-actions>
                 
@@ -64,51 +72,140 @@
                 <v-expand-transition @click.prevent.stop>
                     <v-card v-if="revealId === i" class="position-absolute w-100" height="100%" style="bottom: 0;">
                         <v-card-text class="pb-0">
+                            <!-- Título / Código de referencia -->
                             <p class="text-caption text--primary">
-                                {{ data.identificacion.codigoReferencia }}
+                                {{ type === 'video' ? data.identificacion.codigoReferencia : data.identificacion.titulo }}
                             </p>
-                            <p class="text-caption text--primary">
-                                <v-icon icon="mdi-calendar-blank" size="x-small"></v-icon>
-                                {{ data.identificacion.fecha }}
+
+                            <!-- Fecha y lugar -->
+                            <p>
+                                <!-- Fecha -->
+                                <span v-if="data.identificacion.fecha">
+                                    <v-icon icon="mdi-calendar-blank" size="x-small"></v-icon>
+                                    {{ type === 'video' ? $dayjs(data.identificacion.fecha).format('DD/MM/YYYY') : data.identificacion.fecha }}
+                                </span>
+                                
+                                <!-- Lugar -->
+                                <span v-if="data.identificacion?.pais || data.identificacion?.lugar" class="text-body-2 ml-2">
+                                    <v-icon icon="mdi-map-marker" size="x-small"></v-icon>
+                                    <span v-if="data.identificacion.pais">{{ data.identificacion.pais }}</span>
+                                    <span v-if="data.identificacion.pais && data.identificacion.lugar">, </span>
+                                    <span v-if="data.identificacion.lugar">{{ data.identificacion.lugar }}</span>
+                                </span>
                             </p>
-                            <p v-if="data.identificacion?.pais" class="text-body-2">
-                                <v-icon icon="mdi-map-marker" size="x-small"></v-icon>
-                                {{ data.identificacion.pais }}
+
+
+                            <!-- Personas entrevistadas -->
+                            <p v-if="type === 'video' && data.identificacion?.personasEntrevistadas" class="text-body-2">
+                                <v-icon icon="mdi-account" size="x-small"></v-icon>
+                                {{ data.identificacion.personasEntrevistadas }}
                             </p>
-                            <p class="text-body-2">
-                                <p>{{ data.adicional?.presentacion || '(Sin descripción)' }}</p>
+
+                            <!-- Descripción o presentación -->
+                            <p class="text-body-2 mt-2">
+                                {{ type === 'video' ? data.contenidoEstructura?.descripcionGeneral : ( type === 'conjunto' ? data.adicional?.presentacion : '(Sin descripción)') }}
                             </p>
                         </v-card-text>
+
+                        <!-- Botón para cerrar "cortina" -->
                         <v-card-actions class="pt-0">
                             <v-spacer></v-spacer>
-                            <v-btn color="teal-accent-4" icon="mdi-chevron-down" @click.prevent.stop="revealId = null"></v-btn>
+                            <v-btn :color="color" icon="mdi-chevron-down" @click.prevent.stop="revealId = null"></v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-expand-transition>
             </v-card>
         </template>
     </v-hover>
+
 </template>
 
 <script setup>
-defineProps(['data', 'revealId', 'type'])
+defineProps(['data', 'type', 'revealId', 'color', 'nav'])
 const emit = defineEmits(['delete'])
 
 // State manager
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
 
-/**
- * Función para borrar un conjunto de la base de datos
- * @param {string} id Id (de la base de datos) del conjunto que se desea borrar
- */
- async function deleteConjunto(id){
-    await $fetch(`/api/conjuntos/${id}`, {
-        method: 'DELETE',
-        query: { id: auth?.id }
-    })
+// Color de fondo por defecto cuando no hay imagen
+const defaultBgColor = 'bg-blue-grey-darken-4'
 
-    // Emite evento de borrado, util para saber cuándo recargar el contenido
-    emit('delete')
+/**
+ * Reenvia a la página a la que se desea navegar, tomando en consideración el tipo y 
+ * el modo de navegación (nav prop).
+ * @param {string} type Video o colección
+ * @param {string} id Id en base de datos
+ * @param {boolean} nav Modo de navegación o acceso directo
+ */
+function navigate(type, id, nav){
+    if(!id || typeof nav != undefined || !type || type !== 'video' || type !== 'conjunto')
+        navigateTo()
+
+    if(type === 'video')
+        return navigateTo(`/videos/${id}`)
+    else
+        if(nav)
+            return navigateTo({ path: '/nav', query: {id: id} })
+        return navigateTo(`/conjuntos/${id}`)
+}
+
+/**
+ * Agrega o quita un video de la lista de marcadores.
+ * Nota: Para evitar recargar la información de la lista de videos,
+ * además de realizar la petición a la BD para actualizar, 
+ * se modifica directamente la propiedad "adicional.bookmarkedBy"
+ * @param {object} video Representa un registro de video
+ */
+ async function toggleBookmark(video){
+    // Sin sesión iniciada, no realizar cambios
+    if(!auth.id) return
+    
+    // Si hay sesión iniciada y está incluida en lista de marcadores
+    if(video.adicional.bookmarkedBy.includes(auth.id)){
+        // Quitar de la lista de marcadores
+        video.adicional.bookmarkedBy.splice(video.adicional.bookmarkedBy.indexOf(auth.id), 1)
+        await $fetch(`/api/bookmarks/user/${auth.id}`, {
+            method: 'DELETE',
+            body: video,
+        })
+    }
+    else {
+        // Agregar a la lista de marcadores
+        video.adicional.bookmarkedBy.push(auth.id)
+        // Actualizar en la base de datos
+        await $fetch(`/api/bookmarks/user/${auth.id}`, {
+            method: 'PUT',
+            body: video,
+        })
+    }
+    // Actualizar token (en particular, la lista de marcadores)
+    await auth.updateToken()
+}
+
+/**
+ * Borrar conjunto de la base de datos
+ * @param {string} id Id (de la base de datos) del conjunto que se desea borrar
+ * @param {string} type Video o colección
+ */
+ async function deleteData(id, type){
+    if(!id || !type || type !== 'video' || type !== 'conjunto')
+        return
+
+    if(type === 'video'){
+        await $fetch(`/api/videos/${id}`, {
+            method: 'DELETE',
+            query: { id: auth?.id }
+        })
+        emit('delete')
+    }
+
+    else{
+        await $fetch(`/api/conjuntos/${id}`, {
+            method: 'DELETE',
+            query: { id: auth?.id }
+        })
+        emit('delete')
+    }
 }
 </script>
