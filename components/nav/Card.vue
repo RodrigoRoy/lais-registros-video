@@ -9,7 +9,7 @@
                 <template v-slot:append v-if="auth.isLoggedIn && (auth.canUpdate || auth.canDelete)">
                     <v-menu transition="slide-y-transition">
                         <template v-slot:activator="{ props }">
-                            <v-btn v-bind="props" icon="mdi-dots-horizontal" variant="plain"></v-btn>
+                            <v-btn v-bind="props" icon="mdi-dots-vertical" variant="plain"></v-btn>
                         </template>
                         <!-- Lista de acciones para administración -->
                         <v-list>
@@ -48,7 +48,7 @@
                 
                 <!-- Resto del texto (descripción a una línea) -->
                 <v-card-text>
-                    <p class="text-truncate">{{ type === 'video' ? data.contenidoEstructura?.descripcionGeneral : data.adicional.presentacion || '(Sin descripcion)'}}</p>
+                    <p class="text-truncate">{{ type === 'video' ? (data.contenidoEstructura?.descripcionGeneral || '(Sin descripción)') : (data.adicional?.presentacion || '(Sin descripcion)')}}</p>
                 </v-card-text>
                 
                 <!-- Acciones / botón para mostrar más información -->
@@ -65,7 +65,7 @@
                     <v-spacer></v-spacer>
                     
                     <!-- Más información -->
-                    <v-btn color="secondary" icon="mdi-chevron-up" @click.prevent.stop="revealId = i"></v-btn>
+                    <v-btn :color="subcolor" icon="mdi-chevron-up" @click.prevent.stop="revealId = i"></v-btn>
                 </v-card-actions>
                 
                 <!-- "Cortina" para mostrar información adicional -->
@@ -94,7 +94,6 @@
                                 </span>
                             </p>
 
-
                             <!-- Personas entrevistadas -->
                             <p v-if="type === 'video' && data.identificacion?.personasEntrevistadas" class="text-body-2">
                                 <v-icon icon="mdi-account" size="x-small"></v-icon>
@@ -110,7 +109,7 @@
                         <!-- Botón para cerrar "cortina" -->
                         <v-card-actions class="pt-0">
                             <v-spacer></v-spacer>
-                            <v-btn :color="color" icon="mdi-chevron-down" @click.prevent.stop="revealId = null"></v-btn>
+                            <v-btn :color="subcolor" icon="mdi-chevron-down" @click.prevent.stop="revealId = null"></v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-expand-transition>
@@ -121,7 +120,7 @@
 </template>
 
 <script setup>
-defineProps(['data', 'type', 'revealId', 'color', 'nav'])
+defineProps(['data', 'type', 'revealId', 'color', 'subcolor', 'nav'])
 const emit = defineEmits(['delete'])
 
 // State manager

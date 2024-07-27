@@ -4,7 +4,11 @@
             <v-app-bar-nav-icon @click.stop="website.toggleDrawer()"></v-app-bar-nav-icon>
         </template>
         
-        <v-app-bar-title><nuxt-link to="/" class="text-decoration-none text--primary">Registros en video</nuxt-link></v-app-bar-title>
+        <v-app-bar-title>
+            <nuxt-link to="/" class="text--primary" style="text-decoration: none; color: inherit">
+                Registros en video
+            </nuxt-link>
+        </v-app-bar-title>
 
         <!-- Vista alternativa con botones para iniciar y cerrar sesión -->
         <!-- <template v-slot:append>
@@ -14,42 +18,34 @@
         
         <v-menu>
             <template v-slot:activator="{ props }">
-                <v-btn v-if="!auth.isLoggedIn" icon="mdi-dots-horizontal-circle-outline" v-bind="props"></v-btn>
-                <v-btn v-else color="primary" variant="plain" append-icon="mdi-logout" @click="cerrarSesion()">
+                <v-btn v-if="!auth.isLoggedIn" icon="mdi-dots-vertical" v-bind="props"></v-btn>
+                <v-btn v-else variant="plain" append-icon="mdi-logout" @click="cerrarSesion()" style="text-decoration: none; color: inherit">
                     Cerrar sesión
                 </v-btn>
             </template>
             <v-list v-if="!auth.isLoggedIn">
                 <v-list-item>
                     <v-list-item-title>
-                        <nuxt-link to="/login">
-                            <v-btn color="primary" variant="plain" append-icon="mdi-login" >
+                        <v-btn variant="plain" append-icon="mdi-login">
+                            <nuxt-link to="/login" style="text-decoration: none; color: inherit">
                                 Iniciar sesión
-                            </v-btn>
-                        </nuxt-link>
-                    </v-list-item-title>
-                </v-list-item>
-                <v-list-item>
-                    <v-list-item-title>
-                        <nuxt-link to="/registro">
-                            <v-btn color="primary" variant="plain" append-icon="mdi-account-plus" >
-                                Crear cuenta
-                            </v-btn>
-                        </nuxt-link>
-                    </v-list-item-title>
-                </v-list-item>
-            </v-list>
-            <!-- <v-list v-else>
-                <v-list-item>
-                    <v-list-item-title>
-                        <v-btn color="primary" variant="plain" append-icon="mdi-logout" @click="cerrarSesion()">
-                                Cerrar sesión
+                            </nuxt-link>
                         </v-btn>
                     </v-list-item-title>
                 </v-list-item>
-            </v-list> -->
+                <v-list-item>
+                    <v-list-item-title>
+                        <v-btn variant="plain" append-icon="mdi-account-plus">
+                            <nuxt-link to="/registro" style="text-decoration: none; color: inherit">
+                                Crear cuenta
+                            </nuxt-link>
+                        </v-btn>
+                    </v-list-item-title>
+                </v-list-item>
+            </v-list>
         </v-menu>
     </v-app-bar>
+
     <v-snackbar timeout=800 color=success variant="tonal" v-model="showSnackbar1">
         <p class="text-center font-weight-bold">Cerrando sesión.</p>
     </v-snackbar>

@@ -18,24 +18,30 @@
                         </v-row>
                     </v-container>
                 </v-col>
-
+                
                 <v-col cols="12" sm="12" md="6">
                     <v-container class="text-center">
                         <v-row v-if="logoHeight>20" no-gutters align="center" >
                             <v-col >
-                                <nuxt-link to="/about">
-                                    <v-btn color="" variant="text">Acerca de</v-btn>
-                                </nuxt-link>
+                                <v-btn variant="text">
+                                    <nuxt-link to="/about" color="inherit" style="text-decoration: none; color: inherit">
+                                        Acerca de
+                                    </nuxt-link>
+                                </v-btn>
                             </v-col>
                             <v-col >
-                                <nuxt-link to="mailto:lais@mora.edu.mx">
-                                    <v-btn color="" variant="text">Contacto</v-btn>
-                                </nuxt-link>
+                                <v-btn variant="text">
+                                    <nuxt-link to="mailto:lais@mora.edu.mx" external style="text-decoration: none; color: inherit">
+                                        Contacto
+                                    </nuxt-link>
+                                </v-btn>
                             </v-col>
-                            <v-col >
-                                <nuxt-link v-if="!auth.isLoggedIn" to="/login">
-                                    <v-btn color="" variant="text"> Inicio sesión </v-btn>
-                                </nuxt-link>
+                            <v-col>
+                                <v-btn v-if="!auth.isLoggedIn" color="" variant="text"> 
+                                    <nuxt-link to="/login" style="text-decoration: none; color: inherit">
+                                        Iniciar sesión 
+                                    </nuxt-link>
+                                </v-btn>
                                 <v-btn v-else color="" variant="text" @click="auth.logout">
                                     Cerrar sesión
                                 </v-btn>
@@ -56,10 +62,9 @@
                 </v-col>
             </v-row>
         </v-container>
-
-
     </v-footer>
-  </template>
+</template>
+
 <script setup>
 // State manager
 import { useAuthStore } from '@/stores/auth'
@@ -78,5 +83,5 @@ const logoHeight = computed(() => {
     case 'xxl': return 100
   }
   return undefined
-  })
+})
 </script>

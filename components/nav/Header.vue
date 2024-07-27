@@ -6,12 +6,12 @@
         </template>
         
         <!-- Código de referencia en pequeño -->
-        <v-card-subtitle class="mt-n3 text-caption ">
+        <v-card-subtitle class="mt-n4 text-caption ">
             {{ data.identificacion?.codigoReferencia || '' }}
         </v-card-subtitle>
         
         <!-- Información del conjunto -->
-        <v-card-text>
+        <v-card-text class="mt-n2">
             <p>
                 <!-- Fecha -->
                 <span v-if="data.identificacion?.fecha" class="text-caption text--primary mr-3">
@@ -34,6 +34,19 @@
                 <v-btn icon="mdi-chevron-down" variant="plain" size="x-small" @click="showFullText = true" v-if="!showFullText"></v-btn>
             </p>
         </v-card-text>
+
+        <v-card-actions>
+            <v-btn v-if="(data.adicional?.child?.length === 0 && data.adicional?.videos?.length === 0) || data.adicional?.child?.length !== 0" prepend-icon="mdi-plus" variant="outlined">
+                <nuxt-link :to="`/conjuntos/nuevo?id=${data._id ? data._id : ''}`" style="color: inherit" class="text-decoration-none">
+                    Nuevo grupo
+                </nuxt-link>
+            </v-btn>
+            <v-btn v-if="(data.adicional?.child?.length === 0 && data.adicional?.videos?.length === 0) || data.adicional?.videos?.length !== 0" prepend-icon="mdi-plus" variant="outlined">
+                <nuxt-link :to="`/videos/nuevo?id=${data._id ? data._id : ''}`" style="color: inherit" class="text-decoration-none">
+                    Nueva unidad
+                </nuxt-link>
+            </v-btn>
+        </v-card-actions>
         
         <!-- Botón para ver detalles -->
         <template v-slot:append>
@@ -50,6 +63,9 @@
 
 <script setup>
 defineProps(['data', 'variant', 'color'])
+
+// Composable para obtener parametros desde URL
+const route = useRoute()
 
 // Determina si se muestra la descripción/presentación textual del conjunto
 const showFullText = ref(false)

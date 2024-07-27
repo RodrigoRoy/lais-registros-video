@@ -9,7 +9,7 @@
                 <template v-slot:append v-if="auth.isLoggedIn && (auth.canUpdate || auth.canDelete)">
                     <v-menu transition="slide-y-transition">
                         <template v-slot:activator="{ props }">
-                            <v-btn v-bind="props" icon="mdi-dots-horizontal" variant="plain"></v-btn>
+                            <v-btn v-bind="props" icon="mdi-dots-vertical" variant="plain"></v-btn>
                         </template>
                         <!-- Lista de acciones para administración -->
                         <v-list>

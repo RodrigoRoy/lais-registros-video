@@ -5,11 +5,11 @@
         <v-row>
             <!-- Mostrar cuadricula de elementos. Se usa nomenclatura (element, index) para generar numeración -->
             <v-col v-for="(item, i) in conjunto.adicional.child" :key="item._id" class="d-flex child-flex" cols="12" sm="6" md="4" lg="3" xl="3">
-                <nav-card type="conjunto" :data="item" :revealId="revealId" color="teal-darken-4" :nav="true" @delete="refresh"></nav-card>
+                <nav-card type="conjunto" :data="item" :revealId="revealId" color="teal-darken-4" subcolor="" :nav="true" @delete="refresh"></nav-card>
             </v-col>
 
             <v-col v-for="(item, i) in conjunto.adicional.videos" :key="item._id" class="d-flex child-flex" cols="12" sm="6" md="4" lg="3" xl="3">
-                <nav-card type="video" :data="item" :revealId="revealId" color="lime-darken-4" :nav="true" @delete="refresh"></nav-card>
+                <nav-card type="video" :data="item" :revealId="revealId" color="lime-darken-4" subcolor="" :nav="true" @delete="refresh"></nav-card>
             </v-col>
         </v-row>
     </v-container>
