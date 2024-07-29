@@ -142,6 +142,7 @@
             </div>
         </v-form>
     </v-card>
+    {{conjunto}}
 </template>
 
 <script setup>
@@ -155,6 +156,9 @@ definePageMeta({
         'create',
     ]
 })
+
+// Composable para obtener parametros desde URL
+const route = useRoute()
 
 // Biblioteca para mostrar fechas
 const dayjs = useDayjs()
@@ -253,7 +257,7 @@ const conjunto = reactive({
         isPublic: true,
         isDraft: false,
         fetchCount: 0,
-        parent: null,
+        parent: route.query?.id || null,
         child: [],
         videos: [],
         depth: 0,
@@ -341,15 +345,23 @@ async function uploadFile(file, filetype) {
         conjunto.adicional.imagen = null
 
     // newConjunto es el nuevo registro en base de datos. Incluye propiedad "_id"
-    const { data: newConjunto } = await useFetch('/api/conjuntos/nuevo', {
+    const newConjunto = await $fetch('/api/conjuntos/nuevo', {
         method: 'POST',
         body: JSON.parse(JSON.stringify(conjunto)),
         query: { id: auth?.id }
     })
 
+    // Actualizar referencia del conjunto padre
+    if(newConjunto.adicional.parent){
+        await $fetch(`/api/conjuntos/hierarchy/${newConjunto.adicional.parent}`, {
+            method: 'PUT',
+            query: {id: newConjunto._id, type: "conjunto"}
+        })
+    }
+
     // Si es un borrador, guardar en listado de borradores del usuario
     if(conjunto.adicional.isDraft)
-        await useFetch(`/api/drafts/conjuntos/user/${auth?.id}`, {
+        await $fetch(`/api/drafts/conjuntos/user/${auth?.id}`, {
             method: 'PUT',
             body: JSON.parse(JSON.stringify(newConjunto.value)),
         })

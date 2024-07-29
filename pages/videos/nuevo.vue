@@ -200,6 +200,9 @@ definePageMeta({
     ]
 })
 
+// Composable para obtener parametros desde URL
+const route = useRoute()
+
 // Biblioteca para mostrar fechas
 const dayjs = useDayjs()
 
@@ -292,7 +295,7 @@ const video = reactive({
         isPublic: true,
         isDraft: false,
         bookmarkedBy: [],
-        parent: null,
+        parent: route.query?.id || null,
         fetchCount: 0,
         playCount: 0,
     },
@@ -428,6 +431,11 @@ async function uploadFile(file, filetype) {
     return filename
 }
 
+async function updateParent(conjuntoId, videoId){
+    const conjunto = await $fetch(`/api/conjuntos/${conjuntoId}`)
+    // conjunto.
+}
+
 /**
  * Acciones al dar clic al botón de Crear nuevo registro de video.
  * Se realizan validaciones, si todo es correcto se envia información a la base de datos
@@ -469,9 +477,17 @@ async function uploadFile(file, filetype) {
         query: { id: auth?.id},
     })
 
+    // Actualizar referencia del conjunto padre
+    if(newVideo.adicional.parent){
+        await $fetch(`/api/conjuntos/hierarchy/${newVideo.adicional.parent}`, {
+            method: 'PUT',
+            query: {id: newVideo._id, type: "video"}
+        })
+    }
+
     // Si es un borrador, guardar en listado de borradores del usuario
     if(video.adicional.isDraft)
-        await useFetch(`/api/drafts/videos/user/${auth?.id}`, {
+        await $fetch(`/api/drafts/videos/user/${auth?.id}`, {
             method: 'PUT',
             body: JSON.parse(JSON.stringify(newVideo)),
         })

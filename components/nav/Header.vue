@@ -64,9 +64,6 @@
 <script setup>
 defineProps(['data', 'variant', 'color'])
 
-// Composable para obtener parametros desde URL
-const route = useRoute()
-
 // Determina si se muestra la descripción/presentación textual del conjunto
 const showFullText = ref(false)
 </script>
