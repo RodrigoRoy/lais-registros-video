@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
         maxFieldsSize: 5 * 1024 * 1024, // 5 MB
         defaultInvalidName: 'invalid',
         /**
-         * Renombramiento del archivo para no conservar su nombre original y evitar conflictos.
+         * Renombramiento del archivo para no conservar su nombre original y evitar conflictos
          * @param {string} name Nombre original del archivo
          * @param {string} ext Extensión original del archivo, inlcuye punto(.)
          * @param {Object} part Incluye varios metadatos como originalFilename y mimetype

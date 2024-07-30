@@ -36,8 +36,6 @@
             </v-snackbar>
         </v-form>
     </v-card>
-
-    {{ files }}
 </template>
 
 <script setup>

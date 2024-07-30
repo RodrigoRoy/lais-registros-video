@@ -4,6 +4,9 @@ import * as fs from 'fs' // Biblioteca de Node para editar y mover archivos
 export default defineEventHandler(async (event) => {
     // Ubicación para almacenar archivos
     const uploadDir = 'public/data/profile'
+    // Nombre temporal aleatorio para el archivo
+    const tempFileName = Math.floor(Math.random() * 10000000).toString()
+
     try {
         // Verificar que la ubicación exista, de lo contrario, crearla
         if(!fs.existsSync(uploadDir))
@@ -24,7 +27,7 @@ export default defineEventHandler(async (event) => {
         maxFieldsSize: 5 * 1024 * 1024, // 5 MB
         defaultInvalidName: 'invalid',
         /**
-         * Renombramiento del archivo para conservar su nombre original
+         * Renombramiento del archivo para no conservar su nombre original y evitar conflictos
          * @param {string} name Nombre original del archivo
          * @param {string} ext Extensión original del archivo, inlcuye punto(.)
          * @param {Object} part Incluye varios metadatos como originalFilename y mimetype
@@ -32,7 +35,7 @@ export default defineEventHandler(async (event) => {
          * @returns {string} Nuevo nombre del archivo
          */
         filename: (name, ext, part, form) => {
-            return part.originalFilename
+            return `${tempFileName}${ext}`
         },
     })
 
@@ -59,10 +62,10 @@ export default defineEventHandler(async (event) => {
     // files.file[0]{ size, filepath, newFilename, mimetype, mtime, originalFilename }
 
     // Caracteres finales después del punto (.) final. Por ejemplo: pdf, mp4, jpg
-    const fileExtension = files.file[0].originalFilename.match(/\.([^.]+)$/i)[1]
+    const fileExtension = files.file[0].newFilename.match(/\.([^.]+)$/i)[1]
 
     // Ubicación original del archivo
-    const oldPath = `${uploadDir}/${files.file[0].originalFilename}`
+    const oldPath = `${uploadDir}/${files.file[0].newFilename}`
     // Nueva ubicación del archivo
     const newPath = `${uploadDir}/${fields.id[0]}.${fileExtension}`
 
