@@ -405,10 +405,11 @@ function markerDragEnd(){
  * Sube un archivo del cliente al servidor.
  * El archivo a subir debe estar especificado en alguno de los <v-file-input>
  * @param {object} file Archivo subido desde input file
- * @param {string} filetype Representa el tipo de archivo a subir ("video", "image", "document")\
+ * @param {string} filetype Tipo de archivo a subir ("video", "image", "document")
+ * @param {string} id Id en base de datos del registro
  * @returns {string} El nuevo nombre del archivo subido
  */
-async function uploadFile(file, filetype) {
+async function uploadFile(file, filetype, id) {
     // Validación del parámetro "filetype"
     const valid = /(^video$)|(^image$)|(^document$)/gm.test(filetype)
     if(!valid) return
@@ -418,7 +419,7 @@ async function uploadFile(file, filetype) {
 
     // Agregar campos necesarios, incluyendo el archivo. El nombre de cada campo se usará en el API
     formData.append('file', file)
-    formData.append('codigoReferencia', video.identificacion.codigoReferencia)
+    formData.append('id', id)
     formData.append('filetype', filetype)
 
     // Petición al API para procesar la información del formulario
@@ -429,11 +430,6 @@ async function uploadFile(file, filetype) {
 
     // Devuelve el nuevo nombre del archivo subido
     return filename
-}
-
-async function updateParent(conjuntoId, videoId){
-    const conjunto = await $fetch(`/api/conjuntos/${conjuntoId}`)
-    // conjunto.
 }
 
 /**
@@ -452,24 +448,6 @@ async function updateParent(conjuntoId, videoId){
         return
     }
 
-    // Si existe archivo de video, proceder a subirlo
-    if(video.identificacion.codigoReferencia && files.video)
-        video.adicional.clipVideo = await uploadFile(files.video, 'video')
-    else
-        video.adicional.clipVideo = null
-
-    // Si existe archivo de imagen, proceder a subirlo
-    if(video.identificacion.codigoReferencia && files.image)
-        video.adicional.imagen = await uploadFile(files.image, 'image')
-    else
-        video.adicional.imagen = null
-
-    // Si existe documento de texto, proceder a subirlo
-    if(video.identificacion.codigoReferencia && files.document)
-        video.adicional.documentoCalificacion = await uploadFile(files.document, 'document')
-    else
-        video.adicional.documentoCalificacion = null
-
     // newVideo es el nuevo registro en base de datos. Incluye propiedad "_id"
     const newVideo = await $fetch('/api/videos/nuevo', {
         method: 'POST',
@@ -486,11 +464,35 @@ async function updateParent(conjuntoId, videoId){
     }
 
     // Si es un borrador, guardar en listado de borradores del usuario
-    if(video.adicional.isDraft)
+    if(newVideo.adicional.isDraft)
         await $fetch(`/api/drafts/videos/user/${auth?.id}`, {
             method: 'PUT',
             body: JSON.parse(JSON.stringify(newVideo)),
         })
+    
+    // Si existe archivo de video, proceder a subirlo
+    if(files.video)
+        newVideo.adicional.clipVideo = await uploadFile(files.video, 'video', newVideo._id)
+    else
+        newVideo.adicional.clipVideo = null
+
+    // Si existe archivo de imagen, proceder a subirlo
+    if(files.image)
+        newVideo.adicional.imagen = await uploadFile(files.image, 'image', newVideo._id)
+    else
+        newVideo.adicional.imagen = null
+
+    // Si existe documento de texto, proceder a subirlo
+    if(files.document)
+        newVideo.adicional.documentoCalificacion = await uploadFile(files.document, 'document', newVideo._id)
+    else
+        newVideo.adicional.documentoCalificacion = null
+
+    // Actualizar nuevas referencias de los archivos subidos
+    await $fetch(`/api/videos/${newVideo._id}`, {
+        method: 'PUT',
+        body: JSON.parse(JSON.stringify(newVideo)),
+    })
     
     // Indicar el final del proceso de subida del registro de video
     isLoading.value = false

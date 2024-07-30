@@ -70,7 +70,7 @@
                 
                 <!-- "Cortina" para mostrar información adicional -->
                 <v-expand-transition @click.prevent.stop>
-                    <v-card v-if="revealId === i" class="position-absolute w-100" height="100%" style="bottom: 0;">
+                    <v-card v-if="revealId === i" @click.prevent.stop="revealId = null" class="position-absolute w-100" height="100%" style="bottom: 0;">
                         <v-card-text class="pb-0">
                             <!-- Título / Código de referencia -->
                             <p class="text-caption text--primary">
@@ -102,7 +102,7 @@
 
                             <!-- Descripción o presentación -->
                             <p class="text-body-2 mt-2">
-                                {{ type === 'video' ? data.contenidoEstructura?.descripcionGeneral : ( type === 'conjunto' ? data.adicional?.presentacion : '(Sin descripción)') }}
+                                {{ type === 'video' ? (data.contenidoEstructura?.descripcionGeneral || '(Sin descripción)') : ( data.adicional?.presentacion || '(Sin descripción)') }}
                             </p>
                         </v-card-text>
 

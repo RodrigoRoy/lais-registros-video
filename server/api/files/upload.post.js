@@ -4,9 +4,11 @@ import * as fs from 'fs' // Biblioteca de Node para editar y mover archivos
 export default defineEventHandler(async (event) => {
     // Ubicación para almacenar archivos
     const uploadDir = 'public/data'
-    // Mover el archivo de su ubicacion por default
+    // Nombre temporal aleatorio para el archivo
+    const tempFileName = Math.floor(Math.random() * 10000000).toString()
+
+    // Verificar que uploadDir exista, de lo contrario, crearla
     try {
-        // Verificar que la ubicación exista, de lo contrario, crearla
         if(!fs.existsSync(uploadDir))
             fs.mkdirSync(uploadDir, {recursive: true})
     } catch (err) {
@@ -25,7 +27,7 @@ export default defineEventHandler(async (event) => {
         maxFieldsSize: 5 * 1024 * 1024, // 5 MB
         defaultInvalidName: 'invalid',
         /**
-         * Renombramiento del archivo para conservar su nombre original
+         * Renombramiento del archivo para no conservar su nombre original y evitar conflictos.
          * @param {string} name Nombre original del archivo
          * @param {string} ext Extensión original del archivo, inlcuye punto(.)
          * @param {Object} part Incluye varios metadatos como originalFilename y mimetype
@@ -33,12 +35,12 @@ export default defineEventHandler(async (event) => {
          * @returns {string} Nuevo nombre del archivo
          */
         filename: (name, ext, part, form) => {
-            return part.originalFilename
+            return `${tempFileName}${ext}`
         },
     })
 
     // Los campos definidos en el cliente (FormData)
-    // Deben incluir campos auxiliares como: "filetype" y "codigoReferencia"
+    // Deben incluir campos auxiliares como: "filetype" y "id"
     let fields
     
     // Los metadatos de los archivos que se desean alojar en el sistema de archivos
@@ -54,7 +56,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Campos recibidos desde FormData:
-    // fields.codigoReferencia[0]
+    // fields.id[0]
     // fields.filetype[0]
     
     // Archivo recibido desde FormData y sus propiedades:
@@ -64,13 +66,13 @@ export default defineEventHandler(async (event) => {
     const newDirPath = fields.filetype ? `${uploadDir}/${fields.filetype[0]}` : uploadDir
 
     // Caracteres finales después del punto (.) final. Por ejemplo: pdf, mp4, jpg
-    const fileExtension = files.file[0].originalFilename.match(/\.([^.]+)$/i)[1]
+    const fileExtension = files.file[0].newFilename.match(/\.([^.]+)$/i)[1]
 
     // Ubicación original del archivo
-    const oldPath = `${uploadDir}/${files.file[0].originalFilename}`
+    const oldPath = `${uploadDir}/${files.file[0].newFilename}`
     // Nueva ubicación del archivo
-    // const newPath = `${newDirPath}/${files.file[0].originalFilename}`
-    const newPath = `${newDirPath}/${fields.codigoReferencia[0]}.${fileExtension}`
+    // const newPath = `${newDirPath}/${files.file[0].newFilename}`
+    const newPath = `${newDirPath}/${fields.id[0]}.${fileExtension}`
 
     // Mover el archivo de su ubicacion por default
     try {
@@ -80,5 +82,5 @@ export default defineEventHandler(async (event) => {
     }
 
     // Notificar que la subida de archivos fue correcta
-    return {filename: `${fields.codigoReferencia[0]}.${fileExtension}`}
+    return {filename: `${fields.id[0]}.${fileExtension}`}
 })
