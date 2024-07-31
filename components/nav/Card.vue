@@ -15,7 +15,7 @@
                         <v-list>
                             <!-- EDITAR -->
                             <v-list-item>
-                                <nuxt-link v-if="auth.canUpdate" :to="`/${type === 'videos' ? 'video' : 'conjuntos'}/${data._id}/edit`" class="text-decoration-none"><v-btn>Editar</v-btn></nuxt-link>
+                                <nuxt-link v-if="auth.canUpdate" :to="`/${type === 'video' ? 'videos' : 'conjuntos'}/${data._id}/edit`" class="text-decoration-none"><v-btn>Editar</v-btn></nuxt-link>
                             </v-list-item>
                             
                             <!-- BORRAR -->
