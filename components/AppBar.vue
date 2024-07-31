@@ -13,28 +13,22 @@
         <v-spacer></v-spacer>
 
         <!-- Barra de búsqueda -->
-        <v-btn prepend-icon="mdi-magnify" variant="text" @click="dialog = true">Búsqueda</v-btn>
+        <v-btn icon="mdi-magnify" variant="text" @click="dialog = true"></v-btn>
 
         <!-- Ventana de búsqueda -->
-        <v-dialog v-model="dialog" width="auto" >
+        <v-dialog v-model="dialog" width="100%" scrollable>
             <v-card>
                 <!-- Área para escribir búsqueda -->
                 <template v-slot:title>
-                    <v-text-field v-model="searchQuery" @keyup="search(searchQuery)" prepend-inner-icon="mdi-magnify" label="Búsqueda..." variant="solo-filled" density="comfortable" :hide-details="true" :autofocus="true" :focused="true" :single-line="true"></v-text-field>
+                    <v-text-field placeholder="Búsqueda" v-model="searchQuery" @keyup="search(searchQuery)" prepend-inner-icon="mdi-magnify" variant="solo-filled" density="comfortable" :hide-details="true" :autofocus="true" :focused="true" :single-line="true"></v-text-field>
                 </template>
                 <!-- Presentación de resultados -->
                 <template v-slot:text>
-                    <user-data-table :videos="queryResults" />
+                    <search-items :results="queryResults" @click-result="dialog = false; searchQuery = ''"></search-items>
                 </template>
             </v-card>
         </v-dialog>
 
-        <!-- Vista alternativa con botones para iniciar y cerrar sesión -->
-        <!-- <template v-slot:append>
-            <v-btn v-if="!auth.isLoggedIn" append-icon="mdi-login" variant="tonal">Entrar</v-btn>
-            <v-btn v-if="auth.isLoggedIn" append-icon="mdi-logout" variant="tonal" @click="cerrarSesion()">Salir</v-btn>
-        </template> -->
-        
         <v-menu>
             <template v-slot:activator="{ props }">
                 <v-btn v-if="!auth.isLoggedIn" icon="mdi-dots-vertical" v-bind="props"></v-btn>

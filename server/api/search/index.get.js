@@ -7,7 +7,7 @@ export default defineEventHandler( async (event) => {
     const searchQuery = query?.q ? query.q : ''
 
     try {
-        return await VideoSchema.find({$text: {$search: searchQuery}}, {score: {$meta: "textScore"}})
+        return await VideoSchema.find({$text: {$search: searchQuery}}, {score: {$meta: "textScore"}}).sort({score: { $meta: "textScore" }})
     }
     catch (error) {
         throw createError({statusCode: 500, statusMessage: 'Error en BD', message: error})
