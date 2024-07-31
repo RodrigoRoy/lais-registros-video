@@ -79,5 +79,22 @@ export const VideoSchema = defineMongooseModel({
                 }
             }
         },
-    },  
+    },
+
+    // Schema Hooks Function to customize Model
+    hooks(schema){
+        // Creación de índices para búsqueda textual
+        schema.index( {'$**': 'text'}, {
+            name: 'videoTextSearch',
+            weights: {
+                'identificacion.lugar': 4,
+                'identificacion.entrevista': 3,
+                'identificacion.personasEntrevistadas': 5,
+                'contenidoEstructura.descripcionGeneral': 10,
+                'contenidoEstructura.descriptorOnomastico': 3,
+                'contenidoEstructura.descriptorToponimico': 3,
+                'notas.notas': 2,
+            },
+        })
+    },
 })

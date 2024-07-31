@@ -109,4 +109,22 @@ export const ConjuntoSchema = defineMongooseModel({
         // Nombre de la propiedad para identificar discriminador o tipo de Conjunto (mecanismo de herencia)
         // discriminatorKey: 'tipo',
     },
+
+    // Schema Hooks Function to customize Model
+    hooks(schema){
+        // Creación de índices para búsqueda textual
+        schema.index( {'$**': 'text'}, {
+            name: 'conjuntoTextSearch',
+            weights: {
+                'identificacion.titulo': 8,
+                'identificacion.coordinacion': 3,
+                'identificacion.proyectoInvestigacion': 4,
+                'identificacion.investigacion': 3,
+                'identificacion.coordinacionProyecto': 3,
+                'identificacion.coordinacionProduccionAudiovisual': 3,
+                'notas.notas': 2,
+                'adicional.presentacion': 10,
+            },
+        })
+    },
 })
