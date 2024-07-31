@@ -5,8 +5,9 @@
                 <v-toolbar-title>Editar conjunto documental <span class="text-body-1">({{ conjunto.identificacion?.titulo }})</span></v-toolbar-title>
             </v-toolbar>
             
-            <div class="d-flex flex-row">
-                <v-tabs v-model="tab" color="primary" direction="vertical" >
+            <!-- d-flex flex-row permite mostrar tabs en vertical. Solo para tamaños mdAndUp -->
+            <div :class="{'d-flex': !smAndDown, 'flex-row': !smAndDown}">
+                <v-tabs v-model="tab" color="primary" :direction="smAndDown ? 'horizontal' : 'vertical'" :show-arrows="smAndDown" center-active>
                     <v-tab v-for="area in areasList" :value="area.name">
                         <v-icon start>
                             {{ area.icon }}
@@ -15,8 +16,8 @@
                     </v-tab>
                 </v-tabs>
     
-                <v-window v-model="tab" class="w-100">
-                    <v-window-item value="identificacion">
+                <v-tabs-window v-model="tab" class="w-100">
+                    <v-tabs-window-item value="identificacion">
                         <v-card flat>
                             <v-card-text>
                                 
@@ -24,13 +25,13 @@
                                     <v-text-field v-model="conjunto.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" ></v-text-field>
                                     <v-text-field v-model="conjunto.identificacion.titulo" label="Título" variant="underlined" clearable :rules="formRules.titulo" ></v-text-field>
                                     <v-row>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.fecha" label="Fecha (periodo)" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.pais" label="País" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-select v-model="conjunto.identificacion.nivelDescripcion" label="Nivel de descripción" variant="underlined" clearable :items="selectLists.nivelDescripcion" ></v-select>
                                         </v-col>
 
@@ -38,42 +39,42 @@
 
                                     <!-- solo colección -->
                                     <v-row>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.volumenSoporte" label="Volumen y soporte" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.coordinacion" label="Coordinación" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                     </v-row>
 
                                     <!-- solo grupo documental -->
                                     <v-row>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.proyectoInvestigacion" label="Proyecto de investigación" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.entidadProductora" label="Entidad productora" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                     </v-row>
                                     <v-row>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.investigacion" label="Investigación" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.coordinacionProyecto" label="Coordinación del proyecto" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                     </v-row>
                                     <v-row>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.coordinacionProduccionAudiovisual" label="Coordinación del proyecto audiovisual" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                     </v-row>
                                 </v-container>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="contexto">
+                    <v-tabs-window-item value="contexto">
                         <v-card flat>
                             <v-card-text>
                                 <v-textarea v-model="conjunto.contexto.semblanzaBiografica" label="Semblanza biográfica" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
@@ -83,9 +84,9 @@
                                 <v-textarea v-model="conjunto.contexto.historiaArchivistica" label="Historia archivística" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="contenidoEstructura">
+                    <v-tabs-window-item value="contenidoEstructura">
                         <v-card flat>
                             <v-card-text>
                                 <v-textarea v-model="conjunto.contenidoEstructura.alcanceContenido" label="Alcance y contenido" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
@@ -95,26 +96,26 @@
                                 <v-textarea v-model="conjunto.contenidoEstructura.organizacion" label="Organización" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="condicionesAccesoUso">
+                    <v-tabs-window-item value="condicionesAccesoUso">
                         <v-card flat>
                             <v-card-text>
                                 <v-textarea v-model="conjunto.condicionesAccesoUso.condicionesAcceso" label="Condiciones de acceso" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
                                 <v-textarea v-model="conjunto.condicionesAccesoUso.condicionesReproduccion" label="Condiciones de reproducción" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="notas">
+                    <v-tabs-window-item value="notas">
                         <v-card flat>
                             <v-card-text>
                                 <v-textarea v-model="conjunto.notas.notas" label="Notas" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="controlDescripcion">
+                    <v-tabs-window-item value="controlDescripcion">
                         <v-card flat>
                             <v-card-text>
                                 <v-text-field v-model="conjunto.controlDescripcion.documentalista.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
@@ -123,9 +124,9 @@
                                 <v-text-field v-model="today" label="Fecha de actualización" variant="underlined" readonly ></v-text-field>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="adicional">
+                    <v-tabs-window-item value="adicional">
                         <v-card flat>
                             <v-card-text>
                                 <v-textarea v-model="conjunto.adicional.presentacion" label="Presentación" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
@@ -142,8 +143,8 @@
                                 <v-checkbox v-model="conjunto.adicional.isDraft" label="Guardar como borrador" ></v-checkbox>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
-                </v-window>
+                    </v-tabs-window-item>
+                </v-tabs-window>
             </div>
             <div class="d-flex justify-center">
                 <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading">Editar registro de video</v-btn>
@@ -156,6 +157,10 @@
 // State manager
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
+
+// Identifica tamaños de viewport (ventana)
+import { useDisplay } from 'vuetify'
+const { smAndDown } = useDisplay()
 
 definePageMeta({
     middleware: [

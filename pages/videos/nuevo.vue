@@ -5,8 +5,9 @@
                 <v-toolbar-title>Nuevo registro de video</v-toolbar-title>
             </v-toolbar>
             
-            <div class="d-flex flex-row">
-                <v-tabs v-model="tab" color="primary" direction="vertical" >
+            <!-- d-flex flex-row permite mostrar tabs en vertical. Solo para tamaños mdAndUp -->
+            <div :class="{'d-flex': !smAndDown, 'flex-row': !smAndDown}">
+                <v-tabs v-model="tab" color="primary" :direction="smAndDown ? 'horizontal' : 'vertical'" :show-arrows="smAndDown" center-active>
                     <v-tab v-for="area in areasList" :value="area.name">
                         <v-icon start>
                             {{ area.icon }}
@@ -15,18 +16,18 @@
                     </v-tab>
                 </v-tabs>
     
-                <v-window v-model="tab" class="w-100">
-                    <v-window-item value="identificacion">
+                <v-tabs-window v-model="tab" class="w-100">
+                    <v-tabs-window-item value="identificacion">
                         <v-card flat>
                             <v-card-text>
                                 
                                 <v-container class="px-0">
                                     <v-text-field v-model="video.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" ></v-text-field>
                                     <v-row>
-                                        <v-col xs="12" lg="6">
+                                        <v-col cols="12" lg="6">
                                             <v-date-picker v-model="video.identificacion.fecha" title="Fecha" ></v-date-picker>
                                         </v-col>
-                                        <v-col xs="12" lg="6">
+                                        <v-col cols="12" lg="6">
                                             <v-text-field v-model="video.identificacion.lugar" label="Lugar" variant="underlined" clearable ></v-text-field>
                                             <v-text-field v-model="video.identificacion.pais" label="País" variant="underlined" clearable ></v-text-field>
                                             <v-text-field v-model="video.identificacion.duracion" label="Duración" type="number" min="1" variant="underlined" clearable :rules="formRules.duracion" ></v-text-field>
@@ -34,7 +35,7 @@
                                     </v-row>
 
                                     <v-row>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.personasEntrevistadas" label="Personas entrevistadas" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                         <v-col md="6">
@@ -43,115 +44,115 @@
                                     </v-row>
 
                                     <v-row>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.camara" label="Cámara" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.iluminacion" label="Iluminación" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                     </v-row>
 
                                     <v-row>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.asistencia" label="Asistencia" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.sonido" label="Sonido" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                     </v-row>
                                 </v-container>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="contenidoEstructura">
+                    <v-tabs-window-item value="contenidoEstructura">
                         <v-card flat>
                             <v-card-text>
                                 <v-textarea v-model="video.contenidoEstructura.descripcionGeneral" label="Descripción general" variant="underlined" clearable rows="5" auto-grow ></v-textarea>
                                 <v-select v-model="video.contenidoEstructura.estructuraFormal" label="Estructura formal" variant="underlined" clearable :items="selectLists.estructuraFormal" ></v-select>
                                 <v-container class="px-0">
                                     <v-row>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="video.contenidoEstructura.descriptorOnomastico" label="Descriptor onomástico" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col xs="12" md="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="video.contenidoEstructura.descriptorToponimico" label="Descriptor toponímico" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                     </v-row>
                                 </v-container>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="condicionesAccesoUso">
+                    <v-tabs-window-item value="condicionesAccesoUso">
                         <v-card flat>
                             <v-card-text>
                                 <v-container class="px-0">
                                     <v-row>
-                                        <v-col xs="12" sm="12" md="4">
+                                        <v-col cols="12" sm="12" md="4">
                                             <v-text-field v-model="video.condicionesAccesoUso.idiomaOriginal" label="Idioma original" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col xs="12" sm="12" md="4">
+                                        <v-col cols="12" sm="12" md="4">
                                             <v-text-field v-model="video.condicionesAccesoUso.numeroCasetes" label="Número de casetes" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col xs="12" sm="12" md="4">
+                                        <v-col cols="12" sm="12" md="4">
                                             <v-text-field v-model="video.condicionesAccesoUso.requisitosTecnicos" label="Requisitos técnicos" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                     </v-row>
                                     <v-row>
-                                        <v-col xs="12" sm="12" md="4">
+                                        <v-col cols="12" sm="12" md="4">
                                             <v-select v-model="video.condicionesAccesoUso.soporte" label="Soporte" variant="underlined" clearable :items="selectLists.soporte" ></v-select>
                                         </v-col>
-                                        <v-col xs="12" sm="12" md="4">
+                                        <v-col cols="12" sm="12" md="4">
                                             <v-select v-model="video.condicionesAccesoUso.color" label="Color" variant="underlined" clearable :items="selectLists.color" ></v-select>
                                         </v-col>
-                                        <v-col xs="12" sm="12" md="4">
+                                        <v-col cols="12" sm="12" md="4">
                                             <v-select v-model="video.condicionesAccesoUso.audio" label="Audio" variant="underlined" clearable :items="selectLists.audio" ></v-select>
                                         </v-col>
                                     </v-row>
                                     <v-row>
-                                        <v-col xs="12" sm="12" md="4">
+                                        <v-col cols="12" sm="12" md="4">
                                             <v-select v-model="video.condicionesAccesoUso.sistemaGrabacion" label="Sistema de grabación" variant="underlined" clearable :items="selectLists.sistemaGrabacion" ></v-select>
                                         </v-col>
-                                        <v-col xs="12" sm="12" md="4">
+                                        <v-col cols="12" sm="12" md="4">
                                             <v-select v-model="video.condicionesAccesoUso.resolucionGrabacion" label="Resolución de grabación" variant="underlined" clearable :items="selectLists.resolucionGrabacion" ></v-select>
                                         </v-col>
-                                        <v-col xs="12" sm="12" md="4">
+                                        <v-col cols="12" sm="12" md="4">
                                             <v-select v-model="video.condicionesAccesoUso.formatoVideoDigital" label="Formato de video digital" variant="underlined" clearable :items="selectLists.formatoVideoDigital" ></v-select>
                                         </v-col>
                                     </v-row>
                                 </v-container>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="documentacionAsociada">
+                    <v-tabs-window-item value="documentacionAsociada">
                         <v-card flat>
                             <v-card-text>
                                 <v-textarea v-model="video.documentacionAsociada.unidadesDescripcionRelacionadas" label="Unidades de descripción relacionadas" variant="underlined" clearable rows="3" auto-grow ></v-textarea>
                                 <v-textarea v-model="video.documentacionAsociada.documentosAsociados" label="Documentos asociados" variant="underlined" clearable rows="3" auto-grow ></v-textarea>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="notas">
+                    <v-tabs-window-item value="notas">
                         <v-card flat>
                             <v-card-text>
                                 <v-textarea v-model="video.notas.notas" label="Notas" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="controlDescripcion">
+                    <v-tabs-window-item value="controlDescripcion">
                         <v-card flat>
                             <v-card-text>
                                 <v-text-field v-model="auth.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
                                 <v-text-field v-model="today" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
+                    </v-tabs-window-item>
 
-                    <v-window-item value="adicional">
+                    <v-tabs-window-item value="adicional">
                         <v-card flat>
                             <v-card-text>
                                 <v-file-input v-model="files.video" label="Archivo de video" prepend-icon="mdi-file-video-outline" :rules="formRules.clipVideo" accept="video/*" show-size chips ></v-file-input>
@@ -178,8 +179,8 @@
                                 </l-map>
                             </v-card-text>
                         </v-card>
-                    </v-window-item>
-                </v-window>
+                    </v-tabs-window-item>
+                </v-tabs-window>
             </div>
             <div class="d-flex justify-center">
                 <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading">Crear registro de video</v-btn>
@@ -192,6 +193,10 @@
 // State manager
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
+
+// Identifica tamaños de viewport (ventana)
+import { useDisplay } from 'vuetify'
+const { smAndDown } = useDisplay()
 
 definePageMeta({
     middleware: [
