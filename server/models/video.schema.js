@@ -87,6 +87,7 @@ export const VideoSchema = defineMongooseModel({
         schema.index( {'$**': 'text'}, {
             name: 'videoTextSearch',
             weights: {
+                'identificacion.codigoReferencia': 2,
                 'identificacion.lugar': 4,
                 'identificacion.entrevista': 3,
                 'identificacion.personasEntrevistadas': 5,

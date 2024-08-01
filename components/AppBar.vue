@@ -24,8 +24,8 @@
                 </template>
                 <!-- Presentación de resultados -->
                 <template v-slot:text>
-                    <search-items type="video" :results="queryResults?.videos" @click-result="dialog = false; searchQuery = ''"></search-items>
-                    <search-items type="conjunto" :results="queryResults?.conjuntos" @click-result="dialog = false; searchQuery = ''"></search-items>
+                    <search-items type="video" :max="3" :results="queryResults?.videos" color="secondary" @click-result="dialog = false; searchQuery = ''"></search-items>
+                    <search-items type="conjunto" :max="3" :results="queryResults?.conjuntos" color="secondary" @click-result="dialog = false; searchQuery = ''"></search-items>
                 </template>
             </v-card>
         </v-dialog>

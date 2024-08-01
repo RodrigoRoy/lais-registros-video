@@ -116,6 +116,7 @@ export const ConjuntoSchema = defineMongooseModel({
         schema.index( {'$**': 'text'}, {
             name: 'conjuntoTextSearch',
             weights: {
+                'identificacion.codigoReferencia': 2,
                 'identificacion.titulo': 8,
                 'identificacion.coordinacion': 3,
                 'identificacion.proyectoInvestigacion': 4,
