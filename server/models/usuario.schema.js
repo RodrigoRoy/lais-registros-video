@@ -25,6 +25,10 @@ export const UsuarioSchema = defineMongooseModel({
         drafts: [{type: Types.ObjectId, ref: 'Video'}],
         draftsConjuntos: [{type: Types.ObjectId, ref: 'Conjunto'}],
         profileImage: { type: 'string', default: null },
+        recover: {
+            _id: { type: 'string', },
+            expire: { type: 'date' }
+        },
     },
 
     // Opciones adicionales del modelo

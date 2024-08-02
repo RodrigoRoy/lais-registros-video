@@ -8,7 +8,7 @@
             <v-text-field v-model="fullname" density="compact" placeholder="Lilia Guerrero" prepend-inner-icon="mdi-badge-account" variant="outlined" :rules="formRules.fullname" ></v-text-field>
             
             <div class="text-subtitle-1 text-medium-emphasis">Correo</div>
-            <v-text-field v-model="email" density="compact" placeholder="lguerrero@mupi.sv" prepend-inner-icon="mdi-email-outline" variant="outlined" :rules="formRules.email" ></v-text-field>
+            <v-text-field v-model="email" density="compact" type="email" placeholder="lguerrero@mupi.sv" prepend-inner-icon="mdi-email-outline" variant="outlined" :rules="formRules.email" ></v-text-field>
             
             <div class="text-subtitle-1 text-medium-emphasis">Nombre de usuario</div>
             <v-text-field v-model="name" density="compact" placeholder="Lilia21" prepend-inner-icon="mdi-account" variant="outlined" :rules="formRules.usuario" ></v-text-field>
