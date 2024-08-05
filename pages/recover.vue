@@ -1,47 +1,47 @@
 <template>
-    <p class="mb-6 mt-3 text-h5 text-center text-high-emphasis text-uppercase">New password</p>
+    <p class="mt-4 text-h5 text-center text-high-emphasis text-uppercase">Cambiar contraseña</p>
     
     <v-container >
         <v-row align="center" style="height: 150px;" no-gutters >
             <v-col align="center">
-                <p class="mb-6 text-h6 ">Put a new password. After, only confirm the last one.</p>
-                <v-sheet class="align-center justify-center flex-wrap text-center my-4 mx-auto px-4 bg-accent" elevation="21"  max-width="400" width="100%" rounded="xl" >
+                <!-- <p class="text-subtitle-1 text-medium-emphasis">Escribe y confirma una nueva contraseña.</p> -->
+                <v-sheet class="align-center justify-center flex-wrap text-center my-4 mx-auto px-4 bg-accent" max-width="450" width="100%" color="transparent">
                     <v-form fast-fail validate-on="submit lazy" @submit.prevent="submit" ref="form">
                         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-                            Contraseña
+                            Nueva contraseña
                         </div>
                         <v-text-field v-model="password" :append-inner-icon="isPassVisible ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisible ? 'text' : 'password'" density="compact" placeholder="Escribe la contraseña" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisible = !isPassVisible" :rules="formRules.password" ></v-text-field>
 
                         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-                            Confirmar contraseña
+                            Confirmar nueva contraseña
                         </div>
                         <v-text-field v-model="passwordConfirm" :append-inner-icon="isPassVisibleConfirm ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisibleConfirm ? 'text' : 'password'" density="compact" placeholder="Confirma la contraseña" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisibleConfirm = !isPassVisibleConfirm" :rules="formRules.passwordConfirm" ></v-text-field>            
 
-                        <v-btn color="blue" size="large" variant="tonal"  type="submit" :loading="isLoading" >Send</v-btn>
+                        <v-btn color="primary" size="large" variant="tonal"  type="submit" :loading="isLoading" class="mt-2">Enviar</v-btn>
                     </v-form>
                 </v-sheet>
             </v-col>
         </v-row>
     </v-container>
-    
-
 </template>
 
 <script setup>
+// TODO: Confirmar middleware
+// definePageMeta({
+//     middleware: [
+//         'no-auth',
+//         'recovery',
+//     ]
+// })
+
+// Composable para obtener parametros desde URL
+const route = useRoute()
 
 // Referencia a formulario (util para funciones de validación)
 const form = ref(null)
 const isLoading = ref(false) // determina si hay validaciones en curso
 const password = ref('') // Password (texto simple)
 const passwordConfirm = ref('') // confirmar contraseña
-
-// definePageMeta({
-//     middleware: [
-//         'auth',
-//         'create',
-//     ]
-// })
-
 const isPassVisible = ref(false) // determina si la contraseña es visible
 const isPassVisibleConfirm = ref(false) // determina si la contraseña es visible
 
@@ -83,21 +83,22 @@ const formRules = {
 }
 
 async function submit(){
-    isLoading.value = true // indicar el comienzo de inicio de sesión
+    isLoading.value = true
+    const { valid } = await form.value.validate() // validaciones del formulario
     
     try {
-        const { valid } = await form.value.validate() // validaciones del formulario
         if(valid) {
-            // await auth.login(usuario.value, password.value) // petición al API con datos del usuario
-            await $fetch('/api/recover/generate', {
-                method: 'PATCH',
-                body: {
-                    "email": email.value,
-                }
-            })
-            
+            // TODO: Solicitar cambio de contraseña
+            // await $fetch('/api/recover/newPass', {
+            //     method: 'PATCH',
+            //     body: {
+            //         user: route.query?.u,
+            //         id: route.query?.id,
+            //         password: password.value,
+            //     }
+            // })
         }
-        isLoading.value = false // indicar el final del inicio de sesión
+        isLoading.value = false
     } 
     catch (error) {
         throw createError({ statusCode: 400, statusMessage: error})
