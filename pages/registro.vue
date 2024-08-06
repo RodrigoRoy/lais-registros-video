@@ -5,30 +5,32 @@
             <p class="mb-6 text-h5 text-center text-high-emphasis text-uppercase">Registro</p>
             
             <div class="text-subtitle-1 text-medium-emphasis">Nombre completo</div>
-            <v-text-field v-model="fullname" density="compact" placeholder="Lilia Guerrero" prepend-inner-icon="mdi-badge-account" variant="outlined" :rules="formRules.fullname" ></v-text-field>
+            <v-text-field v-model="fullname" density="compact" placeholder="Rodrigo Colín" prepend-inner-icon="mdi-badge-account" variant="outlined" :rules="formRules.fullname" ></v-text-field>
             
             <div class="text-subtitle-1 text-medium-emphasis">Correo</div>
-            <v-text-field v-model="email" density="compact" type="email" placeholder="lguerrero@mupi.sv" prepend-inner-icon="mdi-email-outline" variant="outlined" :rules="formRules.email" ></v-text-field>
+            <v-text-field v-model="email" density="compact" type="email" placeholder="rodrigo@gmail.com" prepend-inner-icon="mdi-email-outline" variant="outlined" :rules="formRules.email" ></v-text-field>
             
             <div class="text-subtitle-1 text-medium-emphasis">Nombre de usuario</div>
-            <v-text-field v-model="name" density="compact" placeholder="Lilia21" prepend-inner-icon="mdi-account" variant="outlined" :rules="formRules.usuario" ></v-text-field>
+            <v-text-field v-model="name" density="compact" placeholder="Rodrigo123" prepend-inner-icon="mdi-account" variant="outlined" :rules="formRules.usuario" ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
                 Contraseña
             </div>
-            <v-text-field v-model="password" :append-inner-icon="isPassVisible ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisible ? 'text' : 'password'" density="compact" placeholder="Escribe la contraseña" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisible = !isPassVisible" :rules="formRules.password" ></v-text-field>
+            <v-text-field v-model="password" :append-inner-icon="isPassVisible ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisible ? 'text' : 'password'" density="compact" placeholder="********" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisible = !isPassVisible" :rules="formRules.password" ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
                 Confirmar contraseña
             </div>
-            <v-text-field v-model="passwordConfirm" :append-inner-icon="isPassVisibleConfirm ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisibleConfirm ? 'text' : 'password'" density="compact" placeholder="Confirma la contraseña" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisibleConfirm = !isPassVisibleConfirm" :rules="formRules.passwordConfirm" ></v-text-field>
+            <v-text-field v-model="passwordConfirm" :append-inner-icon="isPassVisibleConfirm ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisibleConfirm ? 'text' : 'password'" density="compact" placeholder="********" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisibleConfirm = !isPassVisibleConfirm" :rules="formRules.passwordConfirm" ></v-text-field>
 
             <v-btn class="mb-8 mt-4" color="blue" size="large" variant="tonal" block type="submit" :loading="isLoading" >Registrar</v-btn>
 
             <v-snackbar timeout="3000" :color="snackbarColor" variant="tonal" v-model="showSnackbar">
                 <p class="text-center font-weight-bold">{{ snackbarText }}</p>
             </v-snackbar>
-
+            <v-card-text class="text-center">
+                <nuxt-link class="text-blue text-decoration-none" to="/login">¿Ya te registraste? Iniciar sesión <v-icon icon="mdi-chevron-right"></v-icon> </nuxt-link>
+            </v-card-text>
         </v-form>
 
     </v-card>

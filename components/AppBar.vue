@@ -30,13 +30,13 @@
             </v-card>
         </v-dialog>
 
+        <!-- Menú desplegable -->
         <v-menu>
+            <!-- Icono para desplegar menú -->
             <template v-slot:activator="{ props }">
-                <v-btn v-if="!auth.isLoggedIn" icon="mdi-dots-vertical" v-bind="props"></v-btn>
-                <v-btn v-else variant="plain" append-icon="mdi-logout" @click="cerrarSesion()" style="text-decoration: none; color: inherit">
-                    Cerrar sesión
-                </v-btn>
+                <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
             </template>
+            <!-- Iniciar sesión o crear cuenta -->
             <v-list v-if="!auth.isLoggedIn">
                 <v-list-item>
                     <v-list-item-title>
@@ -52,6 +52,18 @@
                         <v-btn variant="plain" append-icon="mdi-account-plus">
                             <nuxt-link to="/registro" style="text-decoration: none; color: inherit">
                                 Crear cuenta
+                            </nuxt-link>
+                        </v-btn>
+                    </v-list-item-title>
+                </v-list-item>
+            </v-list>
+            <!-- Cerrar sesión -->
+            <v-list v-else>
+                <v-list-item>
+                    <v-list-item-title>
+                        <v-btn variant="plain" append-icon="mdi-logout" @click="cerrarSesion()">
+                            <nuxt-link to="/login" style="text-decoration: none; color: inherit">
+                                Cerrar sesión
                             </nuxt-link>
                         </v-btn>
                     </v-list-item-title>
