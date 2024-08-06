@@ -18,12 +18,11 @@
 </template>
 
 <script setup>
-// TODO: Confirmar middleware
-// definePageMeta({
-//     middleware: [
-//         'no-auth',
-//     ]
-// })
+definePageMeta({
+    middleware: [
+        'no-auth',
+    ]
+})
 
 // Biblioteca para mostrar fechas
 const dayjs = useDayjs()

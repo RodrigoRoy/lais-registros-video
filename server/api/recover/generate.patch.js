@@ -14,7 +14,6 @@ export default defineEventHandler(async (event) => {
     const expireDate = body.expire
     const rngId = Math.floor(Math.random() * 100000000000000).toString() // Id aleatorio de longitud 16
 
-
     // Configuración de recuperación de contraseña
     const userRecover = { 
         _id: rngId,

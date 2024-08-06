@@ -50,18 +50,18 @@ export const UsuarioSchema = defineMongooseModel({
             throw createError({ statusCode: 500, statusMessage: 'validation failed'})
         }),
 
-        // TODO: Automatizar encriptación de contraseña al actualizar
+        // Middleare para almacenenar contraseña segura en actualizaciones
+        // Nota: a diferencia de schema.pre(save), "this" no es el documento, es el query o solicitud de actualización.
+        // Detalles en https://mongoosejs.com/docs/middleware.html#notes
         schema.pre('findOneAndUpdate', function(next){
-            // console.log('===findOneAndUpdate middleware===')
-            // console.log("this.isModified('password'): ", this.isModified('password'))
-            // console.log('this: ', this)
-            // if(this.isModified('password')){
-            //     const saltRounds = 10
-            //     this.password = bcrypt.hashSync(this.password, saltRounds)
-            //     if(this.password)
-            //         next()
-            //     throw createError({ statusCode: 500, statusMessage: 'validation failed'})
-            // }
+            const updateObject = this.getUpdate() // propiedades que se actualizarán
+            if(updateObject?.password){ // encriptar si hay una actualización de la contraseña
+                const saltRounds = 10
+                const encryptedPassword = bcrypt.hashSync(updateObject.password, saltRounds)
+                if(!encryptedPassword)
+                    throw createError({statusCode: 500, statusMessage: 'Encryption failed', message: 'Hash encryption error during update password'})
+                this.set({ password: encryptedPassword })
+            }
             next()
         })
 

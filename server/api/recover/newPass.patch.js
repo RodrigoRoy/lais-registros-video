@@ -24,8 +24,7 @@ export default defineEventHandler(async (event) => {
         if(user.recover?.expire && new Date().getTime() > user.recover.expire.getTime())
             throw createError({ statusCode: 400, statusMessage: 'Bad request', message: 'Expired date for password recovery'})
 
-        // TODO: Encriptar correo antes de llamada a BD?
-        return await UsuarioSchema.findByIdAndUpdate( userId, { password: rawPassword, recover: null }, { new: true } )
+        return await UsuarioSchema.findByIdAndUpdate(userId, { password: rawPassword, recover: null }, { new: true })
     }
     catch (error) {
         throw createError({ statusCode: error.statusCode, statusMessage: error.statusMessage, message: error.message })

@@ -26,13 +26,15 @@
 </template>
 
 <script setup>
-// TODO: Confirmar middleware
-// definePageMeta({
-//     middleware: [
-//         'no-auth',
-//         'recovery',
-//     ]
-// })
+// State manager
+import { useAuthStore } from '@/stores/auth'
+const auth = useAuthStore()
+
+definePageMeta({
+    middleware: [
+        'recover',
+    ]
+})
 
 // Composable para obtener parametros desde URL
 const route = useRoute()
@@ -82,21 +84,31 @@ const formRules = {
     
 }
 
+/**
+ * Realiza la petición de cambio de contraseña.
+ * Si la información es válida, se realiza el cambio, se inicia sesión
+ * y se navega a la página personal del usuario.
+ */
 async function submit(){
     isLoading.value = true
     const { valid } = await form.value.validate() // validaciones del formulario
     
     try {
         if(valid) {
-            // TODO: Solicitar cambio de contraseña
-            // await $fetch('/api/recover/newPass', {
-            //     method: 'PATCH',
-            //     body: {
-            //         user: route.query?.u,
-            //         id: route.query?.id,
-            //         password: password.value,
-            //     }
-            // })
+            // Cambio de contraseña
+            const user = await $fetch('/api/recover/newPass', {
+                method: 'PATCH',
+                body: {
+                    user: route.query?.u,
+                    id: route.query?.id,
+                    password: password.value,
+                }
+            })
+            // Iniciar sesión con nueva contraseña
+            await auth.login(user.name, password.value)
+            
+            // Reenviar a página de usuario
+            navigateTo(`/usuarios/${user._id}`)
         }
         isLoading.value = false
     } 
