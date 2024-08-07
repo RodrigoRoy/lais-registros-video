@@ -40,7 +40,7 @@
             <v-list v-if="!auth.isLoggedIn">
                 <v-list-item>
                     <v-list-item-title>
-                        <v-btn variant="plain" append-icon="mdi-login">
+                        <v-btn variant="plain" prepend-icon="mdi-login">
                             <nuxt-link to="/login" style="text-decoration: none; color: inherit">
                                 Iniciar sesión
                             </nuxt-link>
@@ -49,7 +49,7 @@
                 </v-list-item>
                 <v-list-item>
                     <v-list-item-title>
-                        <v-btn variant="plain" append-icon="mdi-account-plus">
+                        <v-btn variant="plain" prepend-icon="mdi-account-plus">
                             <nuxt-link to="/registro" style="text-decoration: none; color: inherit">
                                 Crear cuenta
                             </nuxt-link>
@@ -61,7 +61,16 @@
             <v-list v-else>
                 <v-list-item>
                     <v-list-item-title>
-                        <v-btn variant="plain" append-icon="mdi-logout" @click="cerrarSesion()">
+                        <v-btn variant="plain" prepend-icon="mdi-account">
+                            <nuxt-link :to="`/usuarios/${auth.id}`" style="text-decoration: none; color: inherit">
+                                Mi perfil
+                            </nuxt-link>
+                        </v-btn>
+                    </v-list-item-title>
+                </v-list-item>
+                <v-list-item>
+                    <v-list-item-title>
+                        <v-btn variant="plain" prepend-icon="mdi-logout" @click="cerrarSesion()">
                             <nuxt-link to="/login" style="text-decoration: none; color: inherit">
                                 Cerrar sesión
                             </nuxt-link>

@@ -91,6 +91,27 @@ const formRules = {
 }
 
 /**
+ * Cambia la contraseña del usuario
+ * @param {string} userId Id del usuario
+ * @param {string} password La contraseña actual del usuario
+ * @param {string} newPassword Nueva contraseña del usuario
+ */
+async function changePassword(userId, password, newPassword){
+    try {
+        await $fetch('/api/recover/changePass', {
+            method: 'patch', 
+            body: {
+                id: userId,
+                password: password,
+                newPassword: newPassword
+            },
+        })
+    } catch (error) {
+        throw createError({statusCode: 400, statusMessage: 'Password error', message: 'Incorrect user values'})
+    }       
+}
+
+/**
  * Sube un archivo del cliente al servidor, en este caso, la imagen de perfil.
  * El archivo a subir debe estar especificado en alguno de los <v-file-input>
  * @param {object} file Archivo subido desde input file
