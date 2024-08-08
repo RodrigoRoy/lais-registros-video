@@ -81,15 +81,8 @@
         </v-menu>
     </v-app-bar>
 
-    <v-snackbar timeout=800 color=success variant="tonal" v-model="showSnackbar1">
-        <p class="text-center font-weight-bold">Cerrando sesión.</p>
-    </v-snackbar>
-    <v-snackbar timeout=800 color=success variant="tonal" v-model="showSnackbar2">
-        <p class="text-center font-weight-bold">Cerrando sesión..</p>
-    </v-snackbar>
-    <v-snackbar timeout=800 color=success variant="tonal" v-model="showSnackbar3">
-        <p class="text-center font-weight-bold">Cerrando sesión...</p>
-    </v-snackbar>
+    <!-- Aviso al usuario de cierre de sesión -->
+    <message :active="showMessage" text="Cerrando sesión" color="success" loading :timeout="timeout"></message>
 </template>
 
 <script setup>
@@ -101,6 +94,11 @@ const auth = useAuthStore()
 
 // Determina si se muetra el dialogo de búsqueda
 const dialog = ref(false)
+// Muestra aviso en pantalla
+const showMessage = ref(false)
+// Tiempo en pantalla del aviso (milisegundos)
+const timeout = ref(2000)
+
 // Texto de búsqueda
 const searchQuery = ref('')
 // Resultados de la búsqueda
@@ -114,23 +112,12 @@ async function search(query){
     queryResults.value = await $fetch('/api/search', {query: {q: query}})
 }
 
-// auxiliar para mostrar mensaje en pantalla
-const showSnackbar1 = ref(false)
-const showSnackbar2 = ref(false)
-const showSnackbar3 = ref(false)
-
 /**
  * Cierra sesión del usuario activo
  */
 async function cerrarSesion(){
-    // Estrategia para animar mensaje de cierre de sesión:
-    showSnackbar1.value = true
-    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
-    showSnackbar2.value = true
-    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
-    showSnackbar3.value = true
-    await new Promise(resolve => setTimeout(resolve, 800)) // Simulación de 3 segundos de espera
-    
+    showMessage.value = true // Mostrar mensaje
+    await new Promise(resolve => setTimeout(resolve, timeout.value))
     auth.logout()
 }
 </script>
