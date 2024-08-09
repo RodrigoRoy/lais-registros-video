@@ -21,7 +21,7 @@
             </div>
             <v-file-input v-else v-model="files.profileImage" label="Imagen de perfil" prepend-icon="mdi-account-box" :rules="formRules.profileImage" accept="image/*" show-size chips ></v-file-input>
             
-            <div v-if="auth.isAdmin" class="text-subtitle-1 text-medium-emphasis">Permisos
+            <div v-if="auth.isAdmin" class="text-subtitle-1 text-medium-emphasis mt-4">Permisos
                 <v-switch class="font-weight-bold mb-4" v-model="usuario.admin" color="primary" label="Administración"  hide-details></v-switch>
                 <v-switch v-model="usuario.operation.create" color="primary" label="Creación de registros"  hide-details></v-switch>
                 <v-switch v-model="usuario.operation.update" color="primary" label="Actualización de registros"  hide-details></v-switch>
@@ -46,7 +46,6 @@ const auth = useAuthStore()
 definePageMeta({
     middleware: [
         'auth',
-        'update',
     ]
 })
 
@@ -87,6 +86,38 @@ const formRules = {
             if (!value || value && value.length === 0 || (value && value.length && value[0].size < 1000000)) return true
             return 'El tamaño de la imagen debe ser menor a 1 MB'
         }
+    ],
+    password: [
+        value => {
+            if (value) return true
+            return 'La contraseña es necesaria.'
+        },
+        value => {
+            if (value?.length >= 8) return true
+            return 'La contraseña debe contener al menos 8 caracteres.'
+        },  // TODO Agregrar validaciones de caracteres,numeros, mayus
+        value => {
+            if(/^.*[0-9A-Z]+.*$/gm.test(value)) return true
+            return 'La contraseña debe tener al menos un número y una letra en mayúscula.'
+        },
+        value => {
+            if(/^.*[A-Z]+.*$/gm.test(value)) return true
+            return 'La contraseña debe tener al menos una letra en mayúscula.'
+        },
+        value => {
+            if(/^.*[0-9]+.*$/gm.test(value)) return true
+            return 'La contraseña debe tener al menos un número.'
+        },
+    ],
+    passwordConfirm: [
+        value => {
+            if (value) return true
+            return 'La contraseña es necesaria'
+        },
+        value => {
+            if (value == password.value) return true
+            return 'Las contraseñas deben coincidir.'
+        },
     ],
 }
 

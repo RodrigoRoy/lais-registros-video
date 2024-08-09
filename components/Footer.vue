@@ -42,7 +42,7 @@
                                         Iniciar sesión 
                                     </nuxt-link>
                                 </v-btn>
-                                <v-btn v-else color="" variant="text" @click="auth.logout">
+                                <v-btn v-else color="" variant="text" @click="cerrarSesion()">
                                     Cerrar sesión
                                 </v-btn>
                             </v-col>
@@ -63,6 +63,8 @@
             </v-row>
         </v-container>
     </v-footer>
+    <!-- Aviso al usuario de cierre de sesión -->
+    <message :active="showMessage" text="Cerrando sesión" color="success" loading :timeout="timeout"></message>
 </template>
 
 <script setup>
@@ -72,6 +74,9 @@ const auth = useAuthStore()
 
 import { useDisplay } from 'vuetify'
 const { name } = useDisplay()
+
+const showMessage = ref(false)
+const timeout = ref(2000)
 
 const logoHeight = computed(() => {
   switch (name.value) {
@@ -84,4 +89,14 @@ const logoHeight = computed(() => {
   }
   return undefined
 })
+
+/**
+ * Cierra sesión del usuario activo
+ */
+ async function cerrarSesion(){
+    showMessage.value = true // Mostrar mensaje
+    await new Promise(resolve => setTimeout(resolve, timeout.value))
+    auth.logout()
+    showMessage.value = false
+}
 </script>

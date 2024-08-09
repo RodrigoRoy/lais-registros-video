@@ -119,5 +119,6 @@ async function cerrarSesion(){
     showMessage.value = true // Mostrar mensaje
     await new Promise(resolve => setTimeout(resolve, timeout.value))
     auth.logout()
+    showMessage.value = false
 }
 </script>

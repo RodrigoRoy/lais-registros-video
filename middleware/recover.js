@@ -16,8 +16,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             return navigateTo('/login')
 
         // Verificar id de usuario
-        const { data:user, error:userError } = await useAsyncData('usuario', () => $fetch(`/api/usuarios/${to.query.u}`))
-        if(userError.value)
+        const { data:user, error } = await useFetch(`/api/usuarios/${to.query.u}`)
+        if(error.value)
             return navigateTo('/registro')
 
         // Si el usuario no tiene petición de recuperación
