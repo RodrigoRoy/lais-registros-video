@@ -19,7 +19,8 @@ export default defineEventHandler(async (event) => {
         const user = await UsuarioSchema.findById(tokenData._id).select('+password').lean().exec()
         if(!user) throw createError({ statusCode: 500, statusMessage: 'Invalid token'})
     
-        if(tokenData.password !== user.password) throw createError({ statusCode: 400, statusMessage: 'Invalid token'})
+        // Comprobación deshabilitada para permitir cambio de contraseña en edición de usuario
+        // if(tokenData.password !== user.password) throw createError({ statusCode: 400, statusMessage: 'Invalid token'})
 
         // Convertir la información del usuario en un token JWT
         const updatedToken = jwt.sign(user, process.env.JWT_SECRET)

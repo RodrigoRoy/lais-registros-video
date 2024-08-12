@@ -13,7 +13,44 @@
             <div class="text-subtitle-1 text-medium-emphasis">Nombre de usuario</div>
             <v-text-field :disabled="auth.isAdmin && auth.id !== usuario._id" v-model="usuario.name" density="compact" :placeholder="usuario.name" prepend-inner-icon="mdi-account" variant="outlined" :rules="formRules.usuario" ></v-text-field>
 
-            <div class="text-subtitle-1 text-medium-emphasis">Imagen de perfil</div>
+            <!-- Cambio de contraseña. Apertura de formulario en dialog -->
+            <v-dialog v-model="showDialog"> 
+                <template v-slot:activator="{ props: activatorProps }"> 
+                    <v-btn v-bind="activatorProps" prepend-icon="mdi-key" class="text-subtitle-1 text-decoration-none" color="info">
+                        Cambiar contraseña
+                    </v-btn>
+                </template>
+                <v-container>
+                    <v-row align="center" no-gutters >
+                        <v-col align="center">
+                            <v-sheet class="align-center justify-center flex-wrap text-center my-4 mx-auto pa-6" max-width="450" width="100%">
+                                <div class="text-h4 mb-6">Cambio de contraseña</div>
+                                <v-form fast-fail validate-on="submit lazy" @submit.prevent="changePassword" ref="passwordForm">
+                                    <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+                                        Contraseña actual
+                                    </div>
+                                    <v-text-field v-model="actualPassword" :append-inner-icon="isActualVisible ? 'mdi-eye-off' : 'mdi-eye'" :type="isActualVisible ? 'text' : 'password'" density="compact" placeholder="" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isActualVisible = !isActualVisible"  ></v-text-field>
+                                    
+                                    <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+                                        Nueva contraseña
+                                    </div>
+                                    <v-text-field v-model="password" :append-inner-icon="isPassVisible ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisible ? 'text' : 'password'" density="compact" placeholder="" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisible = !isPassVisible" :rules="formRules.password"></v-text-field>
+
+                                    <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+                                        Confirmar nueva contraseña
+                                    </div>
+                                    <v-text-field v-model="passwordConfirm" :append-inner-icon="isPassVisibleConfirm ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisibleConfirm ? 'text' : 'password'" density="compact" placeholder="" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisibleConfirm = !isPassVisibleConfirm" :rules="formRules.passwordConfirm"></v-text-field>            
+
+                                    <v-btn color="info" size="large" variant="tonal" type="submit" :loading="isLoadingPassword" class="mt-2">Enviar</v-btn>
+                                </v-form>
+                            </v-sheet>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-dialog>
+
+
+            <div class="mt-4 text-subtitle-1 text-medium-emphasis">Imagen de perfil</div>
             <div v-if="usuario.profileImage">
                 <nuxt-img class="align-center text-white" height="100" :src="`/data/profile/${usuario.profileImage}`" fit="cover" />
                 <br />
@@ -31,7 +68,7 @@
             
             <v-btn class="mb-8 mt-4" color="blue" size="large" variant="tonal" block type="submit" :loading="isLoading" >Actualizar</v-btn>
             
-            <v-snackbar timeout="3000" :color="snackbarColor" variant="tonal" v-model="showSnackbar">
+            <v-snackbar :timeout="timeout" :color="snackbarColor" v-model="showSnackbar">
                 <p class="text-center font-weight-bold">{{ snackbarText }}</p>
             </v-snackbar>
         </v-form>
@@ -56,11 +93,23 @@ const route = useRoute()
 const { data: usuario } = await useFetch(`/api/usuarios/${route.params._id}`)
 
 const form = ref(null) // Referencia a formulario (util para funciones de validación)
-
+const passwordForm = ref(null) // Referencia a formulario (util para funciones de validación)
 const isLoading = ref(false) // determina si hay validaciones en curso
+const isLoadingPassword = ref(false) // determina si hay validaciones al cambiar contraseña
+
 const showSnackbar = ref(false) // determina si muestra el snackbar/mensaje de aviso (alerta)
 const snackbarColor = ref("success")
 const snackbarText = ref("Registro exitoso") // texto en el snackbar
+
+const showDialog = ref(false)
+const timeout = ref(3000)
+
+const actualPassword = ref('') // confirmar contraseña
+const password = ref('') // Password (texto simple)
+const passwordConfirm = ref('') // confirmar contraseña
+const isActualVisible = ref(false) // determina si la contraseña es visible
+const isPassVisibleConfirm = ref(false) // determina si la contraseña es visible
+const isPassVisible = ref(false) // determina si la contraseña es visible
 
 // Contenedor de archivos subidos. Se emplean para representar los campos de "Imagen", "Clip de video" y "Documento de calificación"
 const files = reactive({
@@ -122,24 +171,55 @@ const formRules = {
 }
 
 /**
- * Cambia la contraseña del usuario
- * @param {string} userId Id del usuario
- * @param {string} password La contraseña actual del usuario
- * @param {string} newPassword Nueva contraseña del usuario
+ * Cambia la contraseña del usuario al proveer la contraseña actual y una nueva.
  */
-async function changePassword(userId, password, newPassword){
+async function changePassword(){
+    isLoadingPassword.value = true
+    
     try {
+        const { valid: passwordFormValid } = await passwordForm.value.validate() // validaciones del formulario
+        // Si el formulario no es válido, se detiene el proceso
+        if (!passwordFormValid) {
+            isLoadingPassword.value = false
+            return
+        }
+        
+        // Petición de actualización a base de datos
         await $fetch('/api/recover/changePass', {
-            method: 'patch', 
+            method: 'PATCH', 
             body: {
-                id: userId,
-                password: password,
-                newPassword: newPassword
+                id: usuario.value._id,
+                password: actualPassword.value,
+                newPassword: password.value
             },
         })
-    } catch (error) {
-        throw createError({statusCode: 400, statusMessage: 'Password error', message: 'Incorrect user values'})
-    }       
+
+        // Cerrar dialog
+        showDialog.value = false
+        passwordForm.value.reset()
+
+        // Actualizar token
+        await auth.updateToken()
+        
+        // Mostrar mensaje de contraseña guardada
+        showSnackbar.value = true
+        snackbarColor.value = "success"
+        snackbarText.value = "Contraseña actualizada"
+        await new Promise(resolve => setTimeout(resolve, timeout.value))
+    } 
+    catch (error) {
+        // Cerrar dialog
+        // showDialog.value = false
+
+        // Mostrar mensaje de error
+        showSnackbar.value = true
+        snackbarColor.value = "error"
+        snackbarText.value = "Contraseña incorrecta"
+    } 
+    finally {
+        isLoadingPassword.value = false // indicar el final del inicio de sesión
+    }
+
 }
 
 /**
@@ -192,10 +272,12 @@ async function submit(){
             method: 'PUT',
             body: usuario
         })
+
+        // Mostrar mensaje de actualización de perfil exitoso
+        showSnackbar.value = true
         snackbarColor.value = "success"
         snackbarText.value = "Perfil actualizado"
-        showSnackbar.value = true // indicar que el registro fue exitoso
-        await new Promise(resolve => setTimeout(resolve, 3000)) // Simulación de 3 segundos de espera
+        await new Promise(resolve => setTimeout(resolve, timeout.value))
 
         // si es tu propio perfil, actualizar token
         if(auth.id === route.params._id)
@@ -204,13 +286,13 @@ async function submit(){
         await navigateTo(`/usuarios/${route.params._id}`) // ir a página del usuario
     } 
     catch (error) {
-        snackbarColor.value = "error"
+        // Mostrar mensaje de error
         showSnackbar.value = true
-        snackbarText.value = "Hubo un error"
-        throw createError({ statusCode: 400, statusMessage: error})
+        snackbarColor.value = "error"
+        snackbarText.value = "Error para guardar. Por favor inténtalo más tarde."
     } 
     finally {
-        isLoading.value = false // indicar el final del inicio de sesión
+        isLoading.value = false
     }
 
 }
