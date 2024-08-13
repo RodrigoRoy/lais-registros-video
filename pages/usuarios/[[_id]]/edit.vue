@@ -13,40 +13,37 @@
             <div class="text-subtitle-1 text-medium-emphasis">Nombre de usuario</div>
             <v-text-field :disabled="auth.isAdmin && auth.id !== usuario._id" v-model="usuario.name" density="compact" :placeholder="usuario.name" prepend-inner-icon="mdi-account" variant="outlined" :rules="formRules.usuario" ></v-text-field>
 
-            <!-- Cambio de contraseña. Apertura de formulario en dialog -->
-            <v-dialog v-model="showDialog"> 
-                <template v-slot:activator="{ props: activatorProps }"> 
-                    <v-btn v-bind="activatorProps" prepend-icon="mdi-key" class="text-subtitle-1 text-decoration-none" color="info">
-                        Cambiar contraseña
-                    </v-btn>
-                </template>
-                <v-container>
-                    <v-row align="center" no-gutters >
-                        <v-col align="center">
-                            <v-sheet class="align-center justify-center flex-wrap text-center my-4 mx-auto pa-6" max-width="450" width="100%">
-                                <div class="text-h4 mb-6">Cambio de contraseña</div>
-                                <v-form fast-fail validate-on="submit lazy" @submit.prevent="changePassword" ref="passwordForm">
-                                    <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-                                        Contraseña actual
-                                    </div>
-                                    <v-text-field v-model="actualPassword" :append-inner-icon="isActualVisible ? 'mdi-eye-off' : 'mdi-eye'" :type="isActualVisible ? 'text' : 'password'" density="compact" placeholder="" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isActualVisible = !isActualVisible"  ></v-text-field>
-                                    
-                                    <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-                                        Nueva contraseña
-                                    </div>
-                                    <v-text-field v-model="password" :append-inner-icon="isPassVisible ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisible ? 'text' : 'password'" density="compact" placeholder="" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisible = !isPassVisible" :rules="formRules.password"></v-text-field>
+            <!-- Cambio de contraseña -->
+            <v-btn prepend-icon="mdi-key" color="info" @click="showDialog = true">
+                Cambiar contraseña
+            </v-btn>
+            <v-dialog max-width="600" v-model="showDialog">
+                <v-card title="Cambiar contraseña" max-width="550" align="center">
+                    <v-card-text>
+                            <v-form fast-fail validate-on="submit lazy" @submit.prevent="changePassword" ref="passwordForm">
+                            <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+                                Contraseña actual
+                            </div>
+                            <v-text-field v-model="password" :append-inner-icon="isActualVisible ? 'mdi-eye-off' : 'mdi-eye'" :type="isActualVisible ? 'text' : 'password'" density="compact" placeholder="" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isActualVisible = !isActualVisible" :rules="formRules.password"></v-text-field>
+                            
+                            <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+                                Nueva contraseña
+                            </div>
+                            <v-text-field v-model="newPassword" :append-inner-icon="isPassVisible ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisible ? 'text' : 'password'" density="compact" placeholder="" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisible = !isPassVisible" :rules="formRules.newPassword"></v-text-field>
+        
+                            <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+                                Confirmar nueva contraseña
+                            </div>
+                            <v-text-field v-model="confirmPassword" :append-inner-icon="isPassVisibleConfirm ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisibleConfirm ? 'text' : 'password'" density="compact" placeholder="" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisibleConfirm = !isPassVisibleConfirm" :rules="formRules.confirmPassword"></v-text-field>            
+                        </v-form>
+                    </v-card-text>
 
-                                    <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-                                        Confirmar nueva contraseña
-                                    </div>
-                                    <v-text-field v-model="passwordConfirm" :append-inner-icon="isPassVisibleConfirm ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisibleConfirm ? 'text' : 'password'" density="compact" placeholder="" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisibleConfirm = !isPassVisibleConfirm" :rules="formRules.passwordConfirm"></v-text-field>            
-
-                                    <v-btn color="info" size="large" variant="tonal" type="submit" :loading="isLoadingPassword" class="mt-2">Enviar</v-btn>
-                                </v-form>
-                            </v-sheet>
-                        </v-col>
-                    </v-row>
-                </v-container>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn text="Cancelar" variant="text" @click="showDialog = false"></v-btn>
+                        <v-btn text="Confirmar" color="info" variant="tonal" type="submit" :loading="isLoadingPassword" @click="changePassword"></v-btn>
+                    </v-card-actions>
+                </v-card>
             </v-dialog>
 
 
@@ -104,9 +101,9 @@ const snackbarText = ref("Registro exitoso") // texto en el snackbar
 const showDialog = ref(false)
 const timeout = ref(3000)
 
-const actualPassword = ref('') // confirmar contraseña
-const password = ref('') // Password (texto simple)
-const passwordConfirm = ref('') // confirmar contraseña
+const password = ref('') // Contraseña actual
+const newPassword = ref('') // Nueva contraseña
+const confirmPassword = ref('') // Confirmación de nueva contraseña
 const isActualVisible = ref(false) // determina si la contraseña es visible
 const isPassVisibleConfirm = ref(false) // determina si la contraseña es visible
 const isPassVisible = ref(false) // determina si la contraseña es visible
@@ -141,10 +138,16 @@ const formRules = {
             if (value) return true
             return 'La contraseña es necesaria.'
         },
+    ],
+    newPassword: [
+        value => {
+            if (value) return true
+            return 'La contraseña es necesaria.'
+        },
         value => {
             if (value?.length >= 8) return true
             return 'La contraseña debe contener al menos 8 caracteres.'
-        },  // TODO Agregrar validaciones de caracteres,numeros, mayus
+        },
         value => {
             if(/^.*[0-9A-Z]+.*$/gm.test(value)) return true
             return 'La contraseña debe tener al menos un número y una letra en mayúscula.'
@@ -158,13 +161,13 @@ const formRules = {
             return 'La contraseña debe tener al menos un número.'
         },
     ],
-    passwordConfirm: [
+    confirmPassword: [
         value => {
             if (value) return true
             return 'La contraseña es necesaria'
         },
         value => {
-            if (value == password.value) return true
+            if (value == newPassword.value) return true
             return 'Las contraseñas deben coincidir.'
         },
     ],
@@ -189,17 +192,17 @@ async function changePassword(){
             method: 'PATCH', 
             body: {
                 id: usuario.value._id,
-                password: actualPassword.value,
-                newPassword: password.value
+                password: password.value,
+                newPassword: newPassword.value
             },
         })
+
+        // Actualizar token
+        await auth.updateToken()
 
         // Cerrar dialog
         showDialog.value = false
         passwordForm.value.reset()
-
-        // Actualizar token
-        await auth.updateToken()
         
         // Mostrar mensaje de contraseña guardada
         showSnackbar.value = true
@@ -217,9 +220,8 @@ async function changePassword(){
         snackbarText.value = "Contraseña incorrecta"
     } 
     finally {
-        isLoadingPassword.value = false // indicar el final del inicio de sesión
+        isLoadingPassword.value = false
     }
-
 }
 
 /**
