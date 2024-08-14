@@ -64,10 +64,6 @@
             </div>
             
             <v-btn class="mb-8 mt-4" color="blue" size="large" variant="tonal" block type="submit" :loading="isLoading" >Actualizar</v-btn>
-            
-            <v-snackbar :timeout="timeout" :color="snackbarColor" v-model="showSnackbar">
-                <p class="text-center font-weight-bold">{{ snackbarText }}</p>
-            </v-snackbar>
         </v-form>
     </v-card>
 </template>
@@ -75,7 +71,9 @@
 <script setup>
 // State manager
 import { useAuthStore } from '@/stores/auth'
+import { useMessageStore } from '@/stores/message'
 const auth = useAuthStore()
+const message = useMessageStore()
 
 definePageMeta({
     middleware: [
@@ -94,13 +92,7 @@ const passwordForm = ref(null) // Referencia a formulario (util para funciones d
 const isLoading = ref(false) // determina si hay validaciones en curso
 const isLoadingPassword = ref(false) // determina si hay validaciones al cambiar contraseña
 
-const showSnackbar = ref(false) // determina si muestra el snackbar/mensaje de aviso (alerta)
-const snackbarColor = ref("success")
-const snackbarText = ref("Registro exitoso") // texto en el snackbar
-
-const showDialog = ref(false)
-const timeout = ref(3000)
-
+const showDialog = ref(false) // Muestra/oculta ventana para cambio de contraseña
 const password = ref('') // Contraseña actual
 const newPassword = ref('') // Nueva contraseña
 const confirmPassword = ref('') // Confirmación de nueva contraseña
@@ -108,7 +100,7 @@ const isActualVisible = ref(false) // determina si la contraseña es visible
 const isPassVisibleConfirm = ref(false) // determina si la contraseña es visible
 const isPassVisible = ref(false) // determina si la contraseña es visible
 
-// Contenedor de archivos subidos. Se emplean para representar los campos de "Imagen", "Clip de video" y "Documento de calificación"
+// Contenedor de archivos subidos. Se emplean para representar los campos de "Imagen"
 const files = reactive({
     profileImage: null,
 })
@@ -204,20 +196,11 @@ async function changePassword(){
         showDialog.value = false
         passwordForm.value.reset()
         
-        // Mostrar mensaje de contraseña guardada
-        showSnackbar.value = true
-        snackbarColor.value = "success"
-        snackbarText.value = "Contraseña actualizada"
-        await new Promise(resolve => setTimeout(resolve, timeout.value))
+        // Mostrar mensaje al usuario
+        message.show({text: 'Contraseña actualizada', color: 'success'})
     } 
     catch (error) {
-        // Cerrar dialog
-        // showDialog.value = false
-
-        // Mostrar mensaje de error
-        showSnackbar.value = true
-        snackbarColor.value = "error"
-        snackbarText.value = "Contraseña incorrecta"
+        message.show({text: 'Contraseña incorrecta', color: 'error'})
     } 
     finally {
         isLoadingPassword.value = false
@@ -275,23 +258,18 @@ async function submit(){
             body: usuario
         })
 
-        // Mostrar mensaje de actualización de perfil exitoso
-        showSnackbar.value = true
-        snackbarColor.value = "success"
-        snackbarText.value = "Perfil actualizado"
-        await new Promise(resolve => setTimeout(resolve, timeout.value))
-
         // si es tu propio perfil, actualizar token
         if(auth.id === route.params._id)
             await auth.updateToken()
+        
+        // Mostrar mensaje de actualización de perfil exitoso
+        message.show({text: 'Perfil actualizado', color: 'success', location: 'top'})
 
-        await navigateTo(`/usuarios/${route.params._id}`) // ir a página del usuario
+        // Ir a página del usuario
+        await navigateTo(`/usuarios/${route.params._id}`)
     } 
     catch (error) {
-        // Mostrar mensaje de error
-        showSnackbar.value = true
-        snackbarColor.value = "error"
-        snackbarText.value = "Error para guardar. Por favor inténtalo más tarde."
+        message.show({text: 'Error al guardar. Por favor intenta más tarde', color: 'error'})
     } 
     finally {
         isLoading.value = false

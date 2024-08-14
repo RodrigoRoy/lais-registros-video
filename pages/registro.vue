@@ -25,9 +25,6 @@
 
             <v-btn class="mb-8 mt-4" color="blue" size="large" variant="tonal" block type="submit" :loading="isLoading" >Registrar</v-btn>
 
-            <v-snackbar timeout="3000" :color="snackbarColor" variant="tonal" v-model="showSnackbar">
-                <p class="text-center font-weight-bold">{{ snackbarText }}</p>
-            </v-snackbar>
             <v-card-text class="text-center">
                 <nuxt-link class="text-blue text-decoration-none" to="/login">¿Ya te registraste? Iniciar sesión <v-icon icon="mdi-chevron-right"></v-icon> </nuxt-link>
             </v-card-text>
@@ -39,7 +36,9 @@
 <script setup>
 // State manager
 import { useAuthStore } from '@/stores/auth'
+import { useMessageStore } from '@/stores/message'
 const auth = useAuthStore()
+const message = useMessageStore()
 
 definePageMeta({
     middleware: [
@@ -55,9 +54,6 @@ const password = ref('') // Password (texto simple)
 const passwordConfirm = ref('') // confirmar contraseña
 
 const isLoading = ref(false) // determina si hay validaciones en curso
-const showSnackbar = ref(false) // determina si muestra el snackbar/mensaje de aviso (alerta)
-const snackbarColor = ref("success")
-const snackbarText = ref("Registro exitoso") // texto en el snackbar
 const isPassVisible = ref(false) // determina si la contraseña es visible
 const isPassVisibleConfirm = ref(false) // determina si la contraseña es visible
 
@@ -126,7 +122,7 @@ async function submit(){
     try {
         const { valid } = await form.value.validate() // validaciones del formulario
         if(valid) {
-            // await auth.login(usuario.value, password.value) // petición al API con datos del usuario
+            // Creación de nuevo usuario
             await $fetch('/api/usuarios/nuevo', {
                 method: 'POST',
                 body: {
@@ -136,25 +132,23 @@ async function submit(){
                     "password": password.value
                 }
             })
-            snackbarColor.value = "success"
-            snackbarText.value = "Registro exitoso"
-            showSnackbar.value = true // indicar que el registro fue exitoso
-            await new Promise(resolve => setTimeout(resolve, 3000)) // Simulación de 3 segundos de espera
 
+            // Mostrar mensaje al usuario
+            message.show({text: 'Registro exitoso', color: 'success', location: 'top'})
+            await new Promise(resolve => setTimeout(resolve, 2500)) // Simulación de 3 segundos de espera
+
+            // Iniciar sesión con la información dada
             await auth.login(name.value, password.value)
-            await navigateTo('/') // ir a página inicial con sesión iniciada
             
+            // Ir a página inicial
+            await navigateTo('/')
         }
     } 
     catch (error) {
-        snackbarColor.value = "error"
-        showSnackbar.value = true
-        snackbarText.value = "Hubo un error"
-        throw createError({ statusCode: 400, statusMessage: error})
+        message.show({text: 'Error al guardar. Por favor inténtalo más tarde', color: 'error'})
     } 
     finally {
         isLoading.value = false // indicar el final del inicio de sesión
     }
-
 }
 </script>

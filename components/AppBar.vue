@@ -80,24 +80,19 @@
             </v-list>
         </v-menu>
     </v-app-bar>
-
-    <!-- Aviso al usuario de cierre de sesión -->
-    <message :active="showMessage" text="Cerrando sesión" color="success" loading :timeout="timeout"></message>
 </template>
 
 <script setup>
 // State manager
 import { useWebsiteStore } from '@/stores/website'
 import { useAuthStore } from '@/stores/auth'
+import { useMessageStore } from '@/stores/message'
 const website = useWebsiteStore()
 const auth = useAuthStore()
+const message = useMessageStore()
 
 // Determina si se muetra el dialogo de búsqueda
 const dialog = ref(false)
-// Muestra aviso en pantalla
-const showMessage = ref(false)
-// Tiempo en pantalla del aviso (milisegundos)
-const timeout = ref(2000)
 
 // Texto de búsqueda
 const searchQuery = ref('')
@@ -116,9 +111,9 @@ async function search(query){
  * Cierra sesión del usuario activo
  */
 async function cerrarSesion(){
-    showMessage.value = true // Mostrar mensaje
-    await new Promise(resolve => setTimeout(resolve, timeout.value))
+    message.show({text: 'Cerrando sesión', color: 'info', loading: true, timeout: 2000})
+    await new Promise(resolve => setTimeout(resolve, 2500))
     auth.logout()
-    showMessage.value = false
+    message.show({text: 'Sesión cerrada', color: 'success', timeout: 2000})
 }
 </script>

@@ -3,10 +3,11 @@
     <v-app class="rounded rounded-md">
 
       <!-- Mensaje de retroalimentación a usuarios -->
-      <v-snackbar v-model="snackbar.state" :color="snackbar.color" :location="snackbar.location">
-        {{ snackbar.message }}
+      <v-snackbar v-model="snackbar.state" :color="snackbar.color" :location="snackbar.location" :variant="snackbar.variant" :timeout="snackbar.timeout" :elevation="snackbar.elevation" :rounded="snackbar.rounded">
+        <v-progress-circular v-show="snackbar.loading" indeterminate></v-progress-circular>
+        {{ snackbar.text }}
         <template v-slot:actions>
-            <v-btn icon="mdi-close" @click="snackbar.state = false"></v-btn>
+            <v-btn v-show="snackbar.close" icon="mdi-close" @click="snackbar.state = false"></v-btn>
         </template>
       </v-snackbar>
 

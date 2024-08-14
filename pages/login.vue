@@ -15,10 +15,8 @@
 
             <v-btn class="mb-8" color="blue" size="large" variant="tonal" block type="submit" :loading="isLoading" >Iniciar sesión</v-btn>
 
-            <message :active="showSnackbar" text="Error al iniciar sesión" :timeout="timeout" color="error" icon="mdi-account"></message>
-            
             <v-card-text class="text-center">
-                <nuxt-link class="text-blue text-decoration-none" to="/registro">Crear cuenta <v-icon icon="mdi-chevron-right"></v-icon> </nuxt-link>
+                <nuxt-link class="text-blue text-decoration-none" to="/registro">Crear cuenta <v-icon icon="mdi-chevron-right"></v-icon></nuxt-link>
             </v-card-text>
         </v-form>
 
@@ -28,7 +26,9 @@
 <script setup>
 // State manager
 import { useAuthStore } from '@/stores/auth'
+import { useMessageStore } from '@/stores/message'
 const auth = useAuthStore()
+const message = useMessageStore()
 
 definePageMeta({
     middleware: [
@@ -42,8 +42,6 @@ const password = ref('') // Password (texto simple)
 
 const isLoading = ref(false) // determina si hay validaciones en curso
 const isPassVisible = ref(false) // determina si la contraseña es visible
-const showSnackbar = ref(false) // determina si muestra el snackbar/mensaje de aviso (alerta)
-const timeout = ref(2500)
 
 // Conjunto de reglas de validación para todos los campos del formulario
 const formRules = {
@@ -85,18 +83,14 @@ async function submit(){
             await navigateTo('/') // ir a página de inicio
         }
         else{
-            showSnackbar.value = true // no pudo iniciar sesión
+            message.show({text: 'Usuario y/o contraseña incorrecta', color: 'error'})
         }
     } 
     catch (error) {
-        showSnackbar.value = true // Mostrar mensaje de error
-        await new Promise(resolve => setTimeout(resolve, timeout.value)) // Simulación de 3 segundos de espera
-        throw createError({ statusCode: 400, statusMessage: error})
+        message.show({text: 'Usuario y/o contraseña incorrecta', color: 'error'})
     } 
     finally {
         isLoading.value = false // indicar el final del inicio de sesión
-        showSnackbar.value = false // cierra mensaje de error
     }
-
 }
 </script>

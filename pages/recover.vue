@@ -28,7 +28,9 @@
 <script setup>
 // State manager
 import { useAuthStore } from '@/stores/auth'
+import { useMessageStore } from '@/stores/message'
 const auth = useAuthStore()
+const message = useMessageStore()
 
 definePageMeta({
     middleware: [
@@ -106,6 +108,9 @@ async function submit(){
             })
             // Iniciar sesión con nueva contraseña
             await auth.login(user.name, password.value)
+
+            // Mostrar mensaje al usuario
+            message.show({text: 'Contraseña actualizada', color: 'success', location: 'top'})
             
             // Reenviar a página de usuario
             navigateTo(`/usuarios/${user._id}`)
@@ -116,7 +121,4 @@ async function submit(){
         throw createError({ statusCode: 400, statusMessage: error})
     }
 }
-
-
-
 </script>

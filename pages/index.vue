@@ -10,15 +10,7 @@
             Navegar colección
         </nuxt-link>
     </v-btn>
-
-    <!-- TODO: Borrar después de realizar más pruebas -->
-    <v-btn @click="message.show({text: 'Mensaje de retroalimentación con alcance global en toda la aplicación'})">
-            Message test
-    </v-btn>
 </template>
 
 <script setup>
-// State manager
-import { useMessageStore } from '@/stores/message'
-const message = useMessageStore()
 </script>

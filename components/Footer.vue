@@ -63,21 +63,18 @@
             </v-row>
         </v-container>
     </v-footer>
-    <!-- Aviso al usuario de cierre de sesión -->
-    <message :active="showMessage" text="Cerrando sesión" color="success" loading :timeout="timeout"></message>
 </template>
 
 <script setup>
 // State manager
 import { useAuthStore } from '@/stores/auth'
-const auth = useAuthStore()
-
+import { useMessageStore } from '@/stores/message'
 import { useDisplay } from 'vuetify'
+const auth = useAuthStore()
+const message = useMessageStore()
 const { name } = useDisplay()
 
-const showMessage = ref(false)
-const timeout = ref(2000)
-
+// Determina tamaños de logos según viewport
 const logoHeight = computed(() => {
   switch (name.value) {
     case 'xs': return 20
@@ -93,10 +90,10 @@ const logoHeight = computed(() => {
 /**
  * Cierra sesión del usuario activo
  */
- async function cerrarSesion(){
-    showMessage.value = true // Mostrar mensaje
-    await new Promise(resolve => setTimeout(resolve, timeout.value))
+async function cerrarSesion(){
+    message.show({text: 'Cerrando sesión', color: 'info', loading: true, timeout: 2000})
+    await new Promise(resolve => setTimeout(resolve, 2500))
     auth.logout()
-    showMessage.value = false
+    message.show({text: 'Sesión cerrada', color: 'success', timeout: 2000})
 }
 </script>
