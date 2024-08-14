@@ -3,7 +3,7 @@
         <!-- Interacción de fondo de color cuando el mouse hace acción :hover -->
         <template v-slot:default="{ isHovering, props }">
             <!-- Cada elemento es un v-card, al dar clic se navega a su página -->
-            <v-card :title="type === 'video' ? data.identificacion.codigoReferencia : (type === 'conjunto' ? data.identificacion.titulo : '')" v-bind="props" :color="isHovering && color ? color : undefined" class="mx-auto" :class="{ 'opacity-30': data.adicional.isDraft }" max-width="400" link @click="navigate(type, data._id, nav)" v-if="!data.adicional.isDraft || (data.adicional.isDraft && (auth.id === data.controlDescripcion.documentalista || auth.id == data.controlDescripcion.documentalista._id))">
+            <v-card :title="type === 'video' ? data.identificacion.codigoReferencia : (type === 'conjunto' ? data.identificacion.titulo : '')" v-bind="props" :color="isHovering && color ? color : undefined" class="mx-auto" :class="{ 'opacity-30': data.adicional.isDraft }" max-width="400" link @click="navigate(type, data._id, nav)" v-if="!data.adicional.isDraft || (data.adicional.isDraft && (auth.id === data.controlDescripcion.documentalista))">
                 
                 <!-- Menu para edición y borrado (requiere permisos) -->
                 <template v-slot:append v-if="auth.isLoggedIn && (auth.canUpdate || auth.canDelete)">
