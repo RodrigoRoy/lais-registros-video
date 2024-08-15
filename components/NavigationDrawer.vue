@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="website.isDrawerVisible" temporary>
+    <v-navigation-drawer v-model="website.isDrawerVisible" temporary color="primary"> <!-- scrim="secondary" -->
         <v-list v-if="auth.isLoggedIn">
             <nuxt-link v-if="auth.profileImage" :to="`/usuarios/${auth.id}`" style="text-decoration: none; color: inherit">
                 <v-list-item :title="auth.fullname" :subtitle="auth.email" :prepend-avatar="`/data/profile/${auth.profileImage}`"></v-list-item>

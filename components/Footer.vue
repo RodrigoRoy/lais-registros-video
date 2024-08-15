@@ -1,5 +1,5 @@
 <template>
-    <v-footer :app="true" color="teal" height="auto" rounded="lg" absolute>  
+    <v-footer :app="true" color="primary" height="auto" rounded="lg" absolute>  
         <!-- class="d-flex flex-column"  -->
         <v-container  class="text-center py-0">
             <v-row no-gutters justify="space-around">

@@ -1,15 +1,15 @@
 <template>
     <breadcrumbs :items="breadcrumbsItems"></breadcrumbs>
     <v-container>
-        <nav-header :data="conjunto" color="teal-darken-4" variant="flat" class="mb-6"></nav-header>
+        <nav-header :data="conjunto" :color="conjunto.adicional?.videos?.length ? 'secondary' : 'primary'" variant="flat" class="mb-6"></nav-header>
         <v-row>
             <!-- Mostrar cuadricula de elementos. Se usa nomenclatura (element, index) para generar numeración -->
             <v-col v-for="(item, i) in conjunto.adicional.child" :key="item._id" class="d-flex child-flex" cols="12" sm="6" md="4" lg="3" xl="3">
-                <nav-card type="conjunto" :data="item" :revealId="revealId" color="teal-darken-4" subcolor="" :nav="true" @delete="refresh"></nav-card>
+                <nav-card type="conjunto" :data="item" :revealId="revealId" color="primary" subcolor="" :nav="true" @delete="refresh"></nav-card>
             </v-col>
 
             <v-col v-for="(item, i) in conjunto.adicional.videos" :key="item._id" class="d-flex child-flex" cols="12" sm="6" md="4" lg="3" xl="3">
-                <nav-card type="video" :data="item" :revealId="revealId" color="lime-darken-4" subcolor="" :nav="true" @delete="refresh"></nav-card>
+                <nav-card type="video" :data="item" :revealId="revealId" color="secondary" subcolor="" :nav="true" @delete="refresh"></nav-card>
             </v-col>
         </v-row>
     </v-container>

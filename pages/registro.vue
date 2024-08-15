@@ -23,10 +23,10 @@
             </div>
             <v-text-field v-model="passwordConfirm" :append-inner-icon="isPassVisibleConfirm ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisibleConfirm ? 'text' : 'password'" density="compact" placeholder="********" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisibleConfirm = !isPassVisibleConfirm" :rules="formRules.passwordConfirm" ></v-text-field>
 
-            <v-btn class="mb-8 mt-4" color="blue" size="large" variant="tonal" block type="submit" :loading="isLoading" >Registrar</v-btn>
+            <v-btn class="mb-8 mt-4" color="primary" size="large" variant="flat" block type="submit" :loading="isLoading" >Registrar</v-btn>
 
             <v-card-text class="text-center">
-                <nuxt-link class="text-blue text-decoration-none" to="/login">¿Ya te registraste? Iniciar sesión <v-icon icon="mdi-chevron-right"></v-icon> </nuxt-link>
+                <nuxt-link class="text-accent text-decoration-none" to="/login">¿Ya te registraste? Iniciar sesión <v-icon icon="mdi-chevron-right"></v-icon> </nuxt-link>
             </v-card-text>
         </v-form>
 

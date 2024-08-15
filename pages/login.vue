@@ -9,14 +9,14 @@
 
             <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
                 Contraseña
-                <nuxt-link to="/pass" class="text-caption text-decoration-none text-blue">¿Olvidaste tu contraseña?</nuxt-link>
+                <nuxt-link to="/pass" class="text-caption text-decoration-none text-accent">¿Olvidaste tu contraseña?</nuxt-link>
             </div>
             <v-text-field v-model="password" :append-inner-icon="isPassVisible ? 'mdi-eye-off' : 'mdi-eye'" :type="isPassVisible ? 'text' : 'password'" density="compact" placeholder="Escribe la contraseña" prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="isPassVisible = !isPassVisible" :rules="formRules.password" ></v-text-field>
 
-            <v-btn class="mb-8" color="blue" size="large" variant="tonal" block type="submit" :loading="isLoading" >Iniciar sesión</v-btn>
+            <v-btn class="mb-8" color="primary" size="large" variant="flat" block type="submit" :loading="isLoading" >Iniciar sesión</v-btn>
 
             <v-card-text class="text-center">
-                <nuxt-link class="text-blue text-decoration-none" to="/registro">Crear cuenta <v-icon icon="mdi-chevron-right"></v-icon></nuxt-link>
+                <nuxt-link class="text-accent text-decoration-none" to="/registro">Crear cuenta <v-icon icon="mdi-chevron-right"></v-icon></nuxt-link>
             </v-card-text>
         </v-form>
 

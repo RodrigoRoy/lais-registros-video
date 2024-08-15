@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar elevation="4" rounded>
+    <v-app-bar elevation="4" rounded color="primary">
         <template v-slot:prepend>
             <v-app-bar-nav-icon @click.stop="website.toggleDrawer()"></v-app-bar-nav-icon>
         </template>
@@ -31,7 +31,7 @@
         </v-dialog>
 
         <!-- Menú desplegable -->
-        <v-menu>
+        <v-menu> <!-- scrim="secondary" -->
             <!-- Icono para desplegar menú -->
             <template v-slot:activator="{ props }">
                 <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>

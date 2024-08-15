@@ -14,7 +14,7 @@
             <v-text-field :disabled="auth.isAdmin && auth.id !== usuario._id" v-model="usuario.name" density="compact" :placeholder="usuario.name" prepend-inner-icon="mdi-account" variant="outlined" :rules="formRules.usuario" ></v-text-field>
 
             <!-- Cambio de contraseña -->
-            <v-btn prepend-icon="mdi-key" color="info" @click="showDialog = true">
+            <v-btn prepend-icon="mdi-key" color="warning" @click="showDialog = true">
                 Cambiar contraseña
             </v-btn>
             <v-dialog max-width="600" v-model="showDialog">
@@ -40,8 +40,8 @@
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn text="Cancelar" variant="text" @click="showDialog = false"></v-btn>
-                        <v-btn text="Confirmar" color="info" variant="tonal" type="submit" :loading="isLoadingPassword" @click="changePassword"></v-btn>
+                        <v-btn text="Cancelar" variant="flat" @click="showDialog = false"></v-btn>
+                        <v-btn text="Confirmar" color="success" variant="flat" type="submit" :loading="isLoadingPassword" @click="changePassword"></v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -63,7 +63,7 @@
                 <v-switch class="mt-4" v-model="usuario.active" color="primary" label="Perfil activo"  hide-details></v-switch>
             </div>
             
-            <v-btn class="mb-8 mt-4" color="blue" size="large" variant="tonal" block type="submit" :loading="isLoading" >Actualizar</v-btn>
+            <v-btn class="mb-8 mt-4" color="primary" size="large" variant="flat" block type="submit" :loading="isLoading" >Actualizar</v-btn>
         </v-form>
     </v-card>
 </template>

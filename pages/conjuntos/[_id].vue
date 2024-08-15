@@ -62,53 +62,53 @@
                                     <v-row>
                                         <!-- Compartidos -->
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.codigoReferencia">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Código de referencia </p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Código de referencia </p>
                                             <p class="text-body-1">{{ conjunto.identificacion.codigoReferencia }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.titulo">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Título</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Título</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.titulo }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.pais">
-                                            <p class="text-body-1 font-weight-medium text-secondary">País</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">País</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.pais }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.fecha">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Fecho o periodo</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Fecho o periodo</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.fecha }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.nivelDescripcion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Nivel de descripción</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Nivel de descripción</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.nivelDescripcion }}</p>
                                         </v-col>
                                         <!-- Colección -->
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.volumenSoporte">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Volumen y soporte</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Volumen y soporte</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.volumenSoporte }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.coordinacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Coordinación</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Coordinación</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.coordinacion }}</p>
                                         </v-col>
                                         <!-- Grupo documental -->
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.proyectoInvestigacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Proyecto de investigación</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Proyecto de investigación</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.proyectoInvestigacion }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.entidadProductora">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Entidad productora</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Entidad productora</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.entidadProductora }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.investigacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Investigación</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Investigación</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.investigacion }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.coordinacionProyecto">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Coordinación del proyecto</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Coordinación del proyecto</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.coordinacionProyecto }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.coordinacionProduccionAudiovisual">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Coordinación de producción audiovisual</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Coordinación de producción audiovisual</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.coordinacionProduccionAudiovisual }}</p>
                                         </v-col>
                                     </v-row>
@@ -124,16 +124,16 @@
                                     <v-row>
                                         <!-- Compartidos -->
                                         <v-col cols="12" v-if="conjunto.contexto?.semblanzaBiografica">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Semblanza biográfica</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Semblanza biográfica</p>
                                             <p class="text-body-1">{{ conjunto.contexto.semblanzaBiografica }}</p>
                                         </v-col>
                                         <!-- Colección -->
                                         <v-col cols="12" v-if="conjunto.contexto?.historiaInstitucional">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Historia institucional</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Historia institucional</p>
                                             <p class="text-body-1">{{ conjunto.contexto.historiaInstitucional }}</p>
                                         </v-col>
                                         <v-col cols="12" v-if="conjunto.contexto?.historiaArchivistica">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Historia archivistica</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Historia archivistica</p>
                                             <p class="text-body-1">{{ conjunto.contexto.historiaArchivistica }}</p>
                                         </v-col>
                                     </v-row>
@@ -149,20 +149,20 @@
                                     <v-row>
                                         <!-- Compartidos -->
                                         <v-col cols="12" v-if="conjunto.contenidoEstructura?.alcanceContenido">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Alcance y contenido</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Alcance y contenido</p>
                                             <p class="text-body-1">{{ conjunto.contenidoEstructura.alcanceContenido }}</p>
                                         </v-col>
                                         <v-col cols="12" v-if="conjunto.contenidoEstructura?.valoracionSeleccionEliminacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Valoración, selección y eliminación</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Valoración, selección y eliminación</p>
                                             <p class="text-body-1">{{ conjunto.contenidoEstructura.valoracionSeleccionEliminacion }}</p>
                                         </v-col>
                                         <!-- Colección -->
                                         <v-col cols="12" v-if="conjunto.contenidoEstructura?.nuevosIngresos">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Nuevos ingresos</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Nuevos ingresos</p>
                                             <p class="text-body-1">{{ conjunto.contenidoEstructura.nuevosIngresos }}</p>
                                         </v-col>
                                         <v-col cols="12" v-if="conjunto.contenidoEstructura?.organizacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Organización</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Organización</p>
                                             <p class="text-body-1">{{ conjunto.contenidoEstructura.organizacion }}</p>
                                         </v-col>
                                     </v-row>
@@ -177,11 +177,11 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" v-if="conjunto.condicionesAccesoUso?.condicionesAcceso">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Condiciones de acceso</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Condiciones de acceso</p>
                                             <p class="text-body-1">{{ conjunto.condicionesAccesoUso.condicionesAcceso }}</p>
                                         </v-col>
                                         <v-col cols="12" v-if="conjunto.condicionesAccesoUso?.condicionesReproduccion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Condiciones de reproducción</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Condiciones de reproducción</p>
                                             <p class="text-body-1">{{ conjunto.condicionesAccesoUso.condicionesReproduccion }}</p>
                                         </v-col>
                                     </v-row>
@@ -196,7 +196,7 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" v-if="conjunto.notas?.notas">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Notas</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Notas</p>
                                             <p class="text-body-1">{{ conjunto.notas.notas }}</p>
                                         </v-col>
                                     </v-row>
@@ -212,20 +212,20 @@
                                     <v-row>
                                         <!-- Colección -->
                                         <v-col cols="12" v-if="conjunto.controlDescripcion.reglasNormas">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Reglas o normas</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Reglas o normas</p>
                                             <p class="text-body-1">{{ conjunto.controlDescripcion.reglasNormas }}</p>
                                         </v-col>
                                         <!-- Compartidos -->
                                         <v-col cols="12" sm="4" v-if="conjunto.controlDescripcion?.documentalista">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Archivista</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Archivista</p>
                                             <p class="text-body-1">{{ conjunto.controlDescripcion.documentalista.fullname }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.createdAt">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Fecha de creación</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Fecha de creación</p>
                                             <p class="text-body-1">{{ $dayjs(conjunto.createdAt).format('DD/MM/YYYY HH:mm') }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.updatedAt">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Fecha de actualización</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Fecha de actualización</p>
                                             <p class="text-body-1">{{ $dayjs(conjunto.updatedAt).format('DD/MM/YYYY HH:mm') }}</p>
                                         </v-col>
                                     </v-row>

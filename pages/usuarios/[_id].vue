@@ -1,11 +1,9 @@
 <template>
-    <v-sheet class="d-flex align-center justify-center flex-wrap text-center my-4 mx-auto px-4 bg-accent" elevation="4"  max-width="400" width="100%" rounded >
+    <v-sheet class="d-flex align-center justify-center flex-wrap text-center my-4 mx-auto px-4" elevation="4"  max-width="400" width="100%" rounded color="primary">
         <div>
             <div class="my-2">
                 <v-avatar v-if="user.profileImage" icon="mdi-account" :image="`/data/profile/${user.profileImage}`" style="height: 150px; width: 150px;" variant="elevated" ></v-avatar>
                 <v-avatar v-else icon="mdi-account" image="~/assets/personalPage.gif" style="height: 150px; width: 150px;" variant="elevated" ></v-avatar>
-                <p v-if="user.admin" class="mb-2 font-italic text-overline text-center">Administrador/a</p>
-                
             </div>
 
             <div class="my-3">
@@ -16,8 +14,14 @@
             <div class="text-subtitle-1">
                 <v-icon icon="mdi-email"></v-icon>
                 {{ user.email }}
-                <p :class="user.active? 'text-green-darken-4' : 'text-red-darken-4'">
-                    Usuario <span v-if="!user.active">in</span>activo
+                <p>
+                    <v-chip v-if="!user.active" color="error" variant="flat" size="small" density="compact" class="mr-2">
+                        Cuenta bloqueada
+                    </v-chip>
+                    <v-chip v-if="user.admin" color="amber-darken-1" variant="flat" size="small" density="compact">
+                        <v-icon icon="mdi-key" class="mr-1"></v-icon>
+                        Administrador/a
+                    </v-chip>
                 </p>
             </div>
             

@@ -59,47 +59,47 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.codigoReferencia">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Código de referencia </p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Código de referencia </p>
                                             <p class="text-body-1">{{ video.identificacion.codigoReferencia }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.fecha">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Fecha</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Fecha</p>
                                             <p class="text-body-1">{{ $dayjs(video.identificacion.fecha).format('D/MMMM/YYYY') }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.lugar">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Lugar</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Lugar</p>
                                             <p class="text-body-1">{{ video.identificacion.lugar }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.pais">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Pais</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Pais</p>
                                             <p class="text-body-1">{{ video.identificacion.pais }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.duracion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Duración</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Duración</p>
                                             <p class="text-body-1">{{ minutesToHour(video.identificacion.duracion) }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.personasEntrevistadas">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Personas entrevistadas</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Personas entrevistadas</p>
                                             <p class="text-body-1">{{ video.identificacion.personasEntrevistadas }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.entrevista">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Entrevistador/a</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Entrevistador/a</p>
                                             <p class="text-body-1">{{ video.identificacion.entrevista }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.camara">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Cámara</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Cámara</p>
                                             <p class="text-body-1">{{ video.identificacion.camara }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.iluminacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Iluminación</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Iluminación</p>
                                             <p class="text-body-1">{{ video.identificacion.iluminacion }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.asistencia">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Asistencia</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Asistencia</p>
                                             <p class="text-body-1">{{ video.identificacion.asistencia }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.sonido">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Sonido</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Sonido</p>
                                             <p class="text-body-1">{{ video.identificacion.sonido }}</p>
                                         </v-col>
                                     </v-row>
@@ -114,19 +114,19 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" v-if="video.contenidoEstructura?.descripcionGeneral">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Descripción general</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Descripción general</p>
                                             <p class="text-body-1">{{ video.contenidoEstructura.descripcionGeneral }}</p>
                                         </v-col>
                                         <v-col cols="12" v-if="video.contenidoEstructura?.descriptorOnomastico">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Descriptor onomástico</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Descriptor onomástico</p>
                                             <p class="text-body-1">{{ video.contenidoEstructura.descriptorOnomastico }}</p>
                                         </v-col>
                                         <v-col cols="12" v-if="video.contenidoEstructura?.descriptorToponimico">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Descriptor toponímico</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Descriptor toponímico</p>
                                             <p class="text-body-1">{{ video.contenidoEstructura.descriptorToponimico }}</p>
                                         </v-col>
                                         <v-col cols="12" v-if="video.contenidoEstructura?.estructuraFormal">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Estructura formal</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Estructura formal</p>
                                             <p class="text-body-1">{{ video.contenidoEstructura.estructuraFormal }}</p>
                                         </v-col>
                                     </v-row>
@@ -141,39 +141,39 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.idiomaOriginal">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Idioma original</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Idioma original</p>
                                             <p class="text-body-1">{{ video.condicionesAccesoUso.idiomaOriginal }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.soporte">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Soporte</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Soporte</p>
                                             <p class="text-body-1">{{ video.condicionesAccesoUso.soporte }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.numeroCasetes">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Número de casetes</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Número de casetes</p>
                                             <p class="text-body-1">{{ video.condicionesAccesoUso.numeroCasetes }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.color">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Color</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Color</p>
                                             <p class="text-body-1">{{ video.condicionesAccesoUso.color }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.audio">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Audio</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Audio</p>
                                             <p class="text-body-1">{{ video.condicionesAccesoUso.audio }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.sistemaGrabacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Sistema de grabación</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Sistema de grabación</p>
                                             <p class="text-body-1">{{ video.condicionesAccesoUso.sistemaGrabacion }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.resolucionGrabacion">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Resolución de grabación</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Resolución de grabación</p>
                                             <p class="text-body-1">{{ video.condicionesAccesoUso.resolucionGrabacion }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.formatoVideoDigital">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Formato de video digital</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Formato de video digital</p>
                                             <p class="text-body-1">{{ video.condicionesAccesoUso.formatoVideoDigital }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.requisitosTecnicos">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Requisitos técnicos</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Requisitos técnicos</p>
                                             <p class="text-body-1">{{ video.condicionesAccesoUso.requisitosTecnicos }}</p>
                                         </v-col>
                                     </v-row>
@@ -188,11 +188,11 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" v-if="video.documentacionAsociada?.unidadesDescripcionRelacionadas">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Unidades de descripción relacionadas</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Unidades de descripción relacionadas</p>
                                             <p class="text-body-1">{{ video.documentacionAsociada.unidadesDescripcionRelacionadas }}</p>
                                         </v-col>
                                         <v-col cols="12" v-if="video.documentacionAsociada?.documentosAsociados">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Documentos asociados</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Documentos asociados</p>
                                             <p class="text-body-1">{{ video.documentacionAsociada.documentosAsociados }}</p>
                                         </v-col>
                                     </v-row>
@@ -207,7 +207,7 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" v-if="video.notas?.notas">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Notas</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Notas</p>
                                             <p class="text-body-1">{{ video.notas.notas }}</p>
                                         </v-col>
                                     </v-row>
@@ -222,15 +222,15 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" sm="4" v-if="video.controlDescripcion?.documentalista">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Archivista</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Archivista</p>
                                             <p class="text-body-1">{{ video.controlDescripcion.documentalista.fullname }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.createdAt">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Fecha de creación</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Fecha de creación</p>
                                             <p class="text-body-1">{{ $dayjs(video.createdAt).format('DD/MM/YYYY HH:mm') }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.updatedAt">
-                                            <p class="text-body-1 font-weight-medium text-secondary">Fecha de actualización</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Fecha de actualización</p>
                                             <p class="text-body-1">{{ $dayjs(video.updatedAt).format('DD/MM/YYYY HH:mm') }}</p>
                                         </v-col>
                                     </v-row>

@@ -1,13 +1,13 @@
 <template>
     <v-card>
         <v-form validate-on="submit lazy" @submit.prevent="submit" ref="form">
-            <v-toolbar color="primary" >
+            <v-toolbar color="secondary" >
                 <v-toolbar-title>Editar conjunto documental <span class="text-body-1">({{ conjunto.identificacion?.titulo }})</span></v-toolbar-title>
             </v-toolbar>
             
             <!-- d-flex flex-row permite mostrar tabs en vertical. Solo para tamaños mdAndUp -->
             <div :class="{'d-flex': !smAndDown, 'flex-row': !smAndDown}">
-                <v-tabs v-model="tab" color="primary" :direction="smAndDown ? 'horizontal' : 'vertical'" :show-arrows="smAndDown" center-active>
+                <v-tabs v-model="tab" color="secondary" :direction="smAndDown ? 'horizontal' : 'vertical'" :show-arrows="smAndDown" center-active>
                     <v-tab v-for="area in areasList" :value="area.name">
                         <v-icon start>
                             {{ area.icon }}
@@ -147,7 +147,7 @@
                 </v-tabs-window>
             </div>
             <div class="d-flex justify-center">
-                <v-btn class="mb-8" color="primary" size="large" variant="tonal" type="submit" :loading="isLoading">Editar registro de video</v-btn>
+                <v-btn class="mb-8" color="secondary" size="large" variant="flat" type="submit" :loading="isLoading">Editar registro de video</v-btn>
             </div>
         </v-form>
     </v-card>
