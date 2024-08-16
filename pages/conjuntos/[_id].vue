@@ -30,7 +30,7 @@
                                                 <v-card max-width="400" prepend-icon="mdi-alert" color="error" variant="elevated" title="Borrar registro" :text="`Por favor confirme la eliminación del registro ${conjunto.identificacion.codigoReferencia}. Esta operación no se puede revertir y la información almacenada se perderá.`" >
                                                     <v-card-actions>
                                                         <v-btn @click="isActive.value = false" variant="elevated" color="error">Cancel</v-btn>
-                                                        <v-btn @click="deleteConjunto(conjunto._id)" variant="plain">Borrar</v-btn>
+                                                        <v-btn @click="deleteData(conjunto, 'conjunto')" variant="plain">Borrar</v-btn>
                                                     </v-card-actions>
                                                 </v-card>
                                             </template>
@@ -582,5 +582,43 @@ function showPDF(conjunto){
 
     // Acción para que el usuario pueda descargar el pdf
     pdfMake.createPdf(docDefinition).download(`${conjunto.identificacion.codigoReferencia}.pdf`)
+}
+/**
+ * Borrar conjunto de la base de datos
+ * @param {Object} data Conjunto que se desea borrar
+ * @param {string} type Video o colección
+ */
+ async function deleteData(data, type){
+    if(!data?._id || !data?.adicional?.parent || !type )
+        return
+
+    if(type === 'video'){
+        // Borrar referencia del conjunto padre
+        if(data.adicional?.parent)
+            await $fetch(`/api/conjuntos/hierarchy/${data.adicional.parent}`, {
+                method: 'DELETE',
+                query: {id: data._id, type: "video"}
+            })
+        // Borrar video
+        await $fetch(`/api/videos/${data._id}`, {
+            method: 'DELETE',
+            query: { id: auth?.id }
+        })
+    }
+    else{
+        // Borrar referencia del conjunto padre
+        if(data.adicional?.parent)
+            await $fetch(`/api/conjuntos/hierarchy/${data.adicional.parent}`, {
+                method: 'DELETE',
+                query: {id: data._id, type: "conjunto"}
+            })
+        // Borrar conjunto
+        await $fetch(`/api/conjuntos/${data._id}`, {
+            method: 'DELETE',
+            query: { id: auth?.id }
+        })
+
+        navigateTo(`/nav?id=${data.adicional.parent}`)
+    }
 }
 </script>

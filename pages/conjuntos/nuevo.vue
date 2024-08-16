@@ -362,7 +362,7 @@ async function uploadFile(file, filetype, id) {
     if(newConjunto.adicional.isDraft)
         await $fetch(`/api/drafts/conjuntos/user/${auth?.id}`, {
             method: 'PUT',
-            body: JSON.parse(JSON.stringify(newConjunto.value)),
+            body: JSON.parse(JSON.stringify(newConjunto)),
         })
     
     // Si existe archivo de imagen, proceder a subirlo
