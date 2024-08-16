@@ -265,7 +265,9 @@
 <script setup>
 // State manager
 import { useAuthStore } from '@/stores/auth'
+import { useMessageStore } from '@/stores/message'
 const auth = useAuthStore()
+const message = useMessageStore()
 
 // import PdfPrinter from 'pdfmake'
 import pdfMake from 'pdfmake/build/pdfmake'
@@ -586,39 +588,35 @@ function showPDF(conjunto){
 /**
  * Borrar conjunto de la base de datos
  * @param {Object} data Conjunto que se desea borrar
- * @param {string} type Video o colección
  */
- async function deleteData(data, type){
-    if(!data?._id || !data?.adicional?.parent || !type )
+ async function deleteData(data){
+    if(!data?._id)
         return
 
-    if(type === 'video'){
-        // Borrar referencia del conjunto padre
-        if(data.adicional?.parent)
-            await $fetch(`/api/conjuntos/hierarchy/${data.adicional.parent}`, {
-                method: 'DELETE',
-                query: {id: data._id, type: "video"}
-            })
-        // Borrar video
-        await $fetch(`/api/videos/${data._id}`, {
-            method: 'DELETE',
-            query: { id: auth?.id }
-        })
-    }
-    else{
+    try {
         // Borrar referencia del conjunto padre
         if(data.adicional?.parent)
             await $fetch(`/api/conjuntos/hierarchy/${data.adicional.parent}`, {
                 method: 'DELETE',
                 query: {id: data._id, type: "conjunto"}
             })
+    
         // Borrar conjunto
         await $fetch(`/api/conjuntos/${data._id}`, {
             method: 'DELETE',
             query: { id: auth?.id }
         })
-
-        navigateTo(`/nav?id=${data.adicional.parent}`)
+    
+        // Mostrar mensaje al usuario
+        message.show({text: 'Conjunto borrado', color: "success"})
+    
+        if(data.adicional?.parent)
+            navigateTo(`/nav?id=${data.adicional.parent}`)
+        else
+            navigateTo('/')
+    } catch (error) {
+        // Mostrar mensaje al usuario
+        message.show({text: 'Error al borrar', color: "error"})
     }
 }
 </script>

@@ -101,7 +101,7 @@
                     <v-tabs-window-item value="condicionesAccesoUso">
                         <v-card flat>
                             <v-card-text>
-                                <v-textarea v-model="conjunto.condicionesAccesoUso.condicionesAcceso" label="Condiciones de acceso" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                <v-select v-model="conjunto.condicionesAccesoUso.condicionesAcceso" label="Condiciones de acceso" variant="underlined" clearable :items="selectLists.condicionesAcceso" ></v-select>
                                 <v-textarea v-model="conjunto.condicionesAccesoUso.condicionesReproduccion" label="Condiciones de reproducción" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
                             </v-card-text>
                         </v-card>
@@ -191,6 +191,7 @@ const selectLists = {
     sistemaGrabacion: ['NTSC', 'PAL', 'SECAM'],
     resolucionGrabacion: ['UHD 8K', 'UHD 4K', 'HD 1080p', 'HD 1080i', 'HD 720', 'HD 720p', 'HD 720i', 'PAL 576i', 'NTSC 480i'],
     formatoVideoDigital: ['MP4', 'MTS', 'AVCHD', 'MOV', 'XAVC'],
+    condicionesAcceso: ['Usos reservados para consulta in situ', 'Usos no lucrativos', 'Usos lucrativos'],
 }
 
 // Auxiliar para mostrar "Fecha de creación"
@@ -342,7 +343,7 @@ async function uploadFile(file, filetype, id) {
         isLoading.value = false
         return
     }
-
+    
     // newConjunto es el nuevo registro en base de datos. Incluye propiedad "_id"
     const newConjunto = await $fetch('/api/conjuntos/nuevo', {
         method: 'POST',

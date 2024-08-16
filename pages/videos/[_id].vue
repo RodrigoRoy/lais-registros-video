@@ -30,7 +30,7 @@
                                                 <v-card max-width="400" prepend-icon="mdi-alert" color="error" variant="elevated" title="Borrar registro" :text="`Por favor confirme la eliminación del registro ${video.identificacion.codigoReferencia}. Esta operación no se puede revertir y la información almacenada se perderá.`" >
                                                     <v-card-actions>
                                                         <v-btn @click="isActive.value = false" variant="elevated" color="error">Cancel</v-btn>
-                                                        <v-btn @click="deleteVideo(video._id)" variant="plain">Borrar</v-btn>
+                                                        <v-btn @click="deleteData(video)" variant="plain">Borrar</v-btn>
                                                     </v-card-actions>
                                                 </v-card>
                                             </template>
@@ -244,14 +244,16 @@
             <v-col cols="12" md="4" align="center">
                 <v-sheet class="pa-2 ma-2">
                         <v-card elevation="2" height="auto" width="auto" >
-                            <img :src="`/data/image/${video.adicional.imagen}`" width="100%" height="auto" v-show="false" ref="image" id="image"></img>
-                            <video ref="videoClip" @play="videoClipStarPlaying" @pause="videoClipStopPlaying(video)" controls width="100%" height="auto" :poster="`/data/image/${video.adicional.imagen}`" :loop="false" :muted="false">
+                            <!-- <img :src="`/data/image/${video.adicional.imagen}`" width="100%" height="auto" v-show="false" ref="image" id="image"></img> -->
+
+                            <video v-if="video.adicional.clipVideo" ref="videoClip" @play="videoClipStarPlaying" @pause="videoClipStopPlaying(video)" controls width="100%" height="auto" :poster="`/data/image/${video.adicional.imagen}`" :loop="false" :muted="false">
                                 <source :src="`/data/video/${video.adicional.clipVideo}`" />
                                 <p>
                                     Tu navegador no soporta video HTML. Aquí hay un
                                     <a :href="`/data/video/${video.adicional.clipVideo}`" :download="`/data/video/${video.adicional.clipVideo}`">enlace al video</a>.
                                 </p>
                             </video>
+
 
                             <!-- Acciones / botón para mostrar más información -->
                             <v-card-actions>
@@ -278,7 +280,9 @@
 <script setup>
 // State manager
 import { useAuthStore } from '@/stores/auth'
+import { useMessageStore } from '@/stores/message'
 const auth = useAuthStore()
+const message = useMessageStore()
 
 // import PdfPrinter from 'pdfmake'
 import pdfMake from 'pdfmake/build/pdfmake'
@@ -501,7 +505,7 @@ onMounted( () => {
         imageWidth.value = img.width
         imageHeight.value = img.height
     }
-    img.src = image.value.src
+    img.src = image.value?.src
 })
 
 /**
@@ -681,5 +685,37 @@ function showPDF(video){
 
     // Acción para que el usuario pueda descargar el pdf
     pdfMake.createPdf(docDefinition).download(`${video.identificacion.codigoReferencia}.pdf`)
+}
+
+/**
+ * Borrar video de la base de datos
+ * @param {Object} data Video que se desea borrar
+ */
+ async function deleteData(data){
+    if(!data?._id)
+        return
+
+    try {
+        // Borrar referencia del conjunto padre
+        if(data.adicional?.parent)
+            await $fetch(`/api/conjuntos/hierarchy/${data.adicional.parent}`, {
+                method: 'DELETE',
+                query: {id: data._id, type: "video"}
+            })
+        // Borrar video
+        await $fetch(`/api/videos/${data._id}`, {
+            method: 'DELETE',
+            query: { id: auth?.id }
+        })
+    
+        // Mostrar mensaje al usuario
+        message.show({text: 'Video borrado', color: "success"})
+    
+        navigateTo(`/nav?id=${data.adicional.parent}`)
+        
+    } catch (error) {
+        // Mostrar mensaje al usuario
+        message.show({text: 'Error al borrar', color: "error"})
+    }
 }
 </script>

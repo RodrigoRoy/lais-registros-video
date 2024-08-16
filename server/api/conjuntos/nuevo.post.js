@@ -11,12 +11,14 @@ export default defineEventHandler(async (event) => {
     // Guardar en base de datos
     try{
         const newConjunto = await new ConjuntoSchema(body).save()
+
         if(userId)
             await UsuarioSchema.findByIdAndUpdate(
                 userId,
                 { $addToSet: { conjuntos: newConjunto._id} },
                 { new: true, timestamps: false }
             )
+
         return newConjunto
     }
     catch (error) {

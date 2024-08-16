@@ -2,7 +2,8 @@
     <v-data-table :headers="dataTableHeaders" :items="videos" density="compact" hide-no-data :hide-default-footer="videos?.length <= videosPerPage" hover :items-per-page="videosPerPage" :no-filter="true">
         <!-- Portada -->
         <template v-slot:item.portada="{ value }">
-            <v-img :src="`/data/image/${value}`" cover></v-img>
+            <v-img v-if="value" :src="`/data/image/${value}`" cover></v-img>
+            <v-img v-else src="~/assets/Logo LAIS.png" cover class="bg-blue-grey-darken-4"></v-img>
         </template>
         <!-- Botones de acción (ver, editar) -->
         <template v-slot:item._id="{ value }">
