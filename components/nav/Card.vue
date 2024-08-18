@@ -122,11 +122,11 @@
 <script setup>
 defineProps({
     data: {type: Object, required: true},
-    type: {type: String, default: 'conjunto', validator(value, props){ return ['conjunto', 'video'].includes(value) }}, // only valid options
-    revealId: {type: [Number, null], required: true}, // required but nullable
+    type: {type: String, required: true, validator(value, props){ return ['conjunto', 'video'].includes(value) }}, // only valid options
+    revealId: {type: [Number, null], default: null}, // required but nullable
     color: {type: String, default: 'primary'},
-    subcolor: {type: String, default: 'secondary'},
-    nav: {type: Boolean, default: true}, // intended to use in '/nav' page, false otherwise
+    subcolor: {type: String, default: 'accent'},
+    nav: {type: Boolean}, // true for use in '/nav' page, false otherwise
 })
 const emit = defineEmits(['delete'])
 
