@@ -17,11 +17,11 @@ export default defineNuxtPlugin((app) => {
         themes: {
           light: {
             colors:{
-              // Basada en paleta de color de Color Hunt (verdes claros)
-              // https://colorhunt.co/palette/00676940a5789dde8be6ff94
-              primary: '#006769',
-              secondary: '#40A578',
-              accent: '#E6FF94',
+              // Basada en paleta de color de Color Hunt
+              // https://colorhunt.co/palette/451952662549ae445af39f5a
+              primary: '#662549',
+              secondary: '#AE445A',
+              accent: '#F39F5A',
               
               error: colors.red.darken3,
               info: colors.blue.darken3,

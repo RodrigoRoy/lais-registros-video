@@ -25,12 +25,6 @@
 
         <v-list v-if="auth.isLoggedIn && (auth.canCreate || auth.isAdmin )">
             <v-list-subheader>Administración</v-list-subheader>
-            <nuxt-link v-if="auth.canCreate" to="/videos/nuevo" style="text-decoration: none; color: inherit">
-                <v-list-item link prepend-icon="mdi-file-video" title="Crear registro"></v-list-item>
-            </nuxt-link>
-            <nuxt-link v-if="auth.canCreate" to="/conjuntos/nuevo" style="text-decoration: none; color: inherit">
-                <v-list-item link prepend-icon="mdi-folder-play" title="Crear grupo documental"></v-list-item>
-            </nuxt-link>
             <nuxt-link v-if="auth.isAdmin" to="/usuarios" style="text-decoration: none; color: inherit">
                 <v-list-item link prepend-icon="mdi-account-multiple" title="Lista de usuarios"></v-list-item>
             </nuxt-link>

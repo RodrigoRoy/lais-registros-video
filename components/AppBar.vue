@@ -16,7 +16,7 @@
         <v-btn icon="mdi-magnify" variant="text" @click="dialog = true"></v-btn>
 
         <!-- Ventana de búsqueda -->
-        <v-dialog v-model="dialog" width="100%" scrollable>
+        <v-dialog v-model="dialog" width="100%" scrollable scrim="primary">
             <v-card>
                 <!-- Área para escribir búsqueda -->
                 <template v-slot:title>
