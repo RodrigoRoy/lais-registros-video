@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+    <v-card class="mx-auto my-6 pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
 
         <v-form fast-fail validate-on="submit lazy" @submit.prevent="submit" ref="form">
             <p class="font-weight-bold  mb-6 text-h5 text-center text-high-emphasis text-uppercase">Edición del perfil</p>
@@ -14,7 +14,7 @@
             <v-text-field :disabled="auth.isAdmin && auth.id !== usuario._id" v-model="usuario.name" density="compact" :placeholder="usuario.name" prepend-inner-icon="mdi-account" variant="outlined" :rules="formRules.usuario" ></v-text-field>
 
             <!-- Cambio de contraseña -->
-            <v-btn prepend-icon="mdi-key" color="warning" @click="showDialog = true">
+            <v-btn :disabled="auth.id !== usuario._id" prepend-icon="mdi-key" color="warning" @click="showDialog = true">
                 Cambiar contraseña
             </v-btn>
             <v-dialog max-width="600" v-model="showDialog">
@@ -51,9 +51,9 @@
             <div v-if="usuario.profileImage">
                 <nuxt-img class="align-center text-white" height="100" :src="`/data/profile/${usuario.profileImage}`" fit="cover" />
                 <br />
-                <v-btn variant="tonal" color="error" size="small" @click="usuario.profileImage = null">Borrar imagen</v-btn>
+                <v-btn :disabled="auth.id !== usuario._id" variant="tonal" color="error" size="small" @click="usuario.profileImage = null">Borrar imagen</v-btn>
             </div>
-            <v-file-input v-else v-model="files.profileImage" label="Imagen de perfil" prepend-icon="mdi-account-box" :rules="formRules.profileImage" accept="image/*" show-size chips ></v-file-input>
+            <v-file-input v-else v-model="files.profileImage" :disabled="auth.id !== usuario._id" label="Imagen de perfil" prepend-icon="mdi-account-box" :rules="formRules.profileImage" accept="image/*" show-size chips ></v-file-input>
             
             <div v-if="auth.isAdmin" class="text-subtitle-1 text-medium-emphasis mt-4">Permisos
                 <v-switch class="font-weight-bold mb-4" v-model="usuario.admin" color="primary" label="Administración"  hide-details></v-switch>

@@ -16,7 +16,7 @@
         <v-btn icon="mdi-magnify" variant="text" @click="dialog = true"></v-btn>
 
         <!-- Ventana de búsqueda -->
-        <v-dialog v-model="dialog" width="100%" scrollable scrim="primary">
+        <v-dialog v-model="dialog" width="100%" scrollable>
             <v-card>
                 <!-- Área para escribir búsqueda -->
                 <template v-slot:title>
@@ -24,8 +24,8 @@
                 </template>
                 <!-- Presentación de resultados -->
                 <template v-slot:text>
-                    <search-items type="video" :max="3" :results="queryResults?.videos" color="secondary" @click-result="dialog = false; searchQuery = ''"></search-items>
-                    <search-items type="conjunto" :max="3" :results="queryResults?.conjuntos" color="secondary" @click-result="dialog = false; searchQuery = ''"></search-items>
+                    <search-items type="video" :max="3" :results="queryResults?.videos" color="accent" @click-result="dialog = false; searchQuery = ''"></search-items>
+                    <search-items type="conjunto" :max="3" :results="queryResults?.conjuntos" color="accent" @click-result="dialog = false; searchQuery = ''"></search-items>
                 </template>
             </v-card>
         </v-dialog>

@@ -54,7 +54,7 @@
             </span>
             <br />
 
-            <span class="text-secondary" v-if="user.admin">
+            <span v-if="user.admin">
                 <v-icon size="x-small" icon="mdi-key"></v-icon>
                 Administrador/a
             </span>

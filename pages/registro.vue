@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+    <v-card class="mx-auto my-6 pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
 
         <v-form fast-fail validate-on="submit lazy" @submit.prevent="submit" ref="form">
             <p class="mb-6 text-h5 text-center text-high-emphasis text-uppercase">Registro</p>

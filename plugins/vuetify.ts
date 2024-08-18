@@ -19,9 +19,19 @@ export default defineNuxtPlugin((app) => {
             colors:{
               // Basada en paleta de color de Color Hunt
               // https://colorhunt.co/palette/451952662549ae445af39f5a
-              primary: '#662549',
-              secondary: '#AE445A',
-              accent: '#F39F5A',
+              // primary: '#662549',
+              // secondary: '#AE445A',
+              // accent: '#F39F5A',
+
+              primary: colors.red.darken3,
+              'primary-container': colors.red.lighten1,
+              secondary: colors.deepOrange.darken1,
+              'secondary-container': colors.deepOrange.lighten1,
+              accent: colors.cyan.darken3,
+              'accent-container': colors.cyan.darken1,
+
+              background: colors.grey.lighten3,
+              surface: colors.grey.lighten2,
               
               error: colors.red.darken3,
               info: colors.blue.darken3,
@@ -68,9 +78,19 @@ export default defineNuxtPlugin((app) => {
 
               // Basada en paleta de color de Color Hunt (verdes claros)
               // https://colorhunt.co/palette/00676940a5789dde8be6ff94
-              primary: '#006769',
-              secondary: '#40A578',
-              accent: '#E6FF94',
+              // primary: '#006769',
+              // secondary: '#40A578',
+              // accent: '#E6FF94',
+
+              primary: colors.red.darken3,
+              'primary-container': colors.red.lighten1,
+              secondary: colors.deepOrange.darken1,
+              'secondary-container': colors.deepOrange.lighten1,
+              accent: colors.cyan.lighten3,
+              'accent-container': colors.cyan.lighten1,
+
+              background: colors.grey.darken4,
+              surface: colors.grey.darken3,
 
               error: colors.red.darken3,
               info: colors.blue.darken3,

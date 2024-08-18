@@ -3,8 +3,8 @@
     <v-container>
         <v-row no-gutters>
             <v-col cols="12" md="8" align-self="start">
-                <v-sheet class="pa-2 ma-2">
-                    <v-card elevation="2" height="auto" max-width="auto" variant="text">
+                <v-sheet class="pa-2 ma-2" color="background">
+                    <v-card elevation="2" height="auto" max-width="auto" variant="flat" color="surface">
                         
                         <!-- Menu para edición y borrado (requiere permisos) -->
                         <template v-slot:append v-if="auth.isLoggedIn && (auth.canUpdate || auth.canDelete)">
@@ -242,8 +242,8 @@
             </v-col>
 
             <v-col cols="12" md="4" align="center">
-                <v-sheet class="pa-2 ma-2">
-                        <v-card elevation="2" height="auto" width="auto" >
+                <v-sheet class="pa-2 ma-2" color="background">
+                        <v-card elevation="2" height="auto" width="auto" variant="flat">
                             <!-- <img :src="`/data/image/${video.adicional.imagen}`" width="100%" height="auto" v-show="false" ref="image" id="image"></img> -->
 
                             <video v-if="video.adicional.clipVideo" ref="videoClip" @play="videoClipStarPlaying" @pause="videoClipStopPlaying(video)" controls width="100%" height="auto" :poster="`/data/image/${video.adicional.imagen}`" :loop="false" :muted="false">
@@ -265,10 +265,10 @@
                         </v-card>
                 </v-sheet>
 
-                <v-sheet class="pa-2 ma-2">
-                        <v-card elevation="2" height="auto" width="auto" >
-                            <v-btn v-if="video.adicional.documentoCalificacion" class="text-none my-4 mx-2" variant="tonal" block prepend-icon="mdi-file-document" :href="getDocumentURL(video.adicional.documentoCalificacion)">Documento de calificación</v-btn>
-                            <v-btn class="text-none my-4 mx-2" variant="tonal" block prepend-icon="mdi-file-pdf-box" @click="showPDF(video)">Descargar PDF</v-btn>
+                <v-sheet class="pa-2 ma-2" color="background">
+                        <v-card elevation="2" height="auto" width="auto" variant="flat">
+                            <v-btn v-if="video.adicional.documentoCalificacion" class="text-none" variant="flat" block prepend-icon="mdi-file-document" :href="getDocumentURL(video.adicional.documentoCalificacion)">Documento de calificación</v-btn>
+                            <v-btn class="text-none" variant="flat" block prepend-icon="mdi-file-pdf-box" @click="showPDF(video)">Descargar PDF</v-btn>
                         </v-card>
                 </v-sheet>
             </v-col>
