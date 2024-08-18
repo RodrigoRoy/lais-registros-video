@@ -38,7 +38,7 @@
                                     </v-row>
 
                                     <!-- solo colección -->
-                                    <v-row>
+                                    <v-row v-if="conjunto.adicional.depth === 0">
                                         <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.volumenSoporte" label="Volumen y soporte" variant="underlined" clearable ></v-text-field>
                                         </v-col>
@@ -48,7 +48,7 @@
                                     </v-row>
 
                                     <!-- solo grupo documental -->
-                                    <v-row>
+                                    <v-row v-if="conjunto.adicional.depth !== 0">
                                         <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.proyectoInvestigacion" label="Proyecto de investigación" variant="underlined" clearable ></v-text-field>
                                         </v-col>
@@ -80,8 +80,10 @@
                                 <v-textarea v-model="conjunto.contexto.semblanzaBiografica" label="Semblanza biográfica" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
                                 
                                 <!-- solo colección -->
-                                <v-textarea v-model="conjunto.contexto.historiaInstitucional" label="Historia institucional" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
-                                <v-textarea v-model="conjunto.contexto.historiaArchivistica" label="Historia archivística" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                <div v-if="conjunto.adicional.depth === 0">
+                                    <v-textarea v-model="conjunto.contexto.historiaInstitucional" label="Historia institucional" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                    <v-textarea v-model="conjunto.contexto.historiaArchivistica" label="Historia archivística" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                </div>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>
@@ -92,8 +94,10 @@
                                 <v-textarea v-model="conjunto.contenidoEstructura.alcanceContenido" label="Alcance y contenido" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
                                 <v-textarea v-model="conjunto.contenidoEstructura.valoracionSeleccionEliminacion" label="Valoración, selección y eliminación" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
                                 <!-- solo colección -->
-                                <v-textarea v-model="conjunto.contenidoEstructura.nuevosIngresos" label="Nuevos ingresos" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
-                                <v-textarea v-model="conjunto.contenidoEstructura.organizacion" label="Organización" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                <div v-if="conjunto.adicional.depth === 0">
+                                    <v-textarea v-model="conjunto.contenidoEstructura.nuevosIngresos" label="Nuevos ingresos" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                    <v-textarea v-model="conjunto.contenidoEstructura.organizacion" label="Organización" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                </div>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>
@@ -119,7 +123,8 @@
                         <v-card flat>
                             <v-card-text>
                                 <v-text-field v-model="conjunto.controlDescripcion.documentalista.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
-                                <v-text-field v-model="conjunto.controlDescripcion.reglasNormas" label="Reglas o normas" variant="underlined" ></v-text-field>
+                                <!-- solo colección (reglas o normas) -->
+                                <v-text-field v-if="conjunto.adicional.depth === 0" v-model="conjunto.controlDescripcion.reglasNormas" label="Reglas o normas" variant="underlined" ></v-text-field>
                                 <v-text-field v-model="createdAt" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
                                 <v-text-field v-model="today" label="Fecha de actualización" variant="underlined" readonly ></v-text-field>
                             </v-card-text>

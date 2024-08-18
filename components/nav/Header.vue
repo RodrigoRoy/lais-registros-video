@@ -37,7 +37,7 @@
 
         <v-card-actions>
             <v-btn v-if="(data.adicional?.child?.length === 0 && data.adicional?.videos?.length === 0) || data.adicional?.child?.length !== 0" prepend-icon="mdi-plus" variant="outlined">
-                <nuxt-link :to="`/conjuntos/nuevo?id=${data._id ? data._id : ''}`" style="color: inherit" class="text-decoration-none">
+                <nuxt-link :to="`/conjuntos/nuevo?id=${data._id ? data._id : ''}&d=${data.adicional?.depth + 1}`" style="color: inherit" class="text-decoration-none">
                     Nuevo grupo
                 </nuxt-link>
             </v-btn>
