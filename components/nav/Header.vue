@@ -35,7 +35,7 @@
             </p>
         </v-card-text>
 
-        <v-card-actions>
+        <v-card-actions v-if="auth.isLoggedIn && auth.canCreate">
             <v-btn v-if="(data.adicional?.child?.length === 0 && data.adicional?.videos?.length === 0) || data.adicional?.child?.length !== 0" prepend-icon="mdi-plus" variant="outlined">
                 <nuxt-link :to="`/conjuntos/nuevo?id=${data._id ? data._id : ''}&d=${data.adicional?.depth + 1}`" style="color: inherit" class="text-decoration-none">
                     Nuevo grupo
@@ -62,7 +62,14 @@
 </template>
 
 <script setup>
-defineProps(['data', 'variant', 'color'])
+defineProps({
+    data: {type: Object, required: true},
+    variant: {type: String, default: 'flat'},
+    color: {type: String, default: ''},
+})
+
+import { useAuthStore } from '@/stores/auth'
+const auth = useAuthStore()
 
 // Determina si se muestra la descripción/presentación textual del conjunto
 const showFullText = ref(false)

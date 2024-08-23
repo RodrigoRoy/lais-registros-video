@@ -57,10 +57,10 @@
                     <v-btn v-if="type === 'video'" size="small" :prepend-icon="data.adicional.bookmarkedBy.includes(auth.id) ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="toggleBookmark(data)">{{ data.adicional.bookmarkedBy.length }}</v-btn>
 
                     <!-- Número de vistas -->
-                    <v-btn size="small" prepend-icon="mdi-chart-bar">{{ data.adicional.fetchCount }}</v-btn>
+                    <v-btn size="small" v-show="auth.isLoggedIn && auth.canCreate && auth.canUpdate" prepend-icon="mdi-chart-bar">{{ data.adicional.fetchCount }}</v-btn>
 
                     <!-- Número de reproducciones -->
-                    <v-btn v-if="type === 'video'" size="small" prepend-icon="mdi-play">{{ data.adicional.playCount }}</v-btn>
+                    <v-btn v-if="type === 'video'" v-show="auth.isLoggedIn && auth.canCreate && auth.canUpdate" size="small" prepend-icon="mdi-play">{{ data.adicional.playCount }}</v-btn>
 
                     <v-spacer></v-spacer>
                     

@@ -21,7 +21,7 @@
                         <v-card flat>
                             <v-card-text>
                                 
-                                <v-container class="px-0">
+                                <v-container fluid class="px-0">
                                     <v-text-field v-model="conjunto.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" ></v-text-field>
                                     <v-text-field v-model="conjunto.identificacion.titulo" label="Título" variant="underlined" clearable :rules="formRules.titulo" ></v-text-field>
                                     <v-row>
@@ -77,13 +77,15 @@
                     <v-tabs-window-item value="contexto">
                         <v-card flat>
                             <v-card-text>
-                                <v-textarea v-model="conjunto.contexto.semblanzaBiografica" label="Semblanza biográfica" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
-                                
-                                <!-- solo colección -->
-                                <div v-if="conjunto.adicional.depth === 0">
-                                    <v-textarea v-model="conjunto.contexto.historiaInstitucional" label="Historia institucional" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
-                                    <v-textarea v-model="conjunto.contexto.historiaArchivistica" label="Historia archivística" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
-                                </div>
+                                <v-container fluid class="px-0">
+                                    <v-textarea v-model="conjunto.contexto.semblanzaBiografica" label="Semblanza biográfica" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                    
+                                    <!-- solo colección -->
+                                    <div v-if="conjunto.adicional.depth === 0">
+                                        <v-textarea v-model="conjunto.contexto.historiaInstitucional" label="Historia institucional" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                        <v-textarea v-model="conjunto.contexto.historiaArchivistica" label="Historia archivística" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                    </div>
+                                </v-container>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>
@@ -91,13 +93,15 @@
                     <v-tabs-window-item value="contenidoEstructura">
                         <v-card flat>
                             <v-card-text>
-                                <v-textarea v-model="conjunto.contenidoEstructura.alcanceContenido" label="Alcance y contenido" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
-                                <v-textarea v-model="conjunto.contenidoEstructura.valoracionSeleccionEliminacion" label="Valoración, selección y eliminación" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
-                                <!-- solo colección -->
-                                <div v-if="conjunto.adicional.depth === 0">
-                                    <v-textarea v-model="conjunto.contenidoEstructura.nuevosIngresos" label="Nuevos ingresos" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
-                                    <v-textarea v-model="conjunto.contenidoEstructura.organizacion" label="Organización" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
-                                </div>
+                                <v-container fluid class="px-0">
+                                    <v-textarea v-model="conjunto.contenidoEstructura.alcanceContenido" label="Alcance y contenido" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                    <v-textarea v-model="conjunto.contenidoEstructura.valoracionSeleccionEliminacion" label="Valoración, selección y eliminación" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                    <!-- solo colección -->
+                                    <div v-if="conjunto.adicional.depth === 0">
+                                        <v-textarea v-model="conjunto.contenidoEstructura.nuevosIngresos" label="Nuevos ingresos" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                        <v-textarea v-model="conjunto.contenidoEstructura.organizacion" label="Organización" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                    </div>
+                                </v-container>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>
@@ -105,8 +109,10 @@
                     <v-tabs-window-item value="condicionesAccesoUso">
                         <v-card flat>
                             <v-card-text>
-                                <v-select v-model="conjunto.condicionesAccesoUso.condicionesAcceso" label="Condiciones de acceso" variant="underlined" clearable :items="selectLists.condicionesAcceso" ></v-select>
-                                <v-textarea v-model="conjunto.condicionesAccesoUso.condicionesReproduccion" label="Condiciones de reproducción" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                <v-container fluid class="px-0">
+                                    <v-select v-model="conjunto.condicionesAccesoUso.condicionesAcceso" label="Condiciones de acceso" variant="underlined" clearable :items="selectLists.condicionesAcceso" ></v-select>
+                                    <v-textarea v-model="conjunto.condicionesAccesoUso.condicionesReproduccion" label="Condiciones de reproducción" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                </v-container>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>
@@ -114,7 +120,9 @@
                     <v-tabs-window-item value="notas">
                         <v-card flat>
                             <v-card-text>
-                                <v-textarea v-model="conjunto.notas.notas" label="Notas" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                <v-container fluid class="px-0">
+                                    <v-textarea v-model="conjunto.notas.notas" label="Notas" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                </v-container>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>
@@ -122,10 +130,12 @@
                     <v-tabs-window-item value="controlDescripcion">
                         <v-card flat>
                             <v-card-text>
-                                <v-text-field v-model="auth.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
-                                <!-- solo colección (reglas o normas) -->
-                                <v-text-field v-if="conjunto.adicional.depth === 0" v-model="conjunto.controlDescripcion.reglasNormas" label="Reglas o normas" variant="underlined" ></v-text-field>
-                                <v-text-field v-model="today" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
+                                <v-container fluid class="px-0">
+                                    <v-text-field v-model="auth.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
+                                    <!-- solo colección (reglas o normas) -->
+                                    <v-text-field v-if="conjunto.adicional.depth === 0" v-model="conjunto.controlDescripcion.reglasNormas" label="Reglas o normas" variant="underlined" ></v-text-field>
+                                    <v-text-field v-model="today" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
+                                </v-container>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>
@@ -133,11 +143,13 @@
                     <v-tabs-window-item value="adicional">
                         <v-card flat>
                             <v-card-text>
-                                <v-textarea v-model="conjunto.adicional.presentacion" label="Presentación" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
-                                <v-file-input v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
-                                
-                                <v-checkbox v-model="conjunto.adicional.isPublic" label="Registro público" ></v-checkbox>
-                                <v-checkbox v-model="conjunto.adicional.isDraft" label="Guardar como borrador" ></v-checkbox>
+                                <v-container fluid class="px-0">
+                                    <v-textarea v-model="conjunto.adicional.presentacion" label="Presentación" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                    <v-file-input v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
+                                    
+                                    <v-checkbox v-model="conjunto.adicional.isPublic" label="Registro público" ></v-checkbox>
+                                    <v-checkbox v-model="conjunto.adicional.isDraft" label="Guardar como borrador" ></v-checkbox>
+                                </v-container>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>

@@ -50,22 +50,12 @@ const formRules = {
             if (value) return true
             return 'Usuario o email es necesario'
         },
-        // Se pueden agregar más reglas de validación. El orden de las reglas es importante
-        // value => {
-        //     if (!/\d+/gm.test(value)) return true
-        //     return 'El nombre de usuario no puede contener números.'
-        // }
     ],
     password: [
         value => {
             if (value) return true
             return 'La contraseña es necesaria'
         },
-        // Se pueden agregar más reglas de validación. El orden de las reglas es importante
-        // value => {
-        //     if (value?.length >= 3) return true
-        //     return 'La contraseña debe contener al menos 3 caracteres.'
-        // }
     ]
 }
 

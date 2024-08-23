@@ -21,7 +21,7 @@
                         <v-card flat>
                             <v-card-text>
                                 
-                                <v-container class="px-0">
+                                <v-container fluid class="px-0">
                                     <v-text-field v-model="video.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" :rules="formRules.codigoReferencia" readonly></v-text-field>
                                     <v-row>
                                         <v-col cols="12" lg="6">
@@ -68,9 +68,9 @@
                     <v-tabs-window-item value="contenidoEstructura">
                         <v-card flat>
                             <v-card-text>
-                                <v-textarea v-model="video.contenidoEstructura.descripcionGeneral" label="Descripción general" variant="underlined" clearable rows="5" auto-grow ></v-textarea>
-                                <v-select v-model="video.contenidoEstructura.estructuraFormal" label="Estructura formal" variant="underlined" clearable :items="selectLists.estructuraFormal" ></v-select>
-                                <v-container class="px-0">
+                                <v-container fluid class="px-0">
+                                    <v-textarea v-model="video.contenidoEstructura.descripcionGeneral" label="Descripción general" variant="underlined" clearable rows="5" auto-grow ></v-textarea>
+                                    <v-select v-model="video.contenidoEstructura.estructuraFormal" label="Estructura formal" variant="underlined" clearable :items="selectLists.estructuraFormal" ></v-select>
                                     <v-row>
                                         <v-col cols="12" md="6">
                                             <v-text-field v-model="video.contenidoEstructura.descriptorOnomastico" label="Descriptor onomástico" variant="underlined" clearable ></v-text-field>
@@ -87,7 +87,7 @@
                     <v-tabs-window-item value="condicionesAccesoUso">
                         <v-card flat>
                             <v-card-text>
-                                <v-container class="px-0">
+                                <v-container fluid class="px-0">
                                     <v-row>
                                         <v-col cols="12" sm="12" md="4">
                                             <v-text-field v-model="video.condicionesAccesoUso.idiomaOriginal" label="Idioma original" variant="underlined" clearable ></v-text-field>
@@ -129,8 +129,10 @@
                     <v-tabs-window-item value="documentacionAsociada">
                         <v-card flat>
                             <v-card-text>
-                                <v-textarea v-model="video.documentacionAsociada.unidadesDescripcionRelacionadas" label="Unidades de descripción relacionadas" variant="underlined" clearable rows="3" auto-grow ></v-textarea>
-                                <v-textarea v-model="video.documentacionAsociada.documentosAsociados" label="Documentos asociados" variant="underlined" clearable rows="3" auto-grow ></v-textarea>
+                                <v-container fluid class="px-0">
+                                    <v-textarea v-model="video.documentacionAsociada.unidadesDescripcionRelacionadas" label="Unidades de descripción relacionadas" variant="underlined" clearable rows="3" auto-grow ></v-textarea>
+                                    <v-textarea v-model="video.documentacionAsociada.documentosAsociados" label="Documentos asociados" variant="underlined" clearable rows="3" auto-grow ></v-textarea>
+                                </v-container>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>
@@ -138,7 +140,9 @@
                     <v-tabs-window-item value="notas">
                         <v-card flat>
                             <v-card-text>
-                                <v-textarea v-model="video.notas.notas" label="Notas" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                <v-container fluid class="px-0">
+                                    <v-textarea v-model="video.notas.notas" label="Notas" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                </v-container>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>
@@ -146,9 +150,11 @@
                     <v-tabs-window-item value="controlDescripcion">
                         <v-card flat>
                             <v-card-text>
-                                <v-text-field v-model="video.controlDescripcion.documentalista.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
-                                <v-text-field v-model="createdAt" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
-                                <v-text-field v-model="today" label="Fecha de actualización" variant="underlined" readonly ></v-text-field>
+                                <v-container fluid class="px-0">
+                                    <v-text-field v-model="video.controlDescripcion.documentalista.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
+                                    <v-text-field v-model="createdAt" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
+                                    <v-text-field v-model="today" label="Fecha de actualización" variant="underlined" readonly ></v-text-field>
+                                </v-container>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>
@@ -156,49 +162,51 @@
                     <v-tabs-window-item value="adicional">
                         <v-card flat>
                             <v-card-text>
-                                <div class="mx-2 mb-6" v-if="video.adicional?.clipVideo">
-                                    <p class="text-body-1">Archivo de video</p>
-                                    <video controls width="auto" height="250" >
-                                        <source :src="`/data/video/${video.adicional.clipVideo}`" />
-                                    </video>
-                                    <br />
-                                    <v-btn variant="tonal" color="error" size="small" @click="video.adicional.clipVideo = null">Cambiar video</v-btn>
-                                </div>
-                                <v-file-input v-else v-model="files.video" label="Archivo de video" prepend-icon="mdi-file-video-outline" :rules="formRules.clipVideo" accept="video/*" show-size chips ></v-file-input>
-                                
-                                <div class="mx-2 mb-6" v-if="video.adicional?.imagen">
-                                    <p class="text-body-1">Imagen o portada</p>
-                                    <nuxt-img class="align-center text-white" height="250" :src="`/data/image/${video.adicional.imagen}`" placeholder fit="cover" />
-                                    <br />
-                                    <v-btn variant="tonal" color="error" size="small" @click="video.adicional.imagen = null">Cambiar portada</v-btn>
-                                </div>
-                                <v-file-input v-else v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
-                                
-                                <div class="mx-2 mb-6" v-if="video.adicional?.documentoCalificacion">
-                                    <p class="text-body-1">Documento de calificación</p>
-                                    <p><a :href="`/data/document/${video.adicional.documentoCalificacion}`" target="_blank"><v-icon icon="mdi-file-pdf-box"></v-icon> {{ video.adicional.documentoCalificacion }}</a></p>
-                                    <v-btn variant="tonal" color="error" size="small" @click="video.adicional.documentoCalificacion = null">Cambiar documento</v-btn>
-                                </div>
-                                <v-file-input v-else v-model="files.document" label="Documento de calificación" prepend-icon="mdi-file-document-outline" :rules="formRules.documentoCalificacion" accept=".pdf" show-size chips ></v-file-input>
-                                
-                                <v-checkbox v-model="video.adicional.isPublic" label="El registro de video es público" ></v-checkbox>
-                                <v-checkbox v-model="video.adicional.isDraft" label="Guardar registro de video como borrador" ></v-checkbox>
-
-                                <!-- Mapa interactivo (Leaflet) -->
-                                <p class="text-overline">Ubicación</p>
-                                <l-map style="height: 300px" :zoom="map.zoom" :center="map.center" :options="map.options" ref="leafletMap" @ready="mapReady">
-                                    <!-- Capa principal que muestra el mapa -->
-                                    <l-tile-layer :url="map.url" attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors" layer-type="base" name="OpenStreetMap" />
-                                    <!-- Capa para mostrar botones con acciones personalidas -->
-                                    <l-control position="bottomleft">
-                                        <!-- Botón para agregar marcador -->
-                                        <v-btn @click="addMarker" v-if="!map.marker.visible" icon="mdi-map-marker-plus" variant="elevated" color="success"></v-btn>
-                                        <!-- Botón para borrar marcador -->
-                                        <v-btn @click="removeMarker" v-if="map.marker.visible" icon="mdi-map-marker-remove" variant="elevated" color="error"></v-btn>
-                                    </l-control>
-                                    <!-- Capa para mostrar el marcador que representa la ubicación -->
-                                    <l-marker :lat-lng="map.marker.latLng" :draggable="map.marker.draggable" layer-type="overlay" :visible="map.marker.visible" ref="leafletMarker" @dragend="markerDragEnd" />
-                                </l-map>
+                                <v-container fluid class="px-0">
+                                    <div class="mx-2 mb-6" v-if="video.adicional?.clipVideo">
+                                        <p class="text-body-1">Archivo de video</p>
+                                        <video controls width="auto" height="250" >
+                                            <source :src="`/data/video/${video.adicional.clipVideo}`" />
+                                        </video>
+                                        <br />
+                                        <v-btn variant="tonal" color="error" size="small" @click="video.adicional.clipVideo = null">Cambiar video</v-btn>
+                                    </div>
+                                    <v-file-input v-else v-model="files.video" label="Archivo de video" prepend-icon="mdi-file-video-outline" :rules="formRules.clipVideo" accept="video/*" show-size chips ></v-file-input>
+                                    
+                                    <div class="mx-2 mb-6" v-if="video.adicional?.imagen">
+                                        <p class="text-body-1">Imagen o portada</p>
+                                        <nuxt-img class="align-center text-white" height="250" :src="`/data/image/${video.adicional.imagen}`" placeholder fit="cover" />
+                                        <br />
+                                        <v-btn variant="tonal" color="error" size="small" @click="video.adicional.imagen = null">Cambiar portada</v-btn>
+                                    </div>
+                                    <v-file-input v-else v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
+                                    
+                                    <div class="mx-2 mb-6" v-if="video.adicional?.documentoCalificacion">
+                                        <p class="text-body-1">Documento de calificación</p>
+                                        <p><a :href="`/data/document/${video.adicional.documentoCalificacion}`" target="_blank"><v-icon icon="mdi-file-pdf-box"></v-icon> {{ video.adicional.documentoCalificacion }}</a></p>
+                                        <v-btn variant="tonal" color="error" size="small" @click="video.adicional.documentoCalificacion = null">Cambiar documento</v-btn>
+                                    </div>
+                                    <v-file-input v-else v-model="files.document" label="Documento de calificación" prepend-icon="mdi-file-document-outline" :rules="formRules.documentoCalificacion" accept=".pdf" show-size chips ></v-file-input>
+                                    
+                                    <v-checkbox v-model="video.adicional.isPublic" label="El registro de video es público" ></v-checkbox>
+                                    <v-checkbox v-model="video.adicional.isDraft" label="Guardar registro de video como borrador" ></v-checkbox>
+    
+                                    <!-- Mapa interactivo (Leaflet) -->
+                                    <p class="text-overline">Ubicación</p>
+                                    <l-map style="height: 300px" :zoom="map.zoom" :center="map.center" :options="map.options" ref="leafletMap" @ready="mapReady">
+                                        <!-- Capa principal que muestra el mapa -->
+                                        <l-tile-layer :url="map.url" attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors" layer-type="base" name="OpenStreetMap" />
+                                        <!-- Capa para mostrar botones con acciones personalidas -->
+                                        <l-control position="bottomleft">
+                                            <!-- Botón para agregar marcador -->
+                                            <v-btn @click="addMarker" v-if="!map.marker.visible" icon="mdi-map-marker-plus" variant="elevated" color="success"></v-btn>
+                                            <!-- Botón para borrar marcador -->
+                                            <v-btn @click="removeMarker" v-if="map.marker.visible" icon="mdi-map-marker-remove" variant="elevated" color="error"></v-btn>
+                                        </l-control>
+                                        <!-- Capa para mostrar el marcador que representa la ubicación -->
+                                        <l-marker :lat-lng="map.marker.latLng" :draggable="map.marker.draggable" layer-type="overlay" :visible="map.marker.visible" ref="leafletMarker" @dragend="markerDragEnd" />
+                                    </l-map>
+                                </v-container>
                             </v-card-text>
                         </v-card>
                     </v-tabs-window-item>

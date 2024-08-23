@@ -140,18 +140,6 @@ const formRules = {
             if (value?.length >= 8) return true
             return 'La contraseña debe contener al menos 8 caracteres.'
         },
-        value => {
-            if(/^.*[0-9A-Z]+.*$/gm.test(value)) return true
-            return 'La contraseña debe tener al menos un número y una letra en mayúscula.'
-        },
-        value => {
-            if(/^.*[A-Z]+.*$/gm.test(value)) return true
-            return 'La contraseña debe tener al menos una letra en mayúscula.'
-        },
-        value => {
-            if(/^.*[0-9]+.*$/gm.test(value)) return true
-            return 'La contraseña debe tener al menos un número.'
-        },
     ],
     confirmPassword: [
         value => {
