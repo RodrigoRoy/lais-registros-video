@@ -2,7 +2,7 @@
     <v-card>
         <v-form validate-on="submit lazy" @submit.prevent="submit" ref="form">
             <v-toolbar color="secondary" >
-                <v-toolbar-title>Editar registro de video <span class="text-body-1">({{ video.identificacion.codigoReferencia }})</span></v-toolbar-title>
+                <v-toolbar-title>Editar registro de video</v-toolbar-title>
             </v-toolbar>
             
             <!-- d-flex flex-row permite mostrar tabs en vertical. Solo para tamaños mdAndUp -->
@@ -24,35 +24,30 @@
                                 <v-container fluid class="px-0">
                                     <v-text-field v-model="video.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" :rules="formRules.codigoReferencia" readonly></v-text-field>
                                     <v-row>
-                                        <v-col cols="12" lg="6">
+                                        <v-col cols="12">
                                             <v-date-picker v-model="video.identificacion.fecha" title="Fecha"></v-date-picker>
                                         </v-col>
-                                        <v-col cols="12" lg="6">
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.lugar" label="Lugar" variant="underlined" clearable ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.pais" label="País" variant="underlined" clearable ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.duracion" label="Duración" type="number" min="1" variant="underlined" clearable :rules="formRules.duracion" ></v-text-field>
                                         </v-col>
-                                    </v-row>
-
-                                    <v-row>
                                         <v-col cols="12" md="6">
-                                            <v-text-field v-model="video.identificacion.personasEntrevistadas" label="Personas entrevistadas" variant="underlined" clearable ></v-text-field>
+                                            <v-text-field v-model="video.identificacion.personasEntrevistadas" label="Persona entrevistada" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                         <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.entrevista" label="Entrevista" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                    </v-row>
-
-                                    <v-row>
                                         <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.camara" label="Cámara" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                         <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.iluminacion" label="Iluminación" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                    </v-row>
-
-                                    <v-row>
                                         <v-col cols="12" md="6">
                                             <v-text-field v-model="video.identificacion.asistencia" label="Asistencia" variant="underlined" clearable ></v-text-field>
                                         </v-col>
@@ -96,12 +91,7 @@
                                             <v-text-field v-model="video.condicionesAccesoUso.numeroCasetes" label="Número de casetes" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="12" md="4">
-                                            <v-text-field v-model="video.condicionesAccesoUso.requisitosTecnicos" label="Requisitos técnicos" variant="underlined" clearable ></v-text-field>
-                                        </v-col>
-                                    </v-row>
-                                    <v-row>
-                                        <v-col cols="12" sm="12" md="4">
-                                            <v-select v-model="video.condicionesAccesoUso.soporte" label="Soporte" variant="underlined" clearable :items="selectLists.soporte" ></v-select>
+                                            <v-select v-model="video.condicionesAccesoUso.soporte" label="Formato original" variant="underlined" clearable :items="selectLists.soporte" ></v-select>
                                         </v-col>
                                         <v-col cols="12" sm="12" md="4">
                                             <v-select v-model="video.condicionesAccesoUso.color" label="Color" variant="underlined" clearable :items="selectLists.color" ></v-select>
@@ -109,8 +99,6 @@
                                         <v-col cols="12" sm="12" md="4">
                                             <v-select v-model="video.condicionesAccesoUso.audio" label="Audio" variant="underlined" clearable :items="selectLists.audio" ></v-select>
                                         </v-col>
-                                    </v-row>
-                                    <v-row>
                                         <v-col cols="12" sm="12" md="4">
                                             <v-select v-model="video.condicionesAccesoUso.sistemaGrabacion" label="Sistema de grabación" variant="underlined" clearable :items="selectLists.sistemaGrabacion" ></v-select>
                                         </v-col>
@@ -271,10 +259,10 @@ const selectLists = {
     estructuraFormal: ['Grabación en campo', 'Registro con entrevista', 'Registro de materiales', 'Entrevista controlada', 'Entrevista en campo', 'Entrevista con imágenes', 'Entrevista con acción'],
     soporte: ['Betacam', 'Hi8', 'DVCAM', 'MiniDV', 'Archivo digital'],
     color: ['Color', 'Blanco y negro'],
-    audio: ['Dolby', 'Dolby Digital', 'Estéreo', 'Estéreo mezclado', 'Monoaural', 'Mono'],
+    audio: ['Monoaural', 'Estéreo', 'Estéreo mezclado'],
     sistemaGrabacion: ['NTSC', 'PAL', 'SECAM'],
-    resolucionGrabacion: ['UHD 8K', 'UHD 4K', 'HD 1080p', 'HD 1080i', 'HD 720', 'HD 720p', 'HD 720i', 'PAL 576i', 'NTSC 480i'],
-    formatoVideoDigital: ['MP4', 'MTS', 'AVCHD', 'MOV', 'XAVC'],
+    resolucionGrabacion: ['NTSC 480i', 'PAL 576i', 'HD 720', 'HD 1080', 'UHD 4K'],
+    formatoVideoDigital: ['MP4', 'AVCHD', 'MOV', 'XAVC'],
 }
 
 // Auxiliar para mostrar "Fecha de creación"

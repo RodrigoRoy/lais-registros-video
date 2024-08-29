@@ -16,7 +16,7 @@ export const ConjuntoSchema = defineMongooseModel({
             codigoReferencia: {type: 'string', required: true, trim: true, unique: true },
             pais: {type: 'string', trim: true}, // autogenerado?
             fecha: {type: 'string', trim: true},
-            nivelDescripcion: {type: 'string', enum: ['Colección', 'Grupo', 'Subgrupo', 'Serie', 'Subserie', 'Unidad compuesta']}, // autogenerado?
+            nivelDescripcion: {type: 'string', enum: ['Fondo', 'Colección', 'Grupo', 'Subgrupo', 'Serie', 'Subserie', 'Unidad compuesta']}, // autogenerado?
             titulo: {type: 'string', required: true, trim: true},
 
             // NIVEL COLECCION
@@ -37,11 +37,10 @@ export const ConjuntoSchema = defineMongooseModel({
             semblanzaBiografica: {type: 'string', trim: true},
 
             // NIVEL COLECCION
-            historiaInstitucional: {type: 'string', trim: true},
             historiaArchivistica: {type: 'string', trim: true},
-
+            
             // NIVEL GRUPO DOCUMENTAL
-            // (vacio)
+            historiaInstitucional: {type: 'string', trim: true},
         },
         contenidoEstructura: {
             // COMPARTIDOS

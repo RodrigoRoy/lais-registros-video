@@ -30,10 +30,10 @@ export const VideoSchema = defineMongooseModel({
             soporte: {type: 'string', enum: ['Betacam', 'Hi8', 'DVCAM', 'MiniDV', 'Archivo digital']},
             numeroCasetes: {type: 'string', trim: true},
             color: {type: 'string', enum: ['Color', 'Blanco y negro']},
-            audio: {type: 'string', enum: ['Dolby', 'Dolby Digital', 'Estéreo', 'Estéreo mezclado', 'Monoaural', 'Mono']},
+            audio: {type: 'string', enum: ['Monoaural', 'Estéreo', 'Estéreo mezclado']},
             sistemaGrabacion: {type: 'string', enum: ['NTSC', 'PAL', 'SECAM']},
-            resolucionGrabacion: {type: 'string', enum: ['UHD 8K', 'UHD 4K', 'HD 1080p', 'HD 1080i', 'HD 720', 'HD 720p', 'HD 720i', 'PAL 576i', 'NTSC 480i']},
-            formatoVideoDigital: {type: 'string', enum: ['MP4', 'MTS', 'AVCHD', 'MOV', 'XAVC']},
+            resolucionGrabacion: {type: 'string', enum: ['NTSC 480i', 'PAL 576i', 'HD 720', 'HD 1080', 'UHD 4K']},
+            formatoVideoDigital: {type: 'string', enum: ['MP4', 'AVCHD', 'MOV', 'XAVC']},
             requisitosTecnicos: {type: 'string', trim: true},
         },
         documentacionAsociada: {

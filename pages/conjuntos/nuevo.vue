@@ -22,19 +22,22 @@
                             <v-card-text>
                                 
                                 <v-container fluid class="px-0">
-                                    <v-text-field v-model="conjunto.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" ></v-text-field>
-                                    <v-text-field v-model="conjunto.identificacion.titulo" label="Título" variant="underlined" clearable :rules="formRules.titulo" ></v-text-field>
                                     <v-row>
+                                        <v-col cols="12" md="6">
+                                            <v-select v-model="conjunto.identificacion.nivelDescripcion" label="Nivel de descripción" variant="underlined" clearable :items="selectLists.nivelDescripcion" ></v-select>
+                                        </v-col>
+                                        <v-col cols="12" md="6">
+                                            <v-text-field v-model="conjunto.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" md="6">
+                                            <v-text-field v-model="conjunto.identificacion.titulo" label="Título" variant="underlined" clearable :rules="formRules.titulo" ></v-text-field>
+                                        </v-col>
                                         <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.fecha" label="Fecha (periodo)" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                         <v-col cols="12" md="6">
-                                            <v-text-field v-model="conjunto.identificacion.pais" label="País" variant="underlined" clearable ></v-text-field>
+                                            <v-text-field v-model="conjunto.identificacion.pais" label="País de registro" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                        <v-col cols="12" md="6">
-                                            <v-select v-model="conjunto.identificacion.nivelDescripcion" label="Nivel de descripción" variant="underlined" clearable :items="selectLists.nivelDescripcion" ></v-select>
-                                        </v-col>
-
                                     </v-row>
 
                                     <!-- solo colección -->
@@ -53,18 +56,14 @@
                                             <v-text-field v-model="conjunto.identificacion.proyectoInvestigacion" label="Proyecto de investigación" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                         <v-col cols="12" md="6">
-                                            <v-text-field v-model="conjunto.identificacion.entidadProductora" label="Entidad productora" variant="underlined" clearable ></v-text-field>
-                                        </v-col>
-                                    </v-row>
-                                    <v-row>
-                                        <v-col cols="12" md="6">
-                                            <v-text-field v-model="conjunto.identificacion.investigacion" label="Investigación" variant="underlined" clearable ></v-text-field>
+                                            <v-text-field v-model="conjunto.identificacion.entidadProductora" label="Entidad productora asociada" variant="underlined" clearable ></v-text-field>
                                         </v-col>
                                         <v-col cols="12" md="6">
-                                            <v-text-field v-model="conjunto.identificacion.coordinacionProyecto" label="Coordinación del proyecto" variant="underlined" clearable ></v-text-field>
+                                            <v-text-field v-model="conjunto.identificacion.investigacion" label="Equipo de investigación" variant="underlined" clearable ></v-text-field>
                                         </v-col>
-                                    </v-row>
-                                    <v-row>
+                                        <v-col cols="12" md="6">
+                                            <v-text-field v-model="conjunto.identificacion.coordinacionProyecto" label="Coordinación del proyecto de investigación" variant="underlined" clearable ></v-text-field>
+                                        </v-col>
                                         <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.coordinacionProduccionAudiovisual" label="Coordinación del proyecto audiovisual" variant="underlined" clearable ></v-text-field>
                                         </v-col>
@@ -82,8 +81,13 @@
                                     
                                     <!-- solo colección -->
                                     <div v-if="conjunto.adicional.depth === 0">
-                                        <v-textarea v-model="conjunto.contexto.historiaInstitucional" label="Historia institucional" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
                                         <v-textarea v-model="conjunto.contexto.historiaArchivistica" label="Historia archivística" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                    </div>
+                                    
+                                    <!-- solo grupo documental -->
+                                    <div v-if="conjunto.adicional.depth !== 0">
+                                        <!-- solo si existe Entidad productora asociada -->
+                                        <v-textarea v-show="conjunto.identificacion.entidadProductora" v-model="conjunto.contexto.historiaInstitucional" label="Historia institucional" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
                                     </div>
                                 </v-container>
                             </v-card-text>
@@ -200,7 +204,7 @@ const areasList = [
 
 // Listas textuales para componentes <v-select>
 const selectLists = {
-    nivelDescripcion: ['Colección', 'Grupo', 'Subgrupo', 'Serie', 'Subserie', 'Unidad compuesta'],
+    nivelDescripcion: ['Fondo', 'Grupo', 'Subgrupo', 'Serie', 'Subserie', 'Unidad compuesta'],
     estructuraFormal: ['Grabación en campo', 'Registro con entrevista', 'Registro de materiales', 'Entrevista controlada', 'Entrevista en campo', 'Entrevista con imágenes', 'Entrevista con acción'],
     soporte: ['Betacam', 'Hi8', 'DVCAM', 'MiniDV', 'Archivo digital'],
     color: ['Color', 'Blanco y negro'],
@@ -226,7 +230,7 @@ const conjunto = reactive({
         codigoReferencia: null,
         pais: null,
         fecha: null,
-        nivelDescripcion: Number(route.query?.d) === 0 ? 'Colección' : 'Grupo',
+        nivelDescripcion: Number(route.query?.d) === 0 ? 'Fondo' : 'Grupo',
         titulo: null,
 
         // solo colección

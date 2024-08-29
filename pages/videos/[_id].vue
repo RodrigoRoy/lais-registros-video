@@ -64,7 +64,7 @@
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.fecha">
                                             <p class="text-body-1 font-weight-medium text-accent">Fecha</p>
-                                            <p class="text-body-1">{{ $dayjs(video.identificacion.fecha).format('D/MMMM/YYYY') }}</p>
+                                            <p class="text-body-1">{{ $dayjs(video.identificacion.fecha).format('DD/MM/YYYY') }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.lugar">
                                             <p class="text-body-1 font-weight-medium text-accent">Lugar</p>
@@ -79,7 +79,7 @@
                                             <p class="text-body-1">{{ minutesToHour(video.identificacion.duracion) }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.personasEntrevistadas">
-                                            <p class="text-body-1 font-weight-medium text-accent">Personas entrevistadas</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Persona entrevistada</p>
                                             <p class="text-body-1">{{ video.identificacion.personasEntrevistadas }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.identificacion?.entrevista">
@@ -171,10 +171,6 @@
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.formatoVideoDigital">
                                             <p class="text-body-1 font-weight-medium text-accent">Formato de video digital</p>
                                             <p class="text-body-1">{{ video.condicionesAccesoUso.formatoVideoDigital }}</p>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.requisitosTecnicos">
-                                            <p class="text-body-1 font-weight-medium text-accent">Requisitos técnicos</p>
-                                            <p class="text-body-1">{{ video.condicionesAccesoUso.requisitosTecnicos }}</p>
                                         </v-col>
                                     </v-row>
                                 </v-container>

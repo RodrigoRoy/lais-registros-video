@@ -96,7 +96,7 @@
                                             <p class="text-body-1">{{ conjunto.identificacion.proyectoInvestigacion }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.entidadProductora">
-                                            <p class="text-body-1 font-weight-medium text-accent">Entidad productora</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Entidad productora asociada</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.entidadProductora }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.investigacion">
@@ -104,7 +104,7 @@
                                             <p class="text-body-1">{{ conjunto.identificacion.investigacion }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.coordinacionProyecto">
-                                            <p class="text-body-1 font-weight-medium text-accent">Coordinación del proyecto</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Coordinación del proyecto de investigación</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.coordinacionProyecto }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.coordinacionProduccionAudiovisual">
