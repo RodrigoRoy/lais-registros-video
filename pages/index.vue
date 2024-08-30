@@ -1,5 +1,5 @@
 <template>
-    <video-background src="foo.mp4" style="max-height: 80vh; height: 100vh;" overlay="linear-gradient(45deg,#00000099,#00000099)">
+    <video-background src="foo.mp4" style="max-height: 75vh; height: 100vh;" overlay="linear-gradient(45deg,#00000099,#00000099)">
         <div class="text-white">
             <h1 class="text-h3 pa-6 ma-2">
                 Registros en video del LAIS

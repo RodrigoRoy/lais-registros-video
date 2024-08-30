@@ -1,71 +1,73 @@
 <template>
-    <v-footer :app="true" color="primary" height="auto" rounded="lg" absolute>  
-        <!-- class="d-flex flex-column"  -->
-        <v-container  class="text-center py-0">
-            <v-row no-gutters justify="space-around">
-                <v-col v-if="logoHeight > 20" cols="12" sm="12" md="6" class="py-2">
-                    <v-container class="text-center" >
-                        <v-row no-gutters align="center" justify="center">
-                            <v-col cols="4">
-                                <v-img :height="logoHeight" src="~/assets/Logo CONAHCYT.png"></v-img>
+    
+    <v-footer :app="true" color="primary" height="70px" rounded="lg" absolute>
+        <v-container fluid class="text-center py-0">
+            <v-row  align="center" class="py-0">
+                <v-col>
+                    <v-sheet class="mx-auto" max-width="350" color="primary" >
+                        <v-row >
+                            <v-col align-self="center">
+                                <v-img height=35px src="~/assets/Logo CONAHCYT.png"></v-img>
                             </v-col>
-                            <v-col cols="4">
-                                <v-img :height="logoHeight" src="~/assets/Logo Mora.png"></v-img>
-                            </v-col>
-                            <v-col cols="4">
-                                <v-img :height="logoHeight" src="~/assets/Logo LAIS.png"></v-img>
+                            
+                            <v-col v-if="logoHeight > 50" align-self="start">
+                                <v-row> 
+                                    <v-col>
+                                        <v-img height=45px src="~/assets/Logo Mora.png"></v-img>
+                                    </v-col>
+
+                                    <v-col>
+                                        <v-img height=45px src="~/assets/Logo LAIS.png"></v-img>
+                                    </v-col>
+
+                                </v-row>
                             </v-col>
                         </v-row>
-                    </v-container>
+                    </v-sheet>
+                </v-col>
+       
+                <v-divider vertical length="40" class="border-opacity-50 my-7" color="secondary"></v-divider>
+                
+                <v-col>
+                    <v-sheet class=" text-caption mx-auto" max-width="400" height="60" color="primary">
+                        <p xmlns:cc="http://creativecommons.org/ns#" >Este sitio está bajo una licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="text-secondary">CC BY-NC-SA 4.0<img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a>
+                        </p>
+                        <p v-if="logoHeight > 80" class="font-italic text-caption">
+                            Los contenidos son manifestaciones de libre expresión y no reflejan una postura institucional.
+                        </p> 
+                    </v-sheet>
                 </v-col>
                 
-                <v-col cols="12" sm="12" md="6">
-                    <v-container class="text-center">
-                        <v-row v-if="logoHeight>20" no-gutters align="center" >
-                            <v-col >
-                                <v-btn variant="text">
-                                    <nuxt-link to="/about" color="inherit" style="text-decoration: none; color: inherit">
-                                        Acerca de
-                                    </nuxt-link>
-                                </v-btn>
-                            </v-col>
-                            <v-col >
-                                <v-btn variant="text">
-                                    <nuxt-link to="mailto:lais@mora.edu.mx" external style="text-decoration: none; color: inherit">
-                                        Contacto
-                                    </nuxt-link>
-                                </v-btn>
-                            </v-col>
-                            <v-col>
-                                <v-btn v-if="!auth.isLoggedIn" color="" variant="text"> 
-                                    <nuxt-link to="/login" style="text-decoration: none; color: inherit">
-                                        Iniciar sesión 
-                                    </nuxt-link>
-                                </v-btn>
-                                <v-btn v-else color="" variant="text" @click="cerrarSesion()">
-                                    Cerrar sesión
-                                </v-btn>
-                            </v-col>
-                        </v-row>
+                <v-divider vertical length="40" class="border-opacity-50 my-7" color="secondary"></v-divider>
+
+                <v-col>
+                    <v-sheet class="text-body-2 mx-auto" :max-width="logoHeight > 50 ? 350 : 0" border="xs" color="primary">
+                        <v-btn variant="text" size="small">
+                            <nuxt-link to="/about" color="inherit" style="text-decoration: none; color: inherit">
+                                Acerca de
+                            </nuxt-link>
+                        </v-btn>
                         
-                        <v-row justify="space-around">
-                            <div>
-                                <!-- <p class="text-caption" xmlns:cc="http://creativecommons.org/ns#" >
-                                    Este sitio está bajo una licencia <a href="https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="text-accent" >CC BY-NC 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""></a>
-                                </p> -->
-                                
-                                <p class="text-caption" xmlns:cc="http://creativecommons.org/ns#" >Este sitio está bajo una licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="text-secondary">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a>
-                                </p>
-                                <p class="font-italic text-caption">
-                                    Los contenidos son manifestaciones de libre expresión y no reflejan una postura institucional.
-                                </p> 
-                            </div>
-                        </v-row>
-                    </v-container>  
+                        <v-btn variant="text" size="small">
+                            <nuxt-link to="mailto:lais@mora.edu.mx" external style="text-decoration: none; color: inherit">
+                                Contacto
+                            </nuxt-link>
+                        </v-btn>
+                        
+                        <v-btn v-if="!auth.isLoggedIn" color="" variant="text" size="small"> 
+                            <nuxt-link to="/login" style="text-decoration: none; color: inherit">
+                                Iniciar sesión 
+                            </nuxt-link>
+                        </v-btn>
+                        <v-btn v-else color="" variant="text" @click="cerrarSesion()" size="small">
+                            Cerrar sesión
+                        </v-btn>
+                    </v-sheet>
                 </v-col>
             </v-row>
         </v-container>
     </v-footer>
+
 </template>
 
 <script setup>
