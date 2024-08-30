@@ -1,47 +1,54 @@
 <template>
-    
     <v-footer :app="true" color="primary" height="70px" rounded="lg" absolute>
         <v-container fluid class="text-center py-0">
-            <v-row  align="center" class="py-0">
-                <v-col>
-                    <v-sheet class="mx-auto" max-width="350" color="primary" >
-                        <v-row >
-                            <v-col align-self="center">
-                                <v-img height=35px src="~/assets/Logo CONAHCYT.png"></v-img>
-                            </v-col>
-                            
-                            <v-col v-if="logoHeight > 50" align-self="start">
-                                <v-row> 
-                                    <v-col>
-                                        <v-img height=45px src="~/assets/Logo Mora.png"></v-img>
-                                    </v-col>
-
-                                    <v-col>
-                                        <v-img height=45px src="~/assets/Logo LAIS.png"></v-img>
-                                    </v-col>
-
-                                </v-row>
-                            </v-col>
-                        </v-row>
-                    </v-sheet>
+            <v-row align="center" class="py-0">
+                <!-- Ocultar iconos en pantallas pequeñas -->
+                <v-col v-if="mdAndUp">
+                    <v-row >
+                        <v-col align-self="start">
+                            <v-row> 
+                                <v-col align-self="center">
+                                    <v-img height="35px" src="~/assets/Logo CONAHCYT.png"></v-img>
+                                </v-col>
+                                <v-col>
+                                    <v-img height="45px" src="~/assets/Logo Mora.png"></v-img>
+                                </v-col>
+                                <v-col>
+                                    <v-img height="45px" src="~/assets/Logo LAIS.png"></v-img>
+                                </v-col>
+                            </v-row>
+                        </v-col>
+                    </v-row>
                 </v-col>
        
-                <v-divider vertical length="40" class="border-opacity-50 my-7" color="secondary"></v-divider>
+                <v-divider v-if="mdAndUp" vertical length="40" class="border-opacity-50 my-7" color="secondary"></v-divider>
                 
                 <v-col>
-                    <v-sheet class=" text-caption mx-auto" max-width="400" height="60" color="primary">
-                        <p xmlns:cc="http://creativecommons.org/ns#" >Este sitio está bajo una licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="text-secondary">CC BY-NC-SA 4.0<img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a>
+                    <!-- Licencia Creative Commons -->
+                    <div class="text-caption mx-auto" max-width="400" height="60">
+                        <p xmlns:cc="http://creativecommons.org/ns#">
+                            <span v-show="smAndUp">
+                                Este sitio está bajo una licencia
+                            </span>
+                            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="text-secondary">
+                                CC BY-NC-SA 4.0
+                                <img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt="">
+                                <img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt="">
+                                <img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt="">
+                                <img style="height:20px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt="">
+                            </a>
                         </p>
-                        <p v-if="logoHeight > 80" class="font-italic text-caption">
+                        <p v-show="lgAndUp" class="font-italic text-caption">
                             Los contenidos son manifestaciones de libre expresión y no reflejan una postura institucional.
                         </p> 
-                    </v-sheet>
+                    </div>
                 </v-col>
                 
                 <v-divider vertical length="40" class="border-opacity-50 my-7" color="secondary"></v-divider>
 
                 <v-col>
-                    <v-sheet class="text-body-2 mx-auto" :max-width="logoHeight > 50 ? 350 : 0" border="xs" color="primary">
+                    <!-- Opciones extra (Acerca de, Contacto, Cerrar sesión) -->
+                    <div class="text-body-2 mx-auto" max-width="350">
                         <v-btn variant="text" size="small">
                             <nuxt-link to="/about" color="inherit" style="text-decoration: none; color: inherit">
                                 Acerca de
@@ -54,15 +61,17 @@
                             </nuxt-link>
                         </v-btn>
                         
-                        <v-btn v-if="!auth.isLoggedIn" color="" variant="text" size="small"> 
-                            <nuxt-link to="/login" style="text-decoration: none; color: inherit">
-                                Iniciar sesión 
-                            </nuxt-link>
-                        </v-btn>
-                        <v-btn v-else color="" variant="text" @click="cerrarSesion()" size="small">
-                            Cerrar sesión
-                        </v-btn>
-                    </v-sheet>
+                        <span v-show="smAndUp">
+                            <v-btn v-if="!auth.isLoggedIn" variant="text" size="small"> 
+                                <nuxt-link to="/login" style="text-decoration: none; color: inherit">
+                                    Iniciar sesión 
+                                </nuxt-link>
+                            </v-btn>
+                            <v-btn v-else variant="text" @click="cerrarSesion()" size="small">
+                                Cerrar sesión
+                            </v-btn>
+                        </span>
+                    </div>
                 </v-col>
             </v-row>
         </v-container>
@@ -77,20 +86,7 @@ import { useMessageStore } from '@/stores/message'
 import { useDisplay } from 'vuetify'
 const auth = useAuthStore()
 const message = useMessageStore()
-const { name } = useDisplay()
-
-// Determina tamaños de logos según viewport
-const logoHeight = computed(() => {
-  switch (name.value) {
-    case 'xs': return 20
-    case 'sm': return 50
-    case 'md': return 80
-    case 'lg': return 100
-    case 'xl': return 100
-    case 'xxl': return 100
-  }
-  return undefined
-})
+const { smAndUp, mdAndUp, lgAndUp } = useDisplay()
 
 /**
  * Cierra sesión del usuario activo

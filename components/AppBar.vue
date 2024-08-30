@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar elevation="4" rounded color="primary"  scroll-behavior="inverted fade-image" scroll-threshold="800" image="/fondoMar.jpg">
+    <v-app-bar elevation="4" rounded color="primary">
         <template v-slot:prepend>
             <v-app-bar-nav-icon @click.stop="website.toggleDrawer()"></v-app-bar-nav-icon>
         </template>
