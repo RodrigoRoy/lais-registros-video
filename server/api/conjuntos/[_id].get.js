@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async(event) => {
     // Buscar en base de datos
     try {
         return await ConjuntoSchema.findByIdAndUpdate(
