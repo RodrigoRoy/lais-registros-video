@@ -10,21 +10,29 @@
  * y la última sugerencia indica que se continue la numeración hacia el último valor que sería 76.
  */
 export default defineEventHandler(async(event) => {
+    // Parámetros URL: type (tipo de registro: video o conjunto)
+    const query = getQuery(event)
+    const type = query?.type || 'video'
+
     try {
         // Buscar conjunto de origen
         const conjunto = await ConjuntoSchema.findById(event.context.params?._id).select('identificacion.codigoReferencia').exec()
         
         // Obtener la lista de videos con el mismo prefijo
-        const regexCodigoOrigen = new RegExp(`^${conjunto.identificacion.codigoReferencia}`)
-        const videos = await VideoSchema.find({'identificacion.codigoReferencia': regexCodigoOrigen}).select('identificacion.codigoReferencia').exec()
+        const regexCodigoOrigen = new RegExp(`^${conjunto.identificacion.codigoReferencia}-(\\d+)`)
+        let registros
+        if(type === 'video')
+            registros = await VideoSchema.find({'identificacion.codigoReferencia': regexCodigoOrigen}).select('identificacion.codigoReferencia').exec()
+        if(type === 'conjunto')
+            registros = await ConjuntoSchema.find({'identificacion.codigoReferencia': regexCodigoOrigen}).select('identificacion.codigoReferencia').exec()
 
         // Si el conjunto está vacio, sugerir numeración comenzando con el valor 1
-        if(videos.length === 0)
+        if(registros.length === 0)
             return {first: `${conjunto.identificacion.codigoReferencia}-1`, middle: `${conjunto.identificacion.codigoReferencia}-1`, last: `${conjunto.identificacion.codigoReferencia}-1`}
         
         // Obtener la numeración consecutiva (solamente los últimos dígitos del código de referencia) en orden ascendente
         const regexNumeracion = new RegExp(`${conjunto.identificacion.codigoReferencia}-(\\d+)`)
-        const numeracion = videos.map((video) => parseInt(regexNumeracion.exec(video.identificacion.codigoReferencia)[1])).sort((a,b) => a-b)
+        const numeracion = registros.map((video) => parseInt(regexNumeracion.exec(video.identificacion.codigoReferencia)[1])).sort((a,b) => a-b)
 
         // Determinar la primer sugerencia, es decir, el primer número consecutivo iniciando desde el valor 1
         let first = 1

@@ -24,10 +24,10 @@
                                 <v-container fluid class="px-0">
                                     <v-row>
                                         <v-col cols="12" md="6">
-                                            <v-select v-model="conjunto.identificacion.nivelDescripcion" label="Nivel de descripción" variant="underlined" clearable :items="selectLists.nivelDescripcion" ></v-select>
+                                            <v-select v-model="conjunto.identificacion.nivelDescripcion" label="Nivel de descripción" variant="underlined" clearable :items="selectLists.nivelDescripcion"></v-select>
                                         </v-col>
                                         <v-col cols="12" md="6">
-                                            <v-text-field v-model="conjunto.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" ></v-text-field>
+                                            <v-text-field v-model="conjunto.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" :hint="codigoReferencia.first != codigoReferencia.last ? `Códigos de referencia recomendados: ${codigoReferencia.first}, ${codigoReferencia.last}` : `Código de referencia recomendado: ${codigoReferencia.last}`"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.titulo" label="Título" variant="underlined" clearable :rules="formRules.titulo" ></v-text-field>
@@ -185,6 +185,9 @@ definePageMeta({
 // Composable para obtener parametros desde URL
 const route = useRoute()
 
+// Códigos de referencia recomendados
+const { data: codigoReferencia} = await useFetch(`/api/conjuntos/code/${route.query?.id}?type=conjunto`)
+
 // Biblioteca para mostrar fechas
 const dayjs = useDayjs()
 
@@ -227,7 +230,7 @@ const files = reactive({
 const conjunto = reactive({
     identificacion: {
         // colección y grupo documental
-        codigoReferencia: null,
+        codigoReferencia: codigoReferencia.value.last || null,
         pais: null,
         fecha: null,
         nivelDescripcion: Number(route.query?.d) === 0 ? 'Fondo' : 'Grupo',

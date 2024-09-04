@@ -22,8 +22,10 @@
                             <v-card-text>
                                 
                                 <v-container fluid class="px-0">
-                                    <v-text-field v-model="video.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" ></v-text-field>
                                     <v-row>
+                                        <v-col cols="12">
+                                            <v-text-field v-model="video.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" :hint="codigoReferencia.first != codigoReferencia.last ? `Códigos de referencia recomendados: ${codigoReferencia.first}, ${codigoReferencia.last}` : `Código de referencia recomendado: ${codigoReferencia.last}`"></v-text-field>
+                                        </v-col>
                                         <v-col cols="12">
                                             <v-date-picker v-model="video.identificacion.fecha" title="Fecha" ></v-date-picker>
                                         </v-col>
@@ -204,12 +206,15 @@ definePageMeta({
 // Composable para obtener parametros desde URL
 const route = useRoute()
 
+// Códigos de referencia recomendados
+const { data: codigoReferencia} = await useFetch(`/api/conjuntos/code/${route.query?.id}?type=video`)
+
 // Biblioteca para mostrar fechas
 const dayjs = useDayjs()
 
 // Selector de pestaña. Debe coincidir con el prop "value" de <v-tab>
 const tab = ref('identificacion')
-
+    
 // Lista de áreas con su identificador, nombre textual e icono. Auxiliar para crear <v-tab>
 const areasList = [
     { name: 'identificacion', readName: 'Identificación', icon: 'mdi-file-edit' }, 
@@ -245,7 +250,7 @@ const files = reactive({
 // Representación del registro de video que será enviado a la base de datos
 const video = reactive({
     identificacion: {
-        codigoReferencia: null,
+        codigoReferencia: codigoReferencia.value.last || null,
         fecha: new Date(),
         lugar: null,
         pais: null,

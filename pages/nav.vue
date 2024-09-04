@@ -3,7 +3,7 @@
     <v-container>
         <nav-header :data="conjunto" :color="conjunto.adicional?.videos?.length ? 'secondary' : 'primary'" class="mb-6"></nav-header>
         <v-row>
-            <!-- Mostrar cuadricula de elementos. Se usa nomenclatura (element, index) para generar numeración -->
+            <!-- Mostrar cuadricula de elementos -->
             <v-col v-for="item in conjunto.adicional.child" :key="item._id" class="d-flex child-flex" cols="12" sm="6" md="4" lg="3" xl="3">
                 <nav-card type="conjunto" :data="item" color="primary" nav @delete="refresh"></nav-card>
             </v-col>
