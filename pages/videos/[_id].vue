@@ -130,7 +130,7 @@
                             </div>
 
                             <!-- ÁREA DE CONDICIONES DE ACCESO Y USO-->
-                            <div v-if="video.condicionesAccesoUso?.idiomaOriginal || video.condicionesAccesoUso?.soporte || video.condicionesAccesoUso?.numeroCasetes || video.condicionesAccesoUso?.color || video.condicionesAccesoUso?.audio || video.condicionesAccesoUso?.sistemaGrabacion || video.condicionesAccesoUso?.resolucionGrabacion || video.condicionesAccesoUso?.formatoVideoDigital || video.condicionesAccesoUso?.requisitosTecnicos" class="mt-2 mb-4">
+                            <div v-if="video.condicionesAccesoUso?.idiomaOriginal || video.condicionesAccesoUso?.soporte || video.condicionesAccesoUso?.numeroCasetes || video.condicionesAccesoUso?.color || video.condicionesAccesoUso?.audio || video.condicionesAccesoUso?.resolucionGrabacion || video.condicionesAccesoUso?.formatoVideoDigital || video.condicionesAccesoUso?.requisitosTecnicos" class="mt-2 mb-4">
                                 <div>
                                     <p class="text-h6 font-italic font-weight-light">Área de condiciones de acceso y uso</p>
                                 </div>
@@ -155,10 +155,6 @@
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.audio">
                                             <p class="text-body-1 font-weight-medium text-accent">Audio</p>
                                             <p class="text-body-1">{{ video.condicionesAccesoUso.audio }}</p>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.sistemaGrabacion">
-                                            <p class="text-body-1 font-weight-medium text-accent">Sistema de grabación</p>
-                                            <p class="text-body-1">{{ video.condicionesAccesoUso.sistemaGrabacion }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="video.condicionesAccesoUso?.resolucionGrabacion">
                                             <p class="text-body-1 font-weight-medium text-accent">Resolución de grabación</p>

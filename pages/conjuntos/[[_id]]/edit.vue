@@ -89,6 +89,7 @@
                                     <div v-if="conjunto.adicional.depth !== 0">
                                         <!-- solo si existe Entidad productora asociada -->
                                         <v-textarea v-show="conjunto.identificacion.entidadProductora" v-model="conjunto.contexto.historiaArchivistica" label="Historia archivística" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                        <v-text-field v-model="conjunto.contexto.formaIngreso" label="Forma de ingreso" variant="underlined" clearable ></v-text-field>
                                     </div>
                                 </v-container>
                             </v-card-text>
@@ -117,6 +118,10 @@
                                 <v-container fluid class="px-0">
                                     <v-textarea v-model="conjunto.condicionesAccesoUso.condicionesAcceso" label="Condiciones de acceso" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
                                     <v-textarea v-model="conjunto.condicionesAccesoUso.condicionesReproduccion" label="Condiciones de reproducción" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                    <!-- solo colección -->
+                                    <div v-if="conjunto.adicional.depth === 0">
+                                        <v-select v-model="conjunto.condicionesAccesoUso.sistemaGrabacion" label="Sistema de grabación" variant="underlined" clearable :items="selectLists.sistemaGrabacion" ></v-select>
+                                    </div>
                                 </v-container>
                             </v-card-text>
                         </v-card>
@@ -150,8 +155,6 @@
                         <v-card flat>
                             <v-card-text>
                                 <v-container fluid class="px-0">
-                                    <v-textarea v-model="conjunto.adicional.presentacion" label="Presentación" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
-                                    
                                     <div class="mx-2 mb-6" v-if="conjunto.adicional?.imagen">
                                         <p class="text-body-1">Imagen o portada</p>
                                         <nuxt-img class="align-center text-white" height="250" :src="`/data/image/${conjunto.adicional.imagen}`" placeholder fit="cover" />

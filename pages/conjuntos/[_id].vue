@@ -47,12 +47,6 @@
                         </template>
 
                         <v-card-text>
-                            <!-- Presentación del conjunto documental -->
-                            <div v-if="conjunto.adicional?.presentacion">
-                                <p class="text-body-1 font-weight-light mb-6">
-                                    {{ conjunto.adicional.presentacion }}
-                                </p>
-                            </div>
                             <!-- ÁREA DE IDENTIFICACIÓN -->
                             <div v-if="conjunto.identificacion?.codigoReferencia || conjunto.identificacion?.pais || conjunto.identificacion?.fecha || conjunto.identificacion?.nivelDescripcion || conjunto.identificacion?.titulo || conjunto.identificacion?.volumenSoporte || conjunto.identificacion?.coordinacion || conjunto.identificacion?.proyectoInvestigacion || conjunto.identificacion?.entidadProductora || conjunto.identificacion?.investigacion || conjunto.identificacion?.coordinacionProyecto || conjunto.identificacion?.coordinacionProduccionAudiovisual" class="mt-2 mb-4">
                                 <div>
@@ -116,7 +110,7 @@
                             </div>
 
                             <!-- ÁREA DE CONTEXTO -->
-                            <div v-if="conjunto.contexto?.semblanzaBiografica || conjunto.contexto?.historiaInstitucional || conjunto.contexto?.historiaArchivistica" class="mt-2 mb-4">
+                            <div v-if="conjunto.contexto?.semblanzaBiografica || conjunto.contexto?.historiaInstitucional || conjunto.contexto?.historiaArchivistica || conjunto.contexto?.formaIngreso" class="mt-2 mb-4">
                                 <div>
                                     <p class="text-h6 font-italic font-weight-light">Área de contexto</p>
                                 </div>
@@ -128,13 +122,18 @@
                                             <p class="text-body-1">{{ conjunto.contexto.semblanzaBiografica }}</p>
                                         </v-col>
                                         <!-- Colección -->
+                                        <v-col cols="12" v-if="conjunto.contexto?.historiaArchivistica">
+                                            <p class="text-body-1 font-weight-medium text-accent">Historia archivistica</p>
+                                            <p class="text-body-1">{{ conjunto.contexto.historiaArchivistica }}</p>
+                                        </v-col>
+                                        <!-- Grupo documental -->
                                         <v-col cols="12" v-if="conjunto.contexto?.historiaInstitucional">
                                             <p class="text-body-1 font-weight-medium text-accent">Historia institucional</p>
                                             <p class="text-body-1">{{ conjunto.contexto.historiaInstitucional }}</p>
                                         </v-col>
-                                        <v-col cols="12" v-if="conjunto.contexto?.historiaArchivistica">
-                                            <p class="text-body-1 font-weight-medium text-accent">Historia archivistica</p>
-                                            <p class="text-body-1">{{ conjunto.contexto.historiaArchivistica }}</p>
+                                        <v-col cols="12" v-if="conjunto.contexto?.formaIngreso">
+                                            <p class="text-body-1 font-weight-medium text-accent">Forma de ingreso</p>
+                                            <p class="text-body-1">{{ conjunto.contexto.formaIngreso }}</p>
                                         </v-col>
                                     </v-row>
                                 </v-container>
@@ -170,7 +169,7 @@
                             </div>
 
                             <!-- ÁREA DE CONDICIONES DE ACCESO DE USO -->
-                            <div v-if="conjunto.condicionesAccesoUso?.condicionesAcceso || conjunto.condicionesAccesoUso?.condicionesReproduccion" class="mt-2 mb-4">
+                            <div v-if="conjunto.condicionesAccesoUso?.condicionesAcceso || conjunto.condicionesAccesoUso?.condicionesReproduccion || conjunto.condicionesAccesoUso?.sistemaGrabacion" class="mt-2 mb-4">
                                 <div>
                                     <p class="text-h6 font-italic font-weight-light">Área de condiciones de acceso y uso</p>
                                 </div>
@@ -183,6 +182,10 @@
                                         <v-col cols="12" v-if="conjunto.condicionesAccesoUso?.condicionesReproduccion">
                                             <p class="text-body-1 font-weight-medium text-accent">Condiciones de reproducción</p>
                                             <p class="text-body-1">{{ conjunto.condicionesAccesoUso.condicionesReproduccion }}</p>
+                                        </v-col>
+                                        <v-col cols="12" sm="4" v-if="conjunto.condicionesAccesoUso?.sistemaGrabacion">
+                                            <p class="text-body-1 font-weight-medium text-accent">Sistema de grabación</p>
+                                            <p class="text-body-1">{{ conjunto.condicionesAccesoUso.sistemaGrabacion }}</p>
                                         </v-col>
                                     </v-row>
                                 </v-container>
@@ -240,23 +243,23 @@
             <!-- Imagen de referencia y estadísticas -->
             <v-col cols="12" md="4" align="center">
                 <v-sheet class="pa-2 ma-2" color="background">
-                        <v-card elevation="2" height="auto" width="auto" variant="flat">
-                            <img v-if="conjunto.adicional?.imagen" :src="`/data/image/${conjunto.adicional.imagen}`" width="100%" height="auto"></img>
-                            <img v-else src="~/assets/Logo LAIS.png" width="100%" height="auto"></img>
+                    <v-card elevation="2" height="auto" width="auto" variant="flat">
+                        <img v-if="conjunto.adicional?.imagen" :src="`/data/image/${conjunto.adicional.imagen}`" width="100%" height="auto"></img>
+                        <img v-else src="~/assets/Logo LAIS.png" width="100%" height="auto"></img>
 
-                            <!-- Acciones / botón para mostrar más información -->
-                            <v-card-actions>
-                                <v-btn size="small" prepend-icon="mdi-chart-bar">{{ conjunto.adicional.fetchCount }}</v-btn>
-                                <v-spacer></v-spacer>
-                            </v-card-actions>
-                        </v-card>
+                        <!-- Acciones / botón para mostrar más información -->
+                        <v-card-actions>
+                            <v-btn size="small" prepend-icon="mdi-chart-bar">{{ conjunto.adicional.fetchCount }}</v-btn>
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                    </v-card>
                 </v-sheet>
 
                 <!-- Descarga de documento pdf -->
                 <v-sheet class="pa-2 ma-2" color="background">
-                        <v-card elevation="2" height="auto" width="auto" variant="flat">
-                            <conjunto-pdf :data="conjunto"></conjunto-pdf>
-                        </v-card>
+                    <v-card elevation="2" height="auto" width="auto" variant="flat">
+                        <conjunto-pdf :data="conjunto"></conjunto-pdf>
+                    </v-card>
                 </v-sheet>
             </v-col>
         </v-row>

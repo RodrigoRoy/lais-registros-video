@@ -19,7 +19,7 @@ export default defineEventHandler(async(event) => {
         const conjunto = await ConjuntoSchema.findById(event.context.params?._id).select('identificacion.codigoReferencia').exec()
         
         // Obtener la lista de videos con el mismo prefijo
-        const regexCodigoOrigen = new RegExp(`^${conjunto.identificacion.codigoReferencia}-(\\d+)`)
+        const regexCodigoOrigen = new RegExp(`^${conjunto.identificacion.codigoReferencia}-(\\d+)$`)
         let registros
         if(type === 'video')
             registros = await VideoSchema.find({'identificacion.codigoReferencia': regexCodigoOrigen}).select('identificacion.codigoReferencia').exec()
@@ -31,7 +31,7 @@ export default defineEventHandler(async(event) => {
             return {first: `${conjunto.identificacion.codigoReferencia}-1`, middle: `${conjunto.identificacion.codigoReferencia}-1`, last: `${conjunto.identificacion.codigoReferencia}-1`}
         
         // Obtener la numeración consecutiva (solamente los últimos dígitos del código de referencia) en orden ascendente
-        const regexNumeracion = new RegExp(`${conjunto.identificacion.codigoReferencia}-(\\d+)`)
+        const regexNumeracion = new RegExp(`^${conjunto.identificacion.codigoReferencia}-(\\d+)$`)
         const numeracion = registros.map((video) => parseInt(regexNumeracion.exec(video.identificacion.codigoReferencia)[1])).sort((a,b) => a-b)
 
         // Determinar la primer sugerencia, es decir, el primer número consecutivo iniciando desde el valor 1

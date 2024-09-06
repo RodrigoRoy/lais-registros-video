@@ -88,6 +88,7 @@
                                     <div v-if="conjunto.adicional.depth !== 0">
                                         <!-- solo si existe Entidad productora asociada -->
                                         <v-textarea v-show="conjunto.identificacion.entidadProductora" v-model="conjunto.contexto.historiaInstitucional" label="Historia institucional" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
+                                        <v-text-field v-model="conjunto.contexto.formaIngreso" label="Forma de ingreso" variant="underlined" clearable ></v-text-field>
                                     </div>
                                 </v-container>
                             </v-card-text>
@@ -100,6 +101,7 @@
                                 <v-container fluid class="px-0">
                                     <v-textarea v-model="conjunto.contenidoEstructura.alcanceContenido" label="Alcance y contenido" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
                                     <v-textarea v-model="conjunto.contenidoEstructura.valoracionSeleccionEliminacion" label="Valoración, selección y eliminación" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                    
                                     <!-- solo colección -->
                                     <div v-if="conjunto.adicional.depth === 0">
                                         <v-textarea v-model="conjunto.contenidoEstructura.nuevosIngresos" label="Nuevos ingresos" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
@@ -116,6 +118,12 @@
                                 <v-container fluid class="px-0">
                                     <v-select v-model="conjunto.condicionesAccesoUso.condicionesAcceso" label="Condiciones de acceso" variant="underlined" clearable :items="selectLists.condicionesAcceso" ></v-select>
                                     <v-textarea v-model="conjunto.condicionesAccesoUso.condicionesReproduccion" label="Condiciones de reproducción" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                    
+                                    <!-- solo colección -->
+                                    <div v-if="conjunto.adicional.depth === 0">
+                                        <v-select v-model="conjunto.condicionesAccesoUso.sistemaGrabacion" label="Sistema de grabación" variant="underlined" clearable :items="selectLists.sistemaGrabacion" ></v-select>
+                                    </div>
+                                    
                                 </v-container>
                             </v-card-text>
                         </v-card>
@@ -148,7 +156,6 @@
                         <v-card flat>
                             <v-card-text>
                                 <v-container fluid class="px-0">
-                                    <v-textarea v-model="conjunto.adicional.presentacion" label="Presentación" variant="underlined" clearable rows="4" auto-grow ></v-textarea>
                                     <v-file-input v-model="files.image" label="Imagen o portada" prepend-icon="mdi-image-outline" :rules="formRules.imagen" accept="image/*" show-size chips ></v-file-input>
                                     
                                     <v-checkbox v-model="conjunto.adicional.isPublic" label="Registro público" ></v-checkbox>
@@ -226,7 +233,7 @@ const files = reactive({
     image: null,
 })
 
-// Representación del registro de video que será enviado a la base de datos
+// Representación del conjunto documental que será enviado a la base de datos
 const conjunto = reactive({
     identificacion: {
         // colección y grupo documental
@@ -248,12 +255,15 @@ const conjunto = reactive({
         coordinacionProduccionAudiovisual: null,
     },
     contexto: {
+        // solo colección
+        historiaArchivistica: null,
+
+        // grupo documental
+        historiaInstitucional: null,
+        formaIngreso: null,
+        
         // colección y grupo documental
         semblanzaBiografica: null,
-        
-        // solo colección
-        historiaInstitucional: null,
-        historiaArchivistica: null,
     },
     contenidoEstructura: {
         // colección y grupo documental
@@ -268,6 +278,8 @@ const conjunto = reactive({
         // colección y grupo documental
         condicionesAcceso: null,
         condicionesReproduccion: null,
+        // solo colección
+        sistemaGrabacion: null,
     },
     notas: {
         notas: null,
@@ -281,7 +293,6 @@ const conjunto = reactive({
     },
     adicional: {
         imagen: '',
-        presentacion: null,
         tipo: null,
         isPublic: true,
         isDraft: false,

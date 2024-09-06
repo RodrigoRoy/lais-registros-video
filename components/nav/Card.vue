@@ -100,9 +100,9 @@
                                 {{ data.identificacion.personasEntrevistadas }}
                             </p>
 
-                            <!-- Descripción o presentación -->
+                            <!-- Descripción y/o alcance y contenido -->
                             <p class="text-body-2 mt-2">
-                                {{ type === 'video' ? (data.contenidoEstructura?.descripcionGeneral || '(Sin descripción)') : ( data.adicional?.presentacion || '(Sin descripción)') }}
+                                {{ type === 'video' ? (data.contenidoEstructura?.descripcionGeneral || '(Sin descripción)') : ( data.contenidoEstructura?.alcanceContenido || '(Sin descripción)') }}
                             </p>
                         </v-card-text>
 

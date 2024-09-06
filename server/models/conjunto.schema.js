@@ -33,14 +33,15 @@ export const ConjuntoSchema = defineMongooseModel({
             // lugar: {type: 'string', trim: true}, // autogenerado? // no incluido en manual?
         },
         contexto: {
-            // COMPARTIDOS
-            semblanzaBiografica: {type: 'string', trim: true},
-
             // NIVEL COLECCION
             historiaArchivistica: {type: 'string', trim: true},
             
             // NIVEL GRUPO DOCUMENTAL
             historiaInstitucional: {type: 'string', trim: true},
+            formaIngreso: {type: 'string', trim: true},
+
+            // COMPARTIDOS
+            semblanzaBiografica: {type: 'string', trim: true},
         },
         contenidoEstructura: {
             // COMPARTIDOS
@@ -60,7 +61,7 @@ export const ConjuntoSchema = defineMongooseModel({
             condicionesReproduccion: {type: 'string', trim: true},
 
             // NIVEL COLECCION
-            // (vacio)
+            sistemaGrabacion: {type: 'string', enum: ['NTSC', 'PAL', 'SECAM']},
             // NIVEL GRUPO DOCUMENTAL
             // (vacio)
         },
@@ -87,7 +88,7 @@ export const ConjuntoSchema = defineMongooseModel({
         },
         adicional: {
             imagen: {type: 'string', trim: true},
-            presentacion: {type: 'string', trim: true},
+            // presentacion: {type: 'string', trim: true},
             isPublic: {type: 'boolean', default: true}, // define si el registro es público
             tipo: {type: 'string', enum: ['Colección', 'Grupo documental']},
             isDraft: {type: 'boolean', default: 'false'},

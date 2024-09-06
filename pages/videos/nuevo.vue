@@ -101,9 +101,7 @@
                                         <v-col cols="12" sm="12" md="4">
                                             <v-select v-model="video.condicionesAccesoUso.audio" label="Audio" variant="underlined" clearable :items="selectLists.audio" ></v-select>
                                         </v-col>
-                                        <v-col cols="12" sm="12" md="4">
-                                            <v-select v-model="video.condicionesAccesoUso.sistemaGrabacion" label="Sistema de grabación" variant="underlined" clearable :items="selectLists.sistemaGrabacion" ></v-select>
-                                        </v-col>
+                                        
                                         <v-col cols="12" sm="12" md="4">
                                             <v-select v-model="video.condicionesAccesoUso.resolucionGrabacion" label="Resolución de grabación" variant="underlined" clearable :items="selectLists.resolucionGrabacion" ></v-select>
                                         </v-col>
@@ -228,11 +226,10 @@ const areasList = [
 
 // Listas textuales para componentes <v-select>
 const selectLists = {
-    estructuraFormal: ['Grabación en campo', 'Registro con entrevista', 'Registro de materiales', 'Entrevista controlada', 'Entrevista en campo', 'Entrevista con imágenes', 'Entrevista con acción'],
+    estructuraFormal: ['Entrevista controlada', 'Entrevista con imágenes', 'Entrevista en campo', 'Entrevista en campo con imágenes', 'Entrevista con acción', 'Entrevista con recorrido', 'Registro de campo', 'Reprografía'],
     soporte: ['Betacam', 'Hi8', 'DVCAM', 'MiniDV', 'Archivo digital'],
     color: ['Color', 'Blanco y negro'],
     audio: ['Monoaural', 'Estéreo', 'Estéreo mezclado'],
-    sistemaGrabacion: ['NTSC', 'PAL', 'SECAM'],
     resolucionGrabacion: ['NTSC 480i', 'PAL 576i', 'HD 720', 'HD 1080', 'UHD 4K'],
     formatoVideoDigital: ['MP4', 'AVCHD', 'MOV', 'XAVC'],
 }
@@ -274,7 +271,6 @@ const video = reactive({
         numeroCasetes: null,
         color: null,
         audio: null,
-        sistemaGrabacion: null,
         resolucionGrabacion: null,
         formatoVideoDigital: null,
         requisitosTecnicos: null,

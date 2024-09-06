@@ -26,26 +26,18 @@
                 </span>
             </p>
 
-            <!-- Descripción / presentación a una línea con opción de mostrar texto completo -->
+            <!-- Alcance y contenido, a una línea con opción de mostrar texto completo -->
             <p class="text-body-2">
                 <span :class="{'d-block': !showFullText, 'text-truncate': !showFullText}">
-                    {{ data.adicional?.presentacion || '(Sin descripción)' }}
+                    {{ data.contenidoEstructura?.alcanceContenido || '(Sin descripción)' }}
                 </span>
                 <v-btn icon="mdi-chevron-down" variant="plain" size="x-small" @click="showFullText = true" v-if="!showFullText"></v-btn>
             </p>
         </v-card-text>
 
         <v-card-actions v-if="auth.isLoggedIn && auth.canCreate">
-            <v-btn v-if="(data.adicional?.child?.length === 0 && data.adicional?.videos?.length === 0) || data.adicional?.child?.length !== 0" prepend-icon="mdi-plus" variant="outlined">
-                <nuxt-link :to="`/conjuntos/nuevo?id=${data._id ? data._id : ''}&d=${data.adicional?.depth + 1}`" style="color: inherit" class="text-decoration-none">
-                    Nuevo grupo
-                </nuxt-link>
-            </v-btn>
-            <v-btn v-if="(data.adicional?.child?.length === 0 && data.adicional?.videos?.length === 0) || data.adicional?.videos?.length !== 0" prepend-icon="mdi-plus" variant="outlined">
-                <nuxt-link :to="`/videos/nuevo?id=${data._id ? data._id : ''}`" style="color: inherit" class="text-decoration-none">
-                    Nueva unidad
-                </nuxt-link>
-            </v-btn>
+            <conjunto-new-btn :data="data"></conjunto-new-btn>
+            <video-new-btn :data="data"></video-new-btn>
         </v-card-actions>
         
         <!-- Botón para ver detalles -->

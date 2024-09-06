@@ -21,7 +21,7 @@ export const VideoSchema = defineMongooseModel({
         },
         contenidoEstructura: {
             descripcionGeneral: {type: 'string', trim: true},
-            estructuraFormal: {type: 'string', enum: ['Grabación en campo', 'Registro con entrevista', 'Registro de materiales', 'Entrevista controlada', 'Entrevista en campo', 'Entrevista con imágenes', 'Entrevista con acción']},
+            estructuraFormal: {type: 'string', enum: ['Entrevista controlada', 'Entrevista con imágenes', 'Entrevista en campo', 'Entrevista en campo con imágenes', 'Entrevista con acción', 'Entrevista con recorrido', 'Registro de campo', 'Reprografía']},
             descriptorOnomastico: {type: 'string', trim: true},
             descriptorToponimico: {type: 'string', trim: true},
         },
@@ -31,7 +31,6 @@ export const VideoSchema = defineMongooseModel({
             numeroCasetes: {type: 'string', trim: true},
             color: {type: 'string', enum: ['Color', 'Blanco y negro']},
             audio: {type: 'string', enum: ['Monoaural', 'Estéreo', 'Estéreo mezclado']},
-            sistemaGrabacion: {type: 'string', enum: ['NTSC', 'PAL', 'SECAM']},
             resolucionGrabacion: {type: 'string', enum: ['NTSC 480i', 'PAL 576i', 'HD 720', 'HD 1080', 'UHD 4K']},
             formatoVideoDigital: {type: 'string', enum: ['MP4', 'AVCHD', 'MOV', 'XAVC']},
             requisitosTecnicos: {type: 'string', trim: true},
