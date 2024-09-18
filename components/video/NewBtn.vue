@@ -81,6 +81,7 @@ async function newVideo(){
             parent: props.data._id,
             fetchCount: 0,
             playCount: 0,
+            inReview: true,
         },
     }
 

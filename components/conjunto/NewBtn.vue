@@ -95,6 +95,7 @@ async function newConjunto(){
             child: [],
             videos: [],
             depth: props.data.adicional.depth + 1,
+            review: [],
         },
     }
     // Guardar nuevo conjunto en base de datos

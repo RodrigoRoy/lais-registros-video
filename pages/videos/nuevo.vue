@@ -296,6 +296,7 @@ const video = reactive({
         },
         isPublic: true,
         isDraft: false,
+        inReview: true,
         bookmarkedBy: [],
         parent: route.query?.id || null,
         fetchCount: 0,

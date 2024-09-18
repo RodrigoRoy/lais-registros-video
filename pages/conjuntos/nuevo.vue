@@ -301,6 +301,7 @@ const conjunto = reactive({
         child: [],
         videos: [],
         depth: Number(route.query?.d) || 0,
+        review: [],
     },
 })
 

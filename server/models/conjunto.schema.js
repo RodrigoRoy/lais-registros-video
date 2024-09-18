@@ -97,6 +97,7 @@ export const ConjuntoSchema = defineMongooseModel({
             child: [{type: Types.ObjectId, ref: 'Conjunto'}],
             videos: [{type: Types.ObjectId, ref: 'Video'}],
             depth: {type: 'number', default: 0},
+            review: [{type: Types.ObjectId, ref: 'Usuario'}],
         },
     },
     

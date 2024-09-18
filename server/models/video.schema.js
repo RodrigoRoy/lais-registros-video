@@ -55,11 +55,12 @@ export const VideoSchema = defineMongooseModel({
                 lat: {type: 'number'},
                 lng: {type: 'number'},
             },
-            isDraft: {type: 'boolean', default: 'false'},
-            bookmarkedBy: [{type: Types.ObjectId, ref:"Usuario"}],
+            isDraft: {type: 'boolean', default: false},
+            inReview: {type: 'boolean', default: true},
+            bookmarkedBy: [{type: Types.ObjectId, ref: 'Usuario'}],
             fetchCount: {type: 'number', default: 0},
             playCount: {type: 'number', default: 0},
-            parent: {type: Types.ObjectId, ref:"Conjunto"}
+            parent: {type: Types.ObjectId, ref: 'Conjunto'}
         },
     },
     
