@@ -1,44 +1,151 @@
 <template>
-    <v-card>
-      <v-tabs v-model="tab" align-tabs="center" >
-        <v-tab value="one">Proyecto</v-tab>
-        <v-tab value="two">Documentación</v-tab>
-        <v-tab value="three">Créditos</v-tab>
-      </v-tabs>
-  
-      <v-card-text>
-        <v-window v-model="tab">
-          <v-window-item value="one">
-            <p>
+  <v-container>
+    <v-row>
+      <!-- Contenido principal -->
+      <v-col cols="9">
+        <v-card class="pa-4">
+          <section id="informacion" ref="informacion">
+            <v-sheet elevation="2" class="pa-4 mb-6">
+              
+              <h2>Información</h2>
+              <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat nibh sed pulvinar proin. Ultricies integer quis auctor elit sed vulputate mi sit amet. Vel risus commodo viverra maecenas accumsan lacus vel. Massa sapien faucibus et molestie ac feugiat. Quam vulputate dignissim suspendisse in est ante in nibh. Elit eget gravida cum sociis natoque. Egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Sit amet volutpat consequat mauris nunc congue. Ultrices vitae auctor eu augue. Pretium fusce id velit ut tortor pretium viverra suspendisse potenti. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Purus in massa tempor nec feugiat nisl. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Volutpat maecenas volutpat blandit aliquam etiam. Augue eget arcu dictum varius duis. Rhoncus urna neque viverra justo. Pretium viverra suspendisse potenti nullam ac tortor vitae purus.
-            </p>
-            <p>
-                Diam quis enim lobortis scelerisque fermentum dui. At auctor urna nunc id cursus metus aliquam. Sit amet nulla facilisi morbi tempus iaculis urna id. Integer feugiat scelerisque varius morbi enim. Sit amet volutpat consequat mauris nunc congue nisi. Sagittis orci a scelerisque purus semper eget duis. Mi sit amet mauris commodo quis imperdiet. Urna condimentum mattis pellentesque id nibh. Viverra orci sagittis eu volutpat odio facilisis mauris. Hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit. Duis at consectetur lorem donec massa sapien faucibus. Eget nunc scelerisque viverra mauris in. Lorem sed risus ultricies tristique nulla aliquet enim tortor. Aliquam malesuada bibendum arcu vitae elementum curabitur. Donec adipiscing tristique risus nec feugiat in fermentum posuere urna. Interdum varius sit amet mattis.
-            </p>
-          </v-window-item>
-  
-          <v-window-item value="two">
-            <p>
+              </p>
+              <p>
+                  Diam quis enim lobortis scelerisque fermentum dui. At auctor urna nunc id cursus metus aliquam. Sit amet nulla facilisi morbi tempus iaculis urna id. Integer feugiat scelerisque varius morbi enim. Sit amet volutpat consequat mauris nunc congue nisi. Sagittis orci a scelerisque purus semper eget duis. Mi sit amet mauris commodo quis imperdiet. Urna condimentum mattis pellentesque id nibh. Viverra orci sagittis eu volutpat odio facilisis mauris. Hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit. Duis at consectetur lorem donec massa sapien faucibus. Eget nunc scelerisque viverra mauris in. Lorem sed risus ultricies tristique nulla aliquet enim tortor. Aliquam malesuada bibendum arcu vitae elementum curabitur. Donec adipiscing tristique risus nec feugiat in fermentum posuere urna. Interdum varius sit amet mattis.
+              </p>
+            </v-sheet>
+          </section>
+
+          <section id="documentacion" ref="documentacion">
+            <v-sheet elevation="2" class="pa-4 mb-6">
+              
+              <h2>Documentación</h2>
+              <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat nibh sed pulvinar proin. Ultricies integer quis auctor elit sed vulputate mi sit amet. Vel risus commodo viverra maecenas accumsan lacus vel. Massa sapien faucibus et molestie ac feugiat. Quam vulputate dignissim suspendisse in est ante in nibh. Elit eget gravida cum sociis natoque. Egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Sit amet volutpat consequat mauris nunc congue. Ultrices vitae auctor eu augue. Pretium fusce id velit ut tortor pretium viverra suspendisse potenti. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Purus in massa tempor nec feugiat nisl. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Volutpat maecenas volutpat blandit aliquam etiam. Augue eget arcu dictum varius duis. Rhoncus urna neque viverra justo. Pretium viverra suspendisse potenti nullam ac tortor vitae purus.
-            </p>
-            <p>
-                Diam quis enim lobortis scelerisque fermentum dui. At auctor urna nunc id cursus metus aliquam. Sit amet nulla facilisi morbi tempus iaculis urna id. Integer feugiat scelerisque varius morbi enim. Sit amet volutpat consequat mauris nunc congue nisi. Sagittis orci a scelerisque purus semper eget duis. Mi sit amet mauris commodo quis imperdiet. Urna condimentum mattis pellentesque id nibh. Viverra orci sagittis eu volutpat odio facilisis mauris. Hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit. Duis at consectetur lorem donec massa sapien faucibus. Eget nunc scelerisque viverra mauris in. Lorem sed risus ultricies tristique nulla aliquet enim tortor. Aliquam malesuada bibendum arcu vitae elementum curabitur. Donec adipiscing tristique risus nec feugiat in fermentum posuere urna. Interdum varius sit amet mattis.
-            </p>
-          </v-window-item>
-  
-          <v-window-item value="three">
-            <p>
+              </p>
+              <p>
+                  Diam quis enim lobortis scelerisque fermentum dui. At auctor urna nunc id cursus metus aliquam. Sit amet nulla facilisi morbi tempus iaculis urna id. Integer feugiat scelerisque varius morbi enim. Sit amet volutpat consequat mauris nunc congue nisi. Sagittis orci a scelerisque purus semper eget duis. Mi sit amet mauris commodo quis imperdiet. Urna condimentum mattis pellentesque id nibh. Viverra orci sagittis eu volutpat odio facilisis mauris. Hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit. Duis at consectetur lorem donec massa sapien faucibus. Eget nunc scelerisque viverra mauris in. Lorem sed risus ultricies tristique nulla aliquet enim tortor. Aliquam malesuada bibendum arcu vitae elementum curabitur. Donec adipiscing tristique risus nec feugiat in fermentum posuere urna. Interdum varius sit amet mattis.
+              </p>
+            </v-sheet>
+          </section>
+
+          <section id="creditos" ref="creditos">
+            <v-sheet elevation="2" class="pa-4 mb-6">
+              
+              <h2>Créditos</h2>
+              <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat nibh sed pulvinar proin. Ultricies integer quis auctor elit sed vulputate mi sit amet. Vel risus commodo viverra maecenas accumsan lacus vel. Massa sapien faucibus et molestie ac feugiat. Quam vulputate dignissim suspendisse in est ante in nibh. Elit eget gravida cum sociis natoque. Egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Sit amet volutpat consequat mauris nunc congue. Ultrices vitae auctor eu augue. Pretium fusce id velit ut tortor pretium viverra suspendisse potenti. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Purus in massa tempor nec feugiat nisl. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Volutpat maecenas volutpat blandit aliquam etiam. Augue eget arcu dictum varius duis. Rhoncus urna neque viverra justo. Pretium viverra suspendisse potenti nullam ac tortor vitae purus.
-            </p>
-            <p>
-                Diam quis enim lobortis scelerisque fermentum dui. At auctor urna nunc id cursus metus aliquam. Sit amet nulla facilisi morbi tempus iaculis urna id. Integer feugiat scelerisque varius morbi enim. Sit amet volutpat consequat mauris nunc congue nisi. Sagittis orci a scelerisque purus semper eget duis. Mi sit amet mauris commodo quis imperdiet. Urna condimentum mattis pellentesque id nibh. Viverra orci sagittis eu volutpat odio facilisis mauris. Hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit. Duis at consectetur lorem donec massa sapien faucibus. Eget nunc scelerisque viverra mauris in. Lorem sed risus ultricies tristique nulla aliquet enim tortor. Aliquam malesuada bibendum arcu vitae elementum curabitur. Donec adipiscing tristique risus nec feugiat in fermentum posuere urna. Interdum varius sit amet mattis.
-            </p>
-          </v-window-item>
-        </v-window>
-      </v-card-text>
-    </v-card>
-  </template>
+              </p>
+              <p>
+                  Diam quis enim lobortis scelerisque fermentum dui. At auctor urna nunc id cursus metus aliquam. Sit amet nulla facilisi morbi tempus iaculis urna id. Integer feugiat scelerisque varius morbi enim. Sit amet volutpat consequat mauris nunc congue nisi. Sagittis orci a scelerisque purus semper eget duis. Mi sit amet mauris commodo quis imperdiet. Urna condimentum mattis pellentesque id nibh. Viverra orci sagittis eu volutpat odio facilisis mauris. Hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit. Duis at consectetur lorem donec massa sapien faucibus. Eget nunc scelerisque viverra mauris in. Lorem sed risus ultricies tristique nulla aliquet enim tortor. Aliquam malesuada bibendum arcu vitae elementum curabitur. Donec adipiscing tristique risus nec feugiat in fermentum posuere urna. Interdum varius sit amet mattis.
+              </p>
+            </v-sheet>
+          </section>
+        </v-card>
+      </v-col>
+
+      <!-- Menú lateral scrolleable a la derecha -->
+      <v-col cols="3">
+        <v-card class="pa-4 sticky-menu">
+          <v-list dense>
+            <v-list-item
+              :class="activeSection === 'informacion' ? 'v-list-item--active' : ''"
+              href="#informacion"
+              @click="handleClick('informacion', $event)"
+            >
+              <v-list-item-title>Información</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item
+              :class="activeSection === 'documentacion' ? 'v-list-item--active' : ''"
+              href="#documentacion"
+              @click="handleClick('documentacion', $event)"
+            >
+              <v-list-item-title>Documentación</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item
+              :class="activeSection === 'creditos' ? 'v-list-item--active' : ''"
+              href="#creditos"
+              @click="handleClick('creditos', $event)"
+            >
+              <v-list-item-title>Créditos</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
 
 <script setup>
-const tab = ref(null)
+import { ref, onMounted, nextTick } from 'vue';
+import { useRoute } from 'vue-router';
+
+const activeSection = ref('');
+
+const sections = {
+  informacion: ref(null),
+  documentacion: ref(null),
+  creditos: ref(null),
+};
+
+const scrollTo = async (sectionId) => {
+  await nextTick(); // Asegura que el DOM esté completamente renderizado
+
+  const section = document.getElementById(sectionId);
+  if (section) {
+    // Obtener la altura del App Bar (ajusta esta clase según tu configuración de Vuetify)
+    const appBarHeight = 100;
+    
+    // Calcular la posición de la sección y restar la altura del App Bar
+    const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset - appBarHeight;
+
+    setTimeout(() => {
+      window.scrollTo({ top: sectionPosition, behavior: 'smooth' });
+    }, 100); // Pequeña pausa para asegurarnos de que todo está listo antes de hacer scroll
+  }
+};
+
+// Función que maneja el clic, previniendo el comportamiento predeterminado
+const handleClick = (sectionId, event) => {
+  event.preventDefault(); // Evita el comportamiento predeterminado del enlace
+  scrollTo(sectionId);    // Llama a la función de scroll personalizada
+};
+
+onMounted(() => {
+  const route = useRoute();
+  const hash = route.hash.replace('#', ''); // Remueve el #
+
+  if (hash && document.getElementById(hash)) {
+    scrollTo(hash); // Hace scroll a la sección correspondiente en la carga inicial
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          activeSection.value = entry.target.id;
+        }
+      });
+    },
+    {
+      root: null,
+      threshold: 0.5,
+    }
+  );
+
+  Object.values(sections).forEach((sectionRef) => {
+    if (sectionRef.value) observer.observe(sectionRef.value);
+  });
+});
 </script>
+
+<style scoped>
+.sticky-menu {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 100px;
+}
+</style>
