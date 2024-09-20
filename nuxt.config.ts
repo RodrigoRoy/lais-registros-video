@@ -21,6 +21,7 @@ export default defineNuxtConfig({
     '@nuxt/image', // image optimization
     'dayjs-nuxt', // Parse, validate, manipulate, and display dates and times
     'nuxt3-leaflet', // Leaflet wrapper for interactive maps
+    'nuxt-nodemailer', // servicio correo
   ],
   vite: {
     vue: {
@@ -46,5 +47,15 @@ export default defineNuxtConfig({
   dayjs: {
     locales: ['es', 'en'],
     defaultLocale: 'es',
+  },
+  nodemailer: {
+    from: '"pruebas Instituto Mora" <correo@mora.com>',
+    host: 'smtp.mailtrap.io',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'john@doe.com',
+      pass: '',
+    },
   },
 })

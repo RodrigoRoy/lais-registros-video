@@ -27,7 +27,9 @@
   },
   "devDependencies": {
     "dayjs-nuxt": "^2.1.9",
+    "nodemailer": "^6.9.15",
     "nuxt-mongoose": "^1.0.6",
+    "nuxt-nodemailer": "^1.1.2",
     "vite-plugin-vuetify": "^2.0.2",
     "vuetify": "^3.6.8"
   }
