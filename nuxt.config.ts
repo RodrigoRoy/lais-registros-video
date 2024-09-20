@@ -49,7 +49,7 @@ export default defineNuxtConfig({
     defaultLocale: 'es',
   },
   nodemailer: {
-    from: '"pruebas Instituto Mora" <correo@mora.com>',
+    from: '"John Doe" <john@doe.com>',
     host: 'smtp.mailtrap.io',
     port: 465,
     secure: true,

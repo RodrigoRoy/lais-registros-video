@@ -2,10 +2,10 @@
   <v-container>
     <v-row>
       <!-- Contenido principal -->
-      <v-col cols="9">
+      <v-col cols="12" sm="9" md="10">
         <v-card class="pa-4">
           <section id="informacion" ref="informacion">
-            <v-sheet elevation="2" class="pa-4 mb-6">
+            <v-sheet flat class="pa-4 mb-2">
               
               <h2>Información</h2>
               <p>
@@ -18,7 +18,7 @@
           </section>
 
           <section id="documentacion" ref="documentacion">
-            <v-sheet elevation="2" class="pa-4 mb-6">
+            <v-sheet flat class="pa-4 mb-2">
               
               <h2>Documentación</h2>
               <p>
@@ -31,7 +31,7 @@
           </section>
 
           <section id="creditos" ref="creditos">
-            <v-sheet elevation="2" class="pa-4 mb-6">
+            <v-sheet flat class="pa-4 mb-2">
               
               <h2>Créditos</h2>
               <p>
@@ -46,9 +46,9 @@
       </v-col>
 
       <!-- Menú lateral scrolleable a la derecha -->
-      <v-col cols="3">
+      <v-col cols="3" md="2" class="d-none d-sm-block">
         <v-card class="pa-4 sticky-menu">
-          <v-list dense>
+          <v-list density="compact" :lines="false" nav>
             <v-list-item
               :class="activeSection === 'informacion' ? 'v-list-item--active' : ''"
               href="#informacion"
