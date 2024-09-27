@@ -18,6 +18,10 @@
 </template>
 
 <script setup>
+// State manager
+import { useMessageStore } from '@/stores/message'
+const message = useMessageStore()
+
 definePageMeta({
     middleware: [
         'no-auth',
@@ -40,9 +44,12 @@ const formRules = {
             return 'Escribe un correo válido'
         }, 
     ],
-    
 }
 
+/**
+ * Se genera solicitud de recuperación y se avisa al usuario que
+ * complete el proceso revisando su correo electrónico.
+ */
 async function submit(){
     isLoading.value = true
     const { valid } = await form.value.validate() // validaciones del formulario
@@ -61,15 +68,17 @@ async function submit(){
             // Obtener URL de recuperación
             const response = await $fetch(`/api/recover/${user._id}`, { method: 'GET' })
             
-            // Ir a la ruta de recuperación
-            // TODO: Enviar la ruta de recuperación por correo electrónico
-            if(response)
-                await navigateTo({ path: response.path, query: {u: response.query.u, id: response.query.id} })
+            // Enviar la ruta de recuperación por correo electrónico
+            if(response){
+                await $fetch('/api/recover/mail', {method: 'POST', body: {username: response.username, email: response.email, url: response.url}})
+                message.show({text: 'Por favor revisa tu correo electrónico para concluir.', color: 'info'})
+                await navigateTo({ path: '/' })
+            }
         }
         isLoading.value = false
     } 
     catch (error) {
-        throw createError({ statusCode: 400, statusMessage: `User's email doesn't exists`, message: error})
+        throw createError({ statusCode: error.statusCode, statusMessage: error.statusMessage, message: error.message})
     }
 }
 </script>

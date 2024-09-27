@@ -20,6 +20,8 @@ export default defineEventHandler(async (event) => {
         
         return {
             url: `${origin}/recover?u=${userId}&id=${user.recover._id}`,
+            username: user.fullname,
+            email: user.email,
             host: origin,
             path: `/recover`,
             query: {
