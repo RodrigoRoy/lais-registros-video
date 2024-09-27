@@ -256,11 +256,13 @@
                 </v-sheet>
 
                 <!-- Descarga de documento pdf -->
-                <v-sheet class="pa-2 ma-2" color="background">
-                    <v-card elevation="2" height="auto" width="auto" variant="flat">
-                        <conjunto-pdf :data="conjunto"></conjunto-pdf>
-                    </v-card>
-                </v-sheet>
+                <dev-only>
+                    <v-sheet class="pa-2 ma-2" color="background">
+                        <v-card elevation="2" height="auto" width="auto" variant="flat">
+                            <conjunto-pdf :data="conjunto"></conjunto-pdf>
+                        </v-card>
+                    </v-sheet>
+                </dev-only>
             </v-col>
         </v-row>
     </v-container>

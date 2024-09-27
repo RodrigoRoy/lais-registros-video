@@ -146,6 +146,6 @@ onMounted(() => {
 .sticky-menu {
   position: -webkit-sticky;
   position: sticky;
-  top: 100px;
+  top: 75px;
 }
 </style>

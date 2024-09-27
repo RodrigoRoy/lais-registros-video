@@ -255,7 +255,9 @@
                 <v-sheet class="pa-2 ma-2" color="background">
                         <v-card elevation="2" height="auto" width="auto" variant="flat">
                             <v-btn v-if="video.adicional.documentoCalificacion" class="text-none" variant="flat" block prepend-icon="mdi-file-document" :href="getDocumentURL(video.adicional.documentoCalificacion)">Documento de calificación</v-btn>
-                            <video-pdf :data="video"></video-pdf>
+                            <dev-only>
+                                <video-pdf :data="video"></video-pdf>
+                            </dev-only>
                         </v-card>
                 </v-sheet>
             </v-col>
