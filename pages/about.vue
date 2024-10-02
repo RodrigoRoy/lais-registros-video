@@ -7,7 +7,7 @@
           <section id="informacion" ref="informacion">
             <v-sheet flat class="pa-4 mb-2">
               
-              <h2>Información</h2>
+              <h2 :class="activeSection === 'informacion' ? 'text-secondary' : 'text-accent'">Información</h2>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat nibh sed pulvinar proin. Ultricies integer quis auctor elit sed vulputate mi sit amet. Vel risus commodo viverra maecenas accumsan lacus vel. Massa sapien faucibus et molestie ac feugiat. Quam vulputate dignissim suspendisse in est ante in nibh. Elit eget gravida cum sociis natoque. Egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Sit amet volutpat consequat mauris nunc congue. Ultrices vitae auctor eu augue. Pretium fusce id velit ut tortor pretium viverra suspendisse potenti. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Purus in massa tempor nec feugiat nisl. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Volutpat maecenas volutpat blandit aliquam etiam. Augue eget arcu dictum varius duis. Rhoncus urna neque viverra justo. Pretium viverra suspendisse potenti nullam ac tortor vitae purus.
               </p>
@@ -20,7 +20,7 @@
           <section id="documentacion" ref="documentacion">
             <v-sheet flat class="pa-4 mb-2">
               
-              <h2>Documentación</h2>
+              <h2 :class="activeSection === 'documentacion' ? 'text-secondary' : 'text-accent'">Documentación</h2>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat nibh sed pulvinar proin. Ultricies integer quis auctor elit sed vulputate mi sit amet. Vel risus commodo viverra maecenas accumsan lacus vel. Massa sapien faucibus et molestie ac feugiat. Quam vulputate dignissim suspendisse in est ante in nibh. Elit eget gravida cum sociis natoque. Egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Sit amet volutpat consequat mauris nunc congue. Ultrices vitae auctor eu augue. Pretium fusce id velit ut tortor pretium viverra suspendisse potenti. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Purus in massa tempor nec feugiat nisl. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Volutpat maecenas volutpat blandit aliquam etiam. Augue eget arcu dictum varius duis. Rhoncus urna neque viverra justo. Pretium viverra suspendisse potenti nullam ac tortor vitae purus.
               </p>
@@ -33,7 +33,7 @@
           <section id="creditos" ref="creditos">
             <v-sheet flat class="pa-4 mb-2">
               
-              <h2>Créditos</h2>
+              <h2 :class="activeSection === 'creditos' ? 'text-secondary' : 'text-accent'">Créditos</h2>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat nibh sed pulvinar proin. Ultricies integer quis auctor elit sed vulputate mi sit amet. Vel risus commodo viverra maecenas accumsan lacus vel. Massa sapien faucibus et molestie ac feugiat. Quam vulputate dignissim suspendisse in est ante in nibh. Elit eget gravida cum sociis natoque. Egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Sit amet volutpat consequat mauris nunc congue. Ultrices vitae auctor eu augue. Pretium fusce id velit ut tortor pretium viverra suspendisse potenti. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Purus in massa tempor nec feugiat nisl. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Volutpat maecenas volutpat blandit aliquam etiam. Augue eget arcu dictum varius duis. Rhoncus urna neque viverra justo. Pretium viverra suspendisse potenti nullam ac tortor vitae purus.
               </p>
@@ -46,34 +46,29 @@
       </v-col>
 
       <!-- Menú lateral scrolleable a la derecha -->
-      <v-col cols="3" md="2" class="d-none d-sm-block">
-        <v-card class="pa-4 sticky-menu">
-          <v-list density="compact" :lines="false" nav>
-            <v-list-item
-              :class="activeSection === 'informacion' ? 'v-list-item--active' : ''"
-              href="#informacion"
-              @click="handleClick('informacion', $event)"
-            >
-              <v-list-item-title>Información</v-list-item-title>
-            </v-list-item>
+      <v-col cols="3" md="2" class="mr-10 text-center d-none d-sm-block sticky-menu">
+        <v-list density="compact" :lines="false" nav>
+          <v-list-item :class="activeSection === 'informacion' ? 'bg-blue-lighten-3' : 'bg-yellow-lighten-2'"
+                        href="#informacion" @click="handleClick('informacion', $event)">
+            <v-list-item-title >
+              Información
+            </v-list-item-title>
+          </v-list-item>
 
-            <v-list-item
-              :class="activeSection === 'documentacion' ? 'v-list-item--active' : ''"
-              href="#documentacion"
-              @click="handleClick('documentacion', $event)"
-            >
-              <v-list-item-title>Documentación</v-list-item-title>
-            </v-list-item>
+          <v-list-item :class="activeSection === 'documentacion' ? 'bg-blue-lighten-3' : 'bg-yellow-lighten-2'"
+                          href="#documentacion" @click="handleClick('documentacion', $event)">
+            <v-list-item-title >
+              Documentación
+            </v-list-item-title>
+          </v-list-item>
 
-            <v-list-item
-              :class="activeSection === 'creditos' ? 'v-list-item--active' : ''"
-              href="#creditos"
-              @click="handleClick('creditos', $event)"
-            >
-              <v-list-item-title>Créditos</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-card>
+          <v-list-item :class="activeSection === 'creditos' ? 'bg-blue-lighten-3' : 'bg-yellow-lighten-2'"
+                        href="#creditos" @click="handleClick('creditos', $event)">
+            <v-list-item-title >
+              Créditos
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
       </v-col>
     </v-row>
   </v-container>
@@ -96,11 +91,11 @@ const scrollTo = async (sectionId) => {
 
   const section = document.getElementById(sectionId);
   if (section) {
-    // Obtener la altura del App Bar (ajusta esta clase según tu configuración de Vuetify)
+    // Obtener la altura del App Bar
     const appBarHeight = 100;
     
     // Calcular la posición de la sección y restar la altura del App Bar
-    const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset - appBarHeight;
+    const sectionPosition = section.getBoundingClientRect().top + window.scrollY - appBarHeight;
 
     setTimeout(() => {
       window.scrollTo({ top: sectionPosition, behavior: 'smooth' });
@@ -122,30 +117,43 @@ onMounted(() => {
     scrollTo(hash); // Hace scroll a la sección correspondiente en la carga inicial
   }
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          activeSection.value = entry.target.id;
-        }
-      });
-    },
-    {
-      root: null,
-      threshold: 0.5,
-    }
-  );
+  const checkActiveSection = () => {
+    const scrollPosition = window.scrollY + 300; // Offset para la altura del App Bar
 
-  Object.values(sections).forEach((sectionRef) => {
-    if (sectionRef.value) observer.observe(sectionRef.value);
+    // Recorre las secciones y actualiza activeSection
+    Object.keys(sections).forEach((sectionId) => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+
+        // Verifica si el scroll está en la sección actual
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          activeSection.value = sectionId;
+          // Actualiza la URL con el hash de la sección
+          if (window.location.hash !== `#${sectionId}`) {
+            window.history.replaceState(null, '', `#${sectionId}`);
+          }
+        }
+      }
+    });
+  };
+
+  // Escucha el evento de scroll
+  window.addEventListener('scroll', checkActiveSection);
+
+  // Limpieza al desmontar el componente
+  onBeforeUnmount(() => {
+    window.removeEventListener('scroll', checkActiveSection);
   });
+
 });
 </script>
 
 <style scoped>
 .sticky-menu {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 75px;
+  position: fixed;
+  top: 70px;
+  right: 0;
 }
 </style>
