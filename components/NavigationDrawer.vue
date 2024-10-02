@@ -28,6 +28,9 @@
             <nuxt-link v-if="auth.isAdmin" to="/usuarios" style="text-decoration: none; color: inherit">
                 <v-list-item link prepend-icon="mdi-account-multiple" title="Lista de usuarios"></v-list-item>
             </nuxt-link>
+            <nuxt-link v-if="auth.isAdmin" to="/revisiones" style="text-decoration: none; color: inherit">
+                <v-list-item link prepend-icon="mdi-account-multiple" title="Revisiones"></v-list-item>
+            </nuxt-link>
         </v-list>
         
         <v-btn @click="website.toggleTheme" prepend-icon="mdi-theme-light-dark" class="ml-2 mt-4" variant="tonal">Tema de color</v-btn>
