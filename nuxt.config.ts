@@ -7,9 +7,9 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
-  // app: {
-  //   baseURL: '/registros/'
-  // },
+  app: {
+    baseURL: '/registros/'
+  },
   modules: [
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
