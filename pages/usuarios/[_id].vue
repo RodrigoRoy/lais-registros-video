@@ -1,5 +1,5 @@
 <template>
-    <v-sheet class="d-flex align-center justify-center flex-wrap text-center my-4 mx-auto px-4" elevation="4"  max-width="400" width="100%" rounded color="primary">
+    <v-sheet class="d-flex align-center justify-center flex-wrap text-center my-4 mx-auto px-4" elevation="4"  max-width="400" width="100%" rounded color="accent">
         <div>
             <div class="my-2">
                 <v-avatar v-if="user.profileImage" icon="mdi-account" :image="`/data/profile/${user.profileImage}`" style="height: 150px; width: 150px;" variant="elevated" ></v-avatar>
@@ -37,7 +37,7 @@
     </v-sheet>
 
     <!-- Lista de marcadores del usuario -->
-    <v-container v-if="user.bookmarks?.length > 0">
+    <v-container v-if="user.bookmarks?.length > 0" class="border border-accent my-10">
         <v-row>
             <v-col>
                 <p>Videos guardados</p>
@@ -50,7 +50,7 @@
     </p>
 
     <!-- Lista de videos que ha creado el usuario -->
-    <v-container v-if="user.videos?.length > 0">
+    <v-container v-if="user.videos?.length > 0" class="border border-accent my-10">
         <v-row>
             <v-col>
                 <p>Registros creados</p>
@@ -61,7 +61,7 @@
 
     <!-- Lista de videos que son borradores hechos por el usuario -->
     <!-- v-for="(borrador, i) in userDraftList" :key="userDraftList._id" -->
-    <v-container v-if="user.drafts?.length > 0">
+    <v-container v-if="user.drafts?.length > 0" class="border border-accent my-10">
         <v-row>
             <v-col>
                 <p>Borradores</p>

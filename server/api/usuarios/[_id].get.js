@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     const populateDrafts = query?.drafts && query.drafts === 'true' ? true : false
     const populateBookmarks = query?.bookmarks && query.bookmarks === 'true' ? true : false
     const populateVideos = query?.videos && query.videos === 'true' ? true : false
-    const populateConjuntos = query?.conjuntos && query.conjuntos === 'true' ? true : false
+    const populateReview = query?.review && query.review === 'true' ? true : false
 
     // Buscar en base de datos
     try {
@@ -24,8 +24,8 @@ export default defineEventHandler(async (event) => {
             mongooseQuery.populate('bookmarks')
         if(populateVideos)
             mongooseQuery.populate('videos')
-        if(populateConjuntos)
-            mongooseQuery.populate('conjuntos')
+        if(populateReview)
+            mongooseQuery.populate('review')
 
         return await mongooseQuery.exec()
     }

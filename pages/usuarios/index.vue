@@ -7,7 +7,7 @@
         </v-row>
         <v-row>
             <v-col cols="12" sm="6" md="4" xl="3" v-for="usuario in usuarios" :key="usuario._id">
-                <user-card :user="usuario" @delete-user="refresh" />
+                <user-card :user="usuario" @delete-user="refresh" class="border border-accent"/>
             </v-col>
         </v-row>
     </v-container>

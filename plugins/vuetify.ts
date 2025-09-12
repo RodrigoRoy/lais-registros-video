@@ -17,17 +17,17 @@ export default defineNuxtPlugin((app) => {
         themes: {
           light: {
             colors:{
-              primary: '#A7D129', // lime, light green
+              primary: '#8AA624', // lime, light green
               'primary-container': colors.lime.lighten2,
-              // secondary: '#2C74B3', // blue
-              secondary: colors.blue.darken1,
+
+              secondary: '#153E90',
               'secondary-container': colors.lightBlue.lighten3,
-              // accent: '#FFB300', // amber
-              accent: colors.amber.base,
+
+              accent: '#FFC947',
               'accent-container': colors.yellow.lighten2,
 
-              background: colors.grey.lighten3,
-              surface: colors.grey.lighten2,
+              surface: colors.grey.lighten4,
+              background: colors.grey.lighten5,
               
               error: colors.red.darken3,
               info: colors.blue.darken3,
@@ -37,17 +37,17 @@ export default defineNuxtPlugin((app) => {
           },
           dark: {
             colors: {
-              primary: '#A7D129', // lime, light green
+              primary: '#8FD14F', // lime, light green
               'primary-container': colors.lime.lighten2,
-              // secondary: '#2C74B3', // blue
-              secondary: colors.blue.darken1,
-              'secondary-container': colors.lightBlue.lighten3,
-              // accent: '#FFB300', // amber
-              accent: colors.amber.base,
-              'accent-container': colors.yellow.lighten2,
 
+              secondary: '#239BA7',
+              'secondary-container': colors.lightBlue.lighten3,
+
+              accent: '#EFF396',
+              'accent-container': colors.yellow.accent1,
+
+              surface: colors.shades.black,
               background: colors.grey.darken4,
-              surface: colors.grey.darken3,
 
               error: colors.red.darken3,
               info: colors.blue.darken3,

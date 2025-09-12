@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <!-- Mostrar cuadricula de elementos -->
-            <v-col v-for="video in videos" :key="video._id" class="d-flex child-flex" cols="12" sm="6" md="4" lg="3" xl="3">
+            <v-col v-for="video in videos" :key="video._id" class="d-flex child-flex ma-5" cols="12" sm="6" md="4" lg="3" xl="3">
                 <nav-card type="video" :data="video" color="secondary" @delete="refresh"></nav-card>
             </v-col>
         </v-row>
