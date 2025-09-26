@@ -43,9 +43,4 @@ import { useWebsiteStore } from '@/stores/website'
 import { useAuthStore } from '@/stores/auth'
 const website = useWebsiteStore()
 const auth = useAuthStore()
-definePageMeta({
-  middleware: [
-    'auth',
-  ]
-})
 </script>

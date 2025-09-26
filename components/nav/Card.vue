@@ -65,12 +65,12 @@
                     <v-spacer></v-spacer>
                     
                     <!-- Más información -->
-                    <v-btn :color="subcolor" icon="mdi-chevron-up" @click.prevent.stop="revealId = i"></v-btn>
+                    <v-btn :color="subcolor" icon="mdi-chevron-up" @click.prevent.stop="revealId = data._id"></v-btn>
                 </v-card-actions>
                 
                 <!-- "Cortina" para mostrar información adicional -->
                 <v-expand-transition @click.prevent.stop>
-                    <v-card v-if="revealId === i" @click.prevent.stop="revealId = null" class="position-absolute w-100" height="100%" style="bottom: 0;" :color="color">
+                    <v-card v-if="revealId === data._id" @click.prevent.stop="revealId = null" class="position-absolute w-100" height="100%" style="bottom: 0;" :color="color">
                         <v-card-text class="pb-0">
                             <!-- Título / Código de referencia -->
                             <p class="text-caption text--primary">
