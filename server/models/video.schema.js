@@ -56,7 +56,7 @@ export const VideoSchema = defineMongooseModel({
                 lng: {type: 'number'},
             },
             isDraft: {type: 'boolean', default: false},
-            inReview: {type: 'boolean', default: true},
+            inReview: {type: 'boolean', default: false},
             bookmarkedBy: [{type: Types.ObjectId, ref: 'Usuario'}],
             fetchCount: {type: 'number', default: 0},
             playCount: {type: 'number', default: 0},
