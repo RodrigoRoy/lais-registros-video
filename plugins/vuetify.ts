@@ -28,6 +28,8 @@ export default defineNuxtPlugin((app) => {
 
               surface: colors.grey.lighten4,
               background: colors.grey.lighten5,
+
+              tables: '#e2eaeeff',
               
               error: colors.red.darken3,
               info: colors.blue.darken3,
@@ -48,6 +50,8 @@ export default defineNuxtPlugin((app) => {
 
               surface: colors.shades.black,
               background: colors.grey.darken4,
+
+              tables: '#010f12ff',
 
               error: colors.red.darken3,
               info: colors.blue.darken3,

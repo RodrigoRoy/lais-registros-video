@@ -68,7 +68,7 @@
                                             <p class="text-body-1">{{ conjunto.identificacion.pais }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.fecha">
-                                            <p class="text-body-1 font-weight-medium text-accent">Fecho o periodo</p>
+                                            <p class="text-body-1 font-weight-medium text-accent">Fecha o periodo</p>
                                             <p class="text-body-1">{{ conjunto.identificacion.fecha }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.identificacion?.nivelDescripcion">
@@ -263,6 +263,7 @@
                         </v-card>
                     </v-sheet>
                 </dev-only>
+                <revisiones-acciones :uso="'video'" ></revisiones-acciones>
             </v-col>
         </v-row>
     </v-container>

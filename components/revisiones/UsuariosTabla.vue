@@ -1,6 +1,16 @@
 <template>
     <v-container v-for="usuario in sortedUsuarios" :key="usuario.id" class="border mb-8">
-        <h3 class="text-h6 mb-2">{{ usuario.nombre }}</h3>
+        <h3 class="text-h6 mb-2">
+            {{ usuario.nombre }}
+            <nuxt-link :to="`/usuarios/${usuario.id}`" class="text-decoration-none">
+                <v-tooltip :text="`Perfil de ${ usuario.nombre }`" location="top">
+                    <template v-slot:activator="{ props }">
+                        <v-btn v-bind="props" icon="mdi-badge-account" color="primary" variant="ghost">
+                        </v-btn>
+                    </template>
+                </v-tooltip>
+            </nuxt-link>
+        </h3>
         
         <v-data-table v-if="usuario.review.length > 0" :headers="dataTableHeaders" :items="usuario.review" density="comfortable" hide-no-data :hide-default-footer="usuario.review?.length <= usersForPage" hover :items-per-page="usersForPage" :no-filter="true">
             <!-- Portada -->

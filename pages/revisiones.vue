@@ -54,7 +54,6 @@
       <v-container>
         <revisiones-conjuntos-tabla :conjuntos="conjuntoId" :borde="true" />
       </v-container>
-      <h6 class="text-red">Falta añadir atributo de poder ser revisor</h6>
     </v-card>
   </template>
 

@@ -2,6 +2,15 @@
     <v-container v-for="conjunto in sortedConjuntos" :key="conjunto.id" class="border mb-8" :class="props.borde===true ? 'border-secondary' : ''">
         <h2 class="text-h6 mb-2">
             {{ conjunto.titulo }}
+            <!-- Link para ver los detalles del conjunto -->
+            <nuxt-link :to="`/conjuntos/${conjunto.id}`" class="text-decoration-none">
+                <v-tooltip :text="`Detalles del conjunto ${ conjunto.titulo }`" location="top">
+                    <template v-slot:activator="{ props }">
+                        <v-btn v-bind="props" icon="mdi-checkbook-arrow-right" color="primary" variant="ghost">
+                        </v-btn>
+                    </template>
+                </v-tooltip>
+            </nuxt-link>
         </h2>
         <h3 v-if="conjunto.review.length > 0">
             <span v-for="(revisor, i) in conjunto.review">
@@ -14,7 +23,7 @@
             No tiene revisores asignados.
         </div>
         
-        <v-data-table v-if="conjunto.videos.length > 0" :headers="dataTableHeaders" :items="conjunto.videos" density="comfortable" hide-no-data :hide-default-footer="conjunto.videos?.length <= videosForPage" hover :items-per-page="videosForPage" :no-filter="true">
+        <v-data-table v-if="conjunto.videos.length > 0" :headers="dataTableHeaders" :items="conjunto.videos" density="comfortable" hide-no-data :hide-default-footer="conjunto.videos?.length <= videosForPage" hover :items-per-page="videosForPage" :no-filter="true" class="bg-tables">
             <!-- Documentalista -->
             <template v-slot:item.documentalista="{ item }">
                 {{ item.controlDescripcion.documentalista.fullname }}
