@@ -2,8 +2,7 @@
  * Aprueba un registro de video
  * @param {object} event.body Incluye el id del video para aprobar
  * {
- *     "usuario": string,
- *     "conjunto": string
+ *     "video": string,
  * }
 */
 

@@ -263,7 +263,7 @@
                         </v-card>
                     </v-sheet>
                 </dev-only>
-                <revisiones-acciones :uso="'video'" ></revisiones-acciones>
+                <revisiones-acciones :uso="'conjunto'" :id="conjunto._id" ></revisiones-acciones>
             </v-col>
         </v-row>
     </v-container>

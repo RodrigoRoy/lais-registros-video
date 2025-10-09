@@ -259,7 +259,12 @@
                                 <video-pdf :data="video"></video-pdf>
                             </dev-only>
                         </v-card>
-                </v-sheet>
+                    </v-sheet>
+                    <div v-if="auth.isLoggedIn && auth.isAdmin">
+                        <revisiones-acciones :uso="'video'" :id="video._id" />
+                        <v-divider length="500px" :thickness="4" class="border-opacity-25" color="primary" ></v-divider>
+                        <revisiones-acciones :uso="'aprobar'" :id="video._id" />
+                    </div>
             </v-col>
         </v-row>
     </v-container>
