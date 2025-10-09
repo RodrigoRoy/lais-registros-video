@@ -12,8 +12,11 @@
             </div>
 
             <div class="text-subtitle-1">
-                <v-icon icon="mdi-email"></v-icon>
-                {{ user.email }}
+                <!-- *** Poner restriccion para ocultar correo *** -->
+                <div v-if="verificacion">
+                    <v-icon icon="mdi-email"></v-icon>
+                    {{ user.email }}
+                </div>
                 <p>
                     <v-chip v-if="!user.active" color="error" variant="flat" size="small" density="compact" class="mr-2">
                         Cuenta bloqueada
@@ -36,8 +39,10 @@
         </div>
     </v-sheet>
 
+    <!-- *** OCULTAR LAS 3 LISTAS *** -->
+
     <!-- Lista de marcadores del usuario -->
-    <v-container v-if="user.bookmarks?.length > 0" class="border border-accent my-10">
+    <v-container v-if="user.bookmarks?.length > 0 && verificacion" class="border border-accent my-10">
         <v-row>
             <v-col>
                 <p>Videos guardados</p>
@@ -50,7 +55,7 @@
     </p>
 
     <!-- Lista de videos que ha creado el usuario -->
-    <v-container v-if="user.videos?.length > 0" class="border border-accent my-10">
+    <v-container v-if="user.videos?.length > 0 && verificacion" class="border border-accent my-10">
         <v-row>
             <v-col>
                 <p>Registros creados</p>
@@ -61,7 +66,7 @@
 
     <!-- Lista de videos que son borradores hechos por el usuario -->
     <!-- v-for="(borrador, i) in userDraftList" :key="userDraftList._id" -->
-    <v-container v-if="user.drafts?.length > 0" class="border border-accent my-10">
+    <v-container v-if="user.drafts?.length > 0 && verificacion" class="border border-accent my-10">
         <v-row>
             <v-col>
                 <p>Borradores</p>
@@ -78,5 +83,12 @@ const route = useRoute()
 // Información del usuario
 const { data: user } = await useFetch(`/api/usuarios/${route.params._id}`, {method: 'GET', query: {drafts: true, bookmarks: true, videos: true}})
 
+const auth = useAuthStore()
+
+// Verificación para saber que es un perfil público
+const verificacion = auth.canCreate &&
+                     auth.canUpdate &&
+                     auth.canDelete &&
+                     auth.isAdmin
 
 </script>

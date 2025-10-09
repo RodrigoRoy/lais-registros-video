@@ -1,5 +1,5 @@
 <template>
-    <v-footer :app="true" color="primary" rounded="lg" absolute>
+    <v-footer :app="true" color="primary" rounded="lg" absolute height="64px">
         <v-container fluid class="text-center py-0">
             <v-row align="center" class="py-0">
                 <!-- Ocultar iconos en pantallas pequeñas -->
