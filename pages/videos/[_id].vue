@@ -246,6 +246,27 @@
                                 <v-btn size="small" :prepend-icon="video.adicional.bookmarkedBy.includes(auth.id) ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="toggleBookmark(video)">{{ video.adicional.bookmarkedBy.length }}</v-btn>
                                 <v-btn size="small" v-show="auth.isLoggedIn && auth.canCreate && auth.canUpdate" prepend-icon="mdi-chart-bar">{{ video.adicional.fetchCount }}</v-btn>
                                 <v-btn size="small" v-show="auth.isLoggedIn && auth.canCreate && auth.canUpdate" prepend-icon="mdi-play">{{ video.adicional.playCount }}</v-btn>
+                                <!-- Descargas de documento de calificación y pdf's -->
+
+                                <!-- TODO: ***
+                                  1. DESCARGAR EXPORT 
+                                  2. AGREGAR A TODOS EL ATRIBUTO DE COUNT Y PDF EN ADICIONAL
+                                  3. MODIFICAR API DE PDF Y DE DOCUMENTO DE CALIFICACION
+                                  4. AGREGAR ICONO Y NUMERO DE DESCARGAS, QUE SE MUESTREN AL LADO DE CUADRO PARA DESCARGA DE DOCUMENTOS
+                                 *** -->
+
+                                 <p class="mx-5">
+                                    <v-icon>
+                                        mdi-file-chart-outline
+                                    </v-icon>
+                                    {{ video.adicional.downloadDocCount }}
+                                 </p>
+                                 <p>
+                                    <v-icon>
+                                        mdi-file-download-outline
+                                    </v-icon>
+                                    {{ video.adicional.downloadPdfCount }}
+                                 </p>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -254,7 +275,11 @@
                 <!-- Descarga de documentos -->
                 <v-sheet class="pa-2 ma-2" color="background">
                         <v-card elevation="2" height="auto" width="auto" variant="flat">
+                             <!-- cursor-pointer -->
                             <v-btn v-if="video.adicional.documentoCalificacion" class="text-none" variant="flat" block prepend-icon="mdi-file-document" :href="getDocumentURL(video.adicional.documentoCalificacion)">Documento de calificación</v-btn>
+
+                            <v-divider length="500px" :thickness="2" class="border-opacity-25" color="primary" ></v-divider>
+                            
                             <dev-only>
                                 <video-pdf :data="video"></video-pdf>
                             </dev-only>
@@ -366,6 +391,11 @@ async function videoClipStopPlaying(video){
  * @param {string} filename Nombre del archivo según la base de datos
  */
 function getDocumentURL(filename){
+    // Aumenta el contador de descargas del documento de calificación
+    $fetch(`/api/videos/documentCount`, {
+        method: 'PUT',
+        query: { video: video.value._id }
+    })
     return `/data/document/${filename}`
 }
 

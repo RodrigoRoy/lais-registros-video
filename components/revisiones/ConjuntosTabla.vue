@@ -34,14 +34,18 @@
             </template>
             <!-- Botones de acción (ver, editar) -->
             <template v-slot:item._id="{ item }">
-                <nuxt-link :to="`/videos/${item._id}`" class="text-decoration-none">
-                    <v-tooltip text="Detalles del video" location="top">
-                        <template v-slot:activator="{ props }">
-                            <v-btn v-bind="props" icon="mdi-checkbook-arrow-right" color="primary" variant="ghost">
-                            </v-btn>
-                        </template>
-                    </v-tooltip>
-                </nuxt-link>
+                <div>
+                    <nuxt-link :to="`/videos/${item._id}`" class="text-decoration-none">
+                        <v-tooltip text="Detalles del video" location="top">
+                            <template v-slot:activator="{ props }">
+                                <v-btn v-bind="props" icon="mdi-checkbook-arrow-right" color="primary" variant="ghost">
+                                </v-btn>
+                            </template>
+                        </v-tooltip>
+                    </nuxt-link>
+                    <!-- REVISAR REFRESH, Y ACOMODAR BOTONES... SE NECESITA PALABRA 'APROBAR'? -->
+                    <revisiones-acciones :uso="'aprobar'" :id="item._id" @click="refresh()" />
+                </div>
             </template>
         </v-data-table>
 
@@ -97,6 +101,13 @@ const dataTableHeaders = [
 
 function formatoFecha(fecha){
     return dayjs(fecha).format('DD/MM/YYYY')
+}
+
+/**
+ * Reload data using native Nuxt util function
+ */
+ async function refresh(){
+    await refreshNuxtData()
 }
 
 </script>
