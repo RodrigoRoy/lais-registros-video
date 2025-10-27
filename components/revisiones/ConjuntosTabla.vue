@@ -1,10 +1,10 @@
 <template>
-    <v-container v-for="conjunto in sortedConjuntos" :key="conjunto.id" class="border mb-8" :class="props.borde===true ? 'border-secondary' : ''">
+    <v-container v-for="conjunto in sortedConjuntos" :key="conjunto._id" class="border mb-8" :class="props.borde===true ? 'border-secondary' : ''">
         <h2 class="text-h6 mb-2">
-            {{ conjunto.titulo }}
+            {{ conjunto.identificacion.titulo }}
             <!-- Link para ver los detalles del conjunto -->
-            <nuxt-link :to="`/conjuntos/${conjunto.id}`" class="text-decoration-none">
-                <v-tooltip :text="`Detalles del conjunto ${ conjunto.titulo }`" location="top">
+            <nuxt-link :to="`/conjuntos/${conjunto._id}`" class="text-decoration-none">
+                <v-tooltip :text="`Detalles del conjunto ${ conjunto.identificacion.titulo }`" location="top">
                     <template v-slot:activator="{ props }">
                         <v-btn v-bind="props" icon="mdi-checkbook-arrow-right" color="primary" variant="ghost">
                         </v-btn>
@@ -12,8 +12,8 @@
                 </v-tooltip>
             </nuxt-link>
         </h2>
-        <h3 v-if="conjunto.review.length > 0">
-            <span v-for="(revisor, i) in conjunto.review">
+        <h3 v-if="conjunto.adicional.review.length > 0">
+            <span v-for="(revisor, i) in conjunto.adicional.review">
                 <span class="mx-3 text-primary">{{ i === 0 ? 'Revisores:' : '|' }}</span> 
                  {{ revisor.fullname }}
             </span>
@@ -23,7 +23,7 @@
             No tiene revisores asignados.
         </div>
         
-        <v-data-table v-if="conjunto.videos.length > 0" :headers="dataTableHeaders" :items="conjunto.videos" density="comfortable" hide-no-data :hide-default-footer="conjunto.videos?.length <= videosForPage" hover :items-per-page="videosForPage" :no-filter="true" class="bg-tables">
+        <v-data-table v-if="conjunto.adicional.videos.length > 0" id="tabla" :headers="dataTableHeaders" :items="conjunto.adicional.videos" density="comfortable" hide-no-data :hide-default-footer="conjunto.adicional.videos?.length <= videosForPage" hover :items-per-page="videosForPage" :no-filter="true" class="bg-tables">
             <!-- Documentalista -->
             <template v-slot:item.documentalista="{ item }">
                 {{ item.controlDescripcion.documentalista.fullname }}
@@ -43,8 +43,7 @@
                             </template>
                         </v-tooltip>
                     </nuxt-link>
-                    <!-- REVISAR REFRESH, Y ACOMODAR BOTONES... SE NECESITA PALABRA 'APROBAR'? -->
-                    <revisiones-acciones :uso="'aprobar'" :id="item._id" @click="refresh()" />
+                    <revisiones-acciones :uso="'aprobar'" :id="item._id" @refresh-my-data="emitFunction()" />
                 </div>
             </template>
         </v-data-table>
@@ -62,12 +61,17 @@ const props = defineProps({
     borde: Boolean
 })
 
-const videosForPage = ref(5)
+// Emit a la página 'revisiones' (padre), siguiendo otro emit recibido del componente 'Acciones'
+const emit = defineEmits(['refreshMyData2'])
+
+
+const videosForPage = ref(7)
 // Biblioteca para mostrar fechas
 const dayjs = useDayjs()
 
+// Ordena los conjuntos de acuerdo a cuantos videos contiene para poder mostrarlos en orden.
 const sortedConjuntos = computed(() => {
-  return props.conjuntos.sort((a, b) => b.videos.length - a.videos.length)
+  return props.conjuntos.sort((a, b) => b.adicional.videos.length - a.adicional.videos.length)
 })
 
 /**
@@ -99,15 +103,18 @@ const dataTableHeaders = [
     },
 ]
 
+/**
+ * Devuelve el formato esperado de una fecha con el formato DD/MM/YYYY
+ */
 function formatoFecha(fecha){
     return dayjs(fecha).format('DD/MM/YYYY')
 }
 
 /**
- * Reload data using native Nuxt util function
+ * Emit proveniente desde componente 'Acciones'
  */
- async function refresh(){
-    await refreshNuxtData()
+function emitFunction(){
+    emit('refreshMyData2')
 }
 
 </script>

@@ -17,12 +17,13 @@ export default defineEventHandler(async (event) => {
         if ( !await VideoSchema.findById( data.video ) ) 
             throw createError({ statusCode: 400, statusMessage: 'No se ha encontrado un video con el id proporcionado.' })
         
-        // Aumentar el contador de descargas de documento de calificación
-        const video = await VideoSchema.findByIdAndUpdate(
-            data.video,
-            { "adicional.downloadPdfCount": data.video.adicional.downloadPdfCount++ },
-            { new: true, timestamps: false }
-        )
+        // Aumentar el contador de descargas de documento pdf
+        const video = await VideoSchema.findById( data.video )
+
+        video.adicional.downloadPdfCount = video.adicional.downloadPdfCount + 1
+        
+        // Guardar el conjunto actualizado
+        await video.save()
         
         return video
     }

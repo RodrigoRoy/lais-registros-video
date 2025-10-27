@@ -246,28 +246,18 @@
                                 <v-btn size="small" :prepend-icon="video.adicional.bookmarkedBy.includes(auth.id) ? 'mdi-bookmark' : 'mdi-bookmark-outline'" @click.prevent.stop="toggleBookmark(video)">{{ video.adicional.bookmarkedBy.length }}</v-btn>
                                 <v-btn size="small" v-show="auth.isLoggedIn && auth.canCreate && auth.canUpdate" prepend-icon="mdi-chart-bar">{{ video.adicional.fetchCount }}</v-btn>
                                 <v-btn size="small" v-show="auth.isLoggedIn && auth.canCreate && auth.canUpdate" prepend-icon="mdi-play">{{ video.adicional.playCount }}</v-btn>
+
                                 <!-- Descargas de documento de calificación y pdf's -->
 
-                                <!-- TODO: ***
-                                  1. DESCARGAR EXPORT 
-                                  2. AGREGAR A TODOS EL ATRIBUTO DE COUNT Y PDF EN ADICIONAL
-                                  3. MODIFICAR API DE PDF Y DE DOCUMENTO DE CALIFICACION
-                                  4. AGREGAR ICONO Y NUMERO DE DESCARGAS, QUE SE MUESTREN AL LADO DE CUADRO PARA DESCARGA DE DOCUMENTOS
-                                 *** -->
-
-                                 <p class="mx-5">
-                                    <v-icon>
-                                        mdi-file-chart-outline
-                                    </v-icon>
+                                <v-btn size="small" readonly prepend-icon="mdi-file-chart-outline">
                                     {{ video.adicional.downloadDocCount }}
-                                 </p>
-                                 <p>
-                                    <v-icon>
-                                        mdi-file-download-outline
-                                    </v-icon>
+                                </v-btn>
+                                <v-btn size="small" readonly prepend-icon="mdi-file-pdf-box">
                                     {{ video.adicional.downloadPdfCount }}
-                                 </p>
+                                </v-btn>
+
                                 <v-spacer></v-spacer>
+
                             </v-card-actions>
                         </v-card>
                 </v-sheet>
@@ -276,19 +266,22 @@
                 <v-sheet class="pa-2 ma-2" color="background">
                         <v-card elevation="2" height="auto" width="auto" variant="flat">
                              <!-- cursor-pointer -->
-                            <v-btn v-if="video.adicional.documentoCalificacion" class="text-none" variant="flat" block prepend-icon="mdi-file-document" :href="getDocumentURL(video.adicional.documentoCalificacion)">Documento de calificación</v-btn>
+                            <v-btn v-if="video.adicional.documentoCalificacion" class="text-none" variant="flat" block prepend-icon="mdi-file-document" :href="getDocumentURL(video.adicional.documentoCalificacion)" target="_blank" @click="aumentarContador(1)">Documento de calificación</v-btn>
 
                             <v-divider length="500px" :thickness="2" class="border-opacity-25" color="primary" ></v-divider>
                             
-                            <dev-only>
+                            <div @click="aumentarContador(2)">
                                 <video-pdf :data="video"></video-pdf>
-                            </dev-only>
+                            </div>
+
                         </v-card>
                     </v-sheet>
                     <div v-if="auth.isLoggedIn && auth.isAdmin">
                         <revisiones-acciones :uso="'video'" :id="video._id" />
-                        <v-divider length="500px" :thickness="4" class="border-opacity-25" color="primary" ></v-divider>
-                        <revisiones-acciones :uso="'aprobar'" :id="video._id" />
+                        <div v-if="video.adicional.inReview">
+                            <v-divider length="350px" :thickness="4" class="border-opacity-25 my-3" color="primary" ></v-divider>
+                            <revisiones-acciones  :uso="'aprobar'" :id="video._id" />
+                        </div>
                     </div>
             </v-col>
         </v-row>
@@ -299,6 +292,7 @@
 // State manager
 import { useAuthStore } from '@/stores/auth'
 import { useMessageStore } from '@/stores/message'
+import refresh from '~/utils/refresh'
 const auth = useAuthStore()
 const message = useMessageStore()
 
@@ -391,12 +385,28 @@ async function videoClipStopPlaying(video){
  * @param {string} filename Nombre del archivo según la base de datos
  */
 function getDocumentURL(filename){
-    // Aumenta el contador de descargas del documento de calificación
-    $fetch(`/api/videos/documentCount`, {
-        method: 'PUT',
-        query: { video: video.value._id }
-    })
     return `/data/document/${filename}`
+}
+
+/**
+ * Aumenta el contador de descargas del documento de calificación y de los pdf's
+ * @param contadorID El id del contador: 1 para documento de calificación, 2 para pdf.
+ */
+async function aumentarContador(contadorID){
+    if( contadorID === 1 ){
+        // Aumenta el contador de descargas del documento de calificación
+        await $fetch(`/api/videos/documentCount`, {
+            method: 'PUT',
+            body: { video: video.value._id }
+        })
+    } else if ( contadorID === 2 ){
+        // Aumenta el contador de descargas del documento de calificación
+        await $fetch(`/api/videos/pdfCount`, {
+            method: 'PUT',
+            body: { video: video.value._id }
+        })
+    }
+    refresh()
 }
 
 /**

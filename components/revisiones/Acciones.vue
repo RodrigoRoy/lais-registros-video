@@ -1,5 +1,5 @@
 <template>
-    <div v-if="visibilidad && auth.isLoggedIn && auth.isAdmin" class="my-10 px-5">
+    <span v-if="visibilidad && auth.isLoggedIn && auth.isAdmin" class="my-10 px-5">
         <v-select v-if="props.uso!=='aprobar'" label="Revisor" :items="items" item-title="fullname" item-value="_id" variant="outlined" :hint="mensajeHint" persistent-hint v-model="IdUsuario" class="mb-5" bg-color="black" color="secondary" :base-color="IdUsuario.length>0 ? 'secondary' : 'black'" rounded  ></v-select>
     
         <v-tooltip :text=mensajeTooltip location="top">
@@ -9,7 +9,7 @@
                 </v-btn>
             </template>
         </v-tooltip>
-    </div>
+    </span>
 </template>
 
 <script setup>
@@ -24,6 +24,9 @@ const props = defineProps({
 import { useAuthStore } from '@/stores/auth';
 import { useMessageStore } from '@/stores/message'
 
+// Emit para que la página 'revisiones' haga un refresh de los datos
+const emit = defineEmits(['refreshMyData'])
+
 const auth = useAuthStore()
 const message = useMessageStore()
 
@@ -31,18 +34,25 @@ const { data: items } = await useFetch('/api/usuarios')
 
 const IdUsuario = ref([])  // Variable a modificar dependiendo la selección del usuario en el componente 'select'
 const icon = ref("")
-const mensajeHint = ref("")
-const textoBoton =  ref("")
+const mensajeHint = ref("")  // Mensaje para mostrar en botón como un 'tooltip'
+const textoBoton =  ref("")   // Texto dentro del botón
 const mensajeSnackbar = ref("")
 const mensajeTooltip = ref("")
 const visibilidad = ref(false)  // Permite mostrar el componente o no, depende si viene solo algún 'prop.uso' esperado
 
+/**
+ * Personalización del botón y mensajes de acuerdo a los casos posibles.
+ * Casos posibles:
+ * - Aprobar
+ * - Conjunto
+ * - Video
+ */
 switch ( props.uso.toLowerCase() ){
     case 'aprobar':
         visibilidad.value = true
         icon.value = "mdi-file-check-outline"
-        mensajeTooltip.value = "Clic para poder aprobar el video"
-        textoBoton.value = "Aprobar video"
+        mensajeTooltip.value = "Clic para aprobar el video"
+        textoBoton.value = "Aprobar"
         mensajeSnackbar.value = "Aprobado por Chayanne :D"
         break
     case 'conjunto':
@@ -65,6 +75,13 @@ switch ( props.uso.toLowerCase() ){
         visibilidad.value = false
 }
 
+/**
+ * Casos para acceder al API dependiendo del caso.
+ * Casos posibles:
+ * - Aprobar
+ * - Conjunto
+ * - Video
+ */
 async function botonAccion(){
     const body = ref({})
     if ( props.uso.toLowerCase() === 'aprobar' ){
@@ -76,6 +93,9 @@ async function botonAccion(){
             method: 'PUT',
             body: JSON.parse(JSON.stringify(body.value)),
         })
+
+        // Emitir para que refresque los datos en la tabla. El emit llega hasta la página 'revisiones'
+        emit('refreshMyData')
 
     } else if ( props.uso.toLowerCase() === 'conjunto' ){
         body.value = {
@@ -101,9 +121,8 @@ async function botonAccion(){
 
     }
 
-
+    // Muestra mensaje de información
     message.show({text: mensajeSnackbar.value, color: 'secondary', timeout: 4500})
-    await new Promise(resolve => setTimeout(resolve, 5000))
 }
 
 
