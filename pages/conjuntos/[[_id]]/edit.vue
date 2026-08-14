@@ -225,7 +225,7 @@ const tab = ref('identificacion')
 
 // Listas textuales para componentes <v-select>
 const selectLists = {
-    nivelDescripcion: ['Fondo', 'Grupo', 'Subgrupo', 'Serie', 'Subserie', 'Unidad compuesta'],
+    nivelDescripcion: ['Fondo', 'Colección', 'Grupo', 'Subgrupo', 'Serie', 'Subserie', 'Unidad compuesta'],
     estructuraFormal: ['Grabación en campo', 'Registro con entrevista', 'Registro de materiales', 'Entrevista controlada', 'Entrevista en campo', 'Entrevista con imágenes', 'Entrevista con acción'],
     soporte: ['Betacam', 'Hi8', 'DVCAM', 'MiniDV', 'Archivo digital'],
     color: ['Color', 'Blanco y negro'],

@@ -16,7 +16,7 @@ export const ConjuntoSchema = defineMongooseModel({
             codigoReferencia: {type: 'string', required: true, trim: true, unique: true },
             pais: {type: 'string', trim: true}, // autogenerado?
             fecha: {type: 'string', trim: true},
-            nivelDescripcion: {type: 'string', enum: ['Fondo', 'Colección', 'Grupo', 'Subgrupo', 'Serie', 'Subserie', 'Unidad compuesta']}, // autogenerado?
+            nivelDescripcion: {type: 'string', enum: ['Fondo', 'Colección', 'Grupo', 'Subgrupo', 'Serie', 'Subserie', 'Unidad compuesta']},
             titulo: {type: 'string', required: true, trim: true},
 
             // NIVEL COLECCION

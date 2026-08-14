@@ -17,11 +17,16 @@ logs
 .DS_Store
 .fleet
 .idea
+.vscode
 
 # Local env files
 .env
 .env.*
 !.env.example
 
+
 # Upload data directory
 public/data
+
+# Docker Compose files (pending review)
+docker-compose.yaml

@@ -27,7 +27,7 @@
                                             <v-select v-model="conjunto.identificacion.nivelDescripcion" label="Nivel de descripción" variant="underlined" clearable :items="selectLists.nivelDescripcion"></v-select>
                                         </v-col>
                                         <v-col cols="12" md="6">
-                                            <v-text-field v-model="conjunto.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" :hint="codigoReferencia.first != codigoReferencia.last ? `Códigos de referencia recomendados: ${codigoReferencia.first}, ${codigoReferencia.last}` : `Código de referencia recomendado: ${codigoReferencia.last}`"></v-text-field>
+                                            <v-text-field v-model="conjunto.identificacion.codigoReferencia" label="Código de referencia" variant="underlined" clearable :rules="formRules.codigoReferencia" :hint="(!codigoReferenciaError && (codigoReferencia.first != codigoReferencia.last)) ? `Códigos de referencia recomendados: ${codigoReferencia.first}, ${codigoReferencia.last}` : ''"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" md="6">
                                             <v-text-field v-model="conjunto.identificacion.titulo" label="Título" variant="underlined" clearable :rules="formRules.titulo" ></v-text-field>
@@ -193,7 +193,7 @@ definePageMeta({
 const route = useRoute()
 
 // Códigos de referencia recomendados
-const { data: codigoReferencia} = await useFetch(`/api/conjuntos/code/${route.query?.id}?type=conjunto`)
+const { data: codigoReferencia, error: codigoReferenciaError } = await useFetch(`/api/conjuntos/code/${route.query?.id}?type=conjunto`)
 
 // Biblioteca para mostrar fechas
 const dayjs = useDayjs()
@@ -214,7 +214,7 @@ const areasList = [
 
 // Listas textuales para componentes <v-select>
 const selectLists = {
-    nivelDescripcion: ['Fondo', 'Grupo', 'Subgrupo', 'Serie', 'Subserie', 'Unidad compuesta'],
+    nivelDescripcion: ['Fondo', 'Colección', 'Grupo', 'Subgrupo', 'Serie', 'Subserie', 'Unidad compuesta'],
     estructuraFormal: ['Grabación en campo', 'Registro con entrevista', 'Registro de materiales', 'Entrevista controlada', 'Entrevista en campo', 'Entrevista con imágenes', 'Entrevista con acción'],
     soporte: ['Betacam', 'Hi8', 'DVCAM', 'MiniDV', 'Archivo digital'],
     color: ['Color', 'Blanco y negro'],
@@ -237,7 +237,7 @@ const files = reactive({
 const conjunto = reactive({
     identificacion: {
         // colección y grupo documental
-        codigoReferencia: codigoReferencia.value.last || null,
+        codigoReferencia: codigoReferenciaError ? '' : codigoReferencia.value.last,
         pais: null,
         fecha: null,
         nivelDescripcion: Number(route.query?.d) === 0 ? 'Fondo' : 'Grupo',
