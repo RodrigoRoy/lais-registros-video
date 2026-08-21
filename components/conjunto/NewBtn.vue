@@ -80,16 +80,18 @@ async function newConjunto(){
         },
         controlDescripcion: {
             // colección y grupo documental
-            documentalista: auth?.id || null,
+            documentalista: null,
             
             // solo colección
             reglasNormas: null,
         },
         adicional: {
             imagen: '',
+            createdBy: auth?.id || null,
+            updatedBy: null,
             tipo: null,
             isPublic: true,
-            isDraft: true,
+            isDraft: false,
             fetchCount: 0,
             parent: props.data._id || null,
             child: [],

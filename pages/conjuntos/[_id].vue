@@ -221,7 +221,7 @@
                                         <!-- Compartidos -->
                                         <v-col cols="12" sm="4" v-if="conjunto.controlDescripcion?.documentalista">
                                             <p class="text-body-1 font-weight-medium text-accent">Archivista</p>
-                                            <p class="text-body-1">{{ conjunto.controlDescripcion.documentalista.fullname }}</p>
+                                            <p class="text-body-1">{{ conjunto.controlDescripcion.documentalista }}</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" v-if="conjunto.createdAt">
                                             <p class="text-body-1 font-weight-medium text-accent">Fecha de creación</p>

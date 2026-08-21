@@ -116,7 +116,7 @@
                         <v-card flat>
                             <v-card-text>
                                 <v-container fluid class="px-0">
-                                    <v-textarea v-model="conjunto.condicionesAccesoUso.condicionesAcceso" label="Condiciones de acceso" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
+                                    <v-select v-model="conjunto.condicionesAccesoUso.condicionesAcceso" label="Condiciones de acceso" variant="underlined" clearable :items="selectLists.condicionesAcceso" ></v-select>
                                     <v-textarea v-model="conjunto.condicionesAccesoUso.condicionesReproduccion" label="Condiciones de reproducción" variant="underlined" clearable rows="2" auto-grow ></v-textarea>
                                     <!-- solo colección -->
                                     <div v-if="conjunto.adicional.depth === 0">
@@ -141,7 +141,7 @@
                         <v-card flat>
                             <v-card-text>
                                 <v-container fluid class="px-0">
-                                    <v-text-field v-model="conjunto.controlDescripcion.documentalista.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
+                                    <v-text-field v-model="conjunto.controlDescripcion.documentalista" label="Archivista" variant="underlined" clearable ></v-text-field>
                                     <!-- solo colección (reglas o normas) -->
                                     <v-text-field v-if="conjunto.adicional.depth === 0" v-model="conjunto.controlDescripcion.reglasNormas" label="Reglas o normas" variant="underlined" ></v-text-field>
                                     <v-text-field v-model="createdAt" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
@@ -203,9 +203,12 @@ const dayjs = useDayjs()
 // Información del conjunto documental
 const { data: conjunto } = await useFetch(`/api/conjuntos/${route.params._id}`)
 
-const documentalista = conjunto.value.controlDescripcion.documentalista.fullname
+// Actualizar último usuario que editó el conjunto documental
+conjunto.value.adicional.updatedBy = auth?.id
+
 // Editar listado de archivistas que han editado el conjunto
-conjunto.value.adicional.updates = getUpdatedDocumentalistasList(conjunto.value.adicional.updates, auth.id)
+// conjunto.value.adicional.updates = getUpdatedDocumentalistasList(conjunto.value.adicional.updates, auth.id)
+
 // Auxiliar temporal para mostrar fecha de creación
 const createdAt = dayjs(conjunto.value.createdAt).format('DD/MM/YYYY HH:mm')
 
@@ -233,6 +236,7 @@ const selectLists = {
     sistemaGrabacion: ['NTSC', 'PAL', 'SECAM'],
     resolucionGrabacion: ['UHD 8K', 'UHD 4K', 'HD 1080p', 'HD 1080i', 'HD 720', 'HD 720p', 'HD 720i', 'PAL 576i', 'NTSC 480i'],
     formatoVideoDigital: ['MP4', 'MTS', 'AVCHD', 'MOV', 'XAVC'],
+    condicionesAcceso: ['Usos reservados para consulta in situ', 'Usos no lucrativos', 'Usos lucrativos'],
 }
 
 // Auxiliar para mostrar "Fecha de creación"
@@ -278,11 +282,11 @@ const isLoading = ref(false)
  * @param {string} idUser Id del usuario que está editando el registro
  * @returns {[string]} Arreglo actualizado y sin repeticiones de (Id's de) usuarios que han editado el registro
  */
-function getUpdatedDocumentalistasList(updatesArray, idUser){
-    const updates = new Set(updatesArray)
-    updates.add(idUser)
-    return Array.from(updates)
-}
+// function getUpdatedDocumentalistasList(updatesArray, idUser){
+//     const updates = new Set(updatesArray)
+//     updates.add(idUser)
+//     return Array.from(updates)
+// }
 
 /**
  * Sube un archivo del cliente al servidor.

@@ -143,7 +143,7 @@
                         <v-card flat>
                             <v-card-text>
                                 <v-container fluid class="px-0">
-                                    <v-text-field v-model="auth.fullname" label="Archivista" variant="underlined" readonly ></v-text-field>
+                                    <v-text-field v-model="conjunto.controlDescripcion.documentalista" label="Archivista" variant="underlined" clearable ></v-text-field>
                                     <!-- solo colección (reglas o normas) -->
                                     <v-text-field v-if="conjunto.adicional.depth === 0" v-model="conjunto.controlDescripcion.reglasNormas" label="Reglas o normas" variant="underlined" ></v-text-field>
                                     <v-text-field v-model="today" label="Fecha de creación" variant="underlined" readonly ></v-text-field>
@@ -286,13 +286,15 @@ const conjunto = reactive({
     },
     controlDescripcion: {
         // colección y grupo documental
-        documentalista: auth?.id || null,
+        documentalista: null,
 
         // solo colección
         reglasNormas: null,
     },
     adicional: {
         imagen: '',
+        createdBy: auth?.id || null,
+        updatedBy: null,
         tipo: null,
         isPublic: true,
         isDraft: false,

@@ -14,13 +14,13 @@ export const ConjuntoSchema = defineMongooseModel({
         identificacion: {
             // COMPARTIDOS
             codigoReferencia: {type: 'string', required: true, trim: true, unique: true },
-            pais: {type: 'string', trim: true}, // autogenerado?
+            pais: {type: 'string', trim: true},
             fecha: {type: 'string', trim: true},
             nivelDescripcion: {type: 'string', enum: ['Fondo', 'Colección', 'Grupo', 'Subgrupo', 'Serie', 'Subserie', 'Unidad compuesta']},
             titulo: {type: 'string', required: true, trim: true},
 
             // NIVEL COLECCION
-            volumenSoporte: {type: 'string', trim: true}, // autogenerado?
+            volumenSoporte: {type: 'string', trim: true},
             coordinacion: {type: 'string', trim: true},
 
             // NIVEL GRUPO DOCUMENTAL
@@ -76,7 +76,7 @@ export const ConjuntoSchema = defineMongooseModel({
         },
         controlDescripcion: {
             // COMPARTIDOS
-            documentalista: {type: Types.ObjectId, ref: 'Usuario'},
+            documentalista: {type: 'string', trim: true},
             // fechaCreacion = createdAt
             // fechaActualizacion = updatedAt
 
@@ -88,7 +88,9 @@ export const ConjuntoSchema = defineMongooseModel({
         },
         adicional: {
             imagen: {type: 'string', trim: true},
-            // presentacion: {type: 'string', trim: true},
+            createdBy: {type: Types.ObjectId, ref: 'Usuario'},
+            updatedBy: {type: Types.ObjectId, ref: 'Usuario'},
+            // presentacion: {type: 'string', trim: true}, // puede emplearse "contenidoEstructura.alcanceContenido"
             isPublic: {type: 'boolean', default: true}, // define si el registro es público
             tipo: {type: 'string', enum: ['Colección', 'Grupo documental']},
             isDraft: {type: 'boolean', default: 'false'},
